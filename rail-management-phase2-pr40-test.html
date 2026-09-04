@@ -934,6 +934,10 @@ summary::marker {
   color: var(--game-gold);
 }
 
+.standard {
+  color: var(--game-blue);
+}
+
 .comfortable {
   color: #66eaa1;
 }
@@ -5883,9 +5887,9 @@ summary::marker {
   "initialDisplay": {
     "cashRunwayQuarters": 3,
     "display": "3四半期",
-    "status": "注意",
+    "status": "標準",
     "achieved": true,
-    "description": "現在の資金の残り期間は3四半期です。最低基準の2四半期は上回っていますが、急な災害や投資が重なると余裕がなくなる状態です。"
+    "description": "現在の資金の残り期間は3四半期です。最低ラインの2四半期は上回っていますが、急な災害や投資が重なると余裕がなくなる状態です。"
   },
   "introduction": {
     "title": "未来つくり鉄道 経営会議",
@@ -5899,9 +5903,9 @@ summary::marker {
     "runwayGuide": {
       "meaning": "資金の残り期間は、標準的に1四半期あたり10億円の資金が必要と仮定し、現在の現金残高で何四半期運営できるかを示す目安です。",
       "danger": "0〜1四半期：危険",
-      "caution": "2〜3四半期：注意",
+      "caution": "2〜3四半期：標準",
       "comfortable": "4〜12四半期：余裕あり",
-      "minimum": "最低基準は2四半期以上です。",
+      "minimum": "最低ラインは2四半期以上です。",
       "comfortableTarget": "安心できる目安は4四半期以上です。",
       "financingNote": "借入で現金が増えると資金の残り期間は延びますが、本業の営業利益が増えたわけではありません。"
     },
@@ -6086,7 +6090,7 @@ const profit=pl=>(pl.revenue??0)-(pl.cashOperatingExpense??0)-(pl.depreciationEx
 const turnIndex=id=>PHASE2_TURN_IDS.indexOf(id);
 const freezeSnapshots=session=>{for(const snapshot of session.annualSnapshots??[])deepFreeze(snapshot);return session;};const deepFreeze=value=>{if(rec(value)||Array.isArray(value)){Object.values(value).forEach(deepFreeze);Object.freeze(value);}return value;};
 function toPhase2TenPointScore(value){return clamp(Math.round(Number.isFinite(Number(value))?Number(value)/10:0),1,10);}
-function createPhase2RunwayDisplay(value){const cashRunwayQuarters=clamp(Math.round(Number(value)||0),0,12);return{cashRunwayQuarters,display:`${cashRunwayQuarters}四半期`,status:cashRunwayQuarters<=1?'危険':cashRunwayQuarters<=3?'注意':'余裕あり',achieved:cashRunwayQuarters>=2};}
+function createPhase2RunwayDisplay(value){const cashRunwayQuarters=clamp(Math.round(Number(value)||0),0,12);return{cashRunwayQuarters,display:`${cashRunwayQuarters}四半期`,status:cashRunwayQuarters<=1?'危険':cashRunwayQuarters<=3?'標準':'余裕あり',achieved:cashRunwayQuarters>=2};}
 function deriveFieldCapacity(internalMetrics){return clamp(100-Math.round(Number(internalMetrics?.fieldFatigue??0)),0,100);}
 function scanConditions(value,path='condition'){if(Array.isArray(value))return value.forEach((v,i)=>scanConditions(v,`${path}[${i}]`));if(!rec(value))return;if(value.operator&&!OPS.has(value.operator))throw new Error(`${path} に未対応の条件演算子 ${value.operator} があります`);Object.entries(value).forEach(([k,v])=>scanConditions(v,`${path}.${k}`));}
 function scanEffect(effect,path,postingIds){if(!effect)return;for(const p of effect.postings??[]){if(postingIds.has(p.id))throw new Error(`posting ID が重複しています: ${p.id}`);postingIds.add(p.id);for(const [group,keys] of [['pl',PL_KEYS],['cf',['operating','investing','financing']],['bsDelta',['cash','propertyPlantEquipment','debt','contributedCapital','retainedEarnings']]])for(const key of keys)integer(p[group]?.[key]??0,`${path}.${p.id}.${group}.${key}`);}for(const [key,value] of Object.entries(effect.nonFinancialDeltas??{}))integer(value,`${path}.nonFinancialDeltas.${key}`);for(const [key,value] of Object.entries(effect.internalMetricDeltas??{})){if(!PHASE2_INTERNAL_METRICS.includes(key))throw new Error(`未許可の内部変数です: ${key}`);integer(value,`${path}.internalMetricDeltas.${key}`);}scanConditions(effect.condition,path);}
@@ -6165,7 +6169,7 @@ const pixelIcon=kind=>`<span class="pixel-icon pixel-icon-${esc(kind)}" aria-hid
 const screenHeading=(kicker,title,modifier='')=>`<div class="screen-heading ${esc(modifier)}"><p class="screen-kicker">${esc(kicker)}</p><h1>${esc(title)}</h1></div>`;
 const gameFrame=(content,modifier='')=>`<section class="game-frame pixel-border ${esc(modifier)}"><div class="game-screen">${content}</div></section>`;
 const yearStartBanner=v=>{if(v.quarter!==1)return'';const copy={1:['YEAR 1','経営スタート','★'],2:['YEAR 2','変化への対応','★★'],3:['FINAL YEAR','未来を決める1年','★★★']}[v.year];return`<section class="year-start-banner year-${v.year}" aria-label="${v.year}年目開始"><span>${copy[2]}</span><strong>${copy[0]}</strong><p>${copy[1]}</p></section>`;};
-const primaryMetricCards=m=>`<div class="grid metrics primary-metrics"><article class="metric status-card required"><div class="status-heading">${pixelIcon('shield')}<span>安全</span></div><strong>${num(m.safety)}/10</strong><small>目標：8/10以上</small><small>設備は経年劣化します。</small></article><article class="metric status-card required"><div class="status-heading">${pixelIcon('coin')}<span>資金の残り期間</span></div><strong>${esc(runwayMonths(m.cashRunway.display))}</strong><small class="status ${m.cashRunway.status==='危険'?'danger':m.cashRunway.status==='注意'?'caution':'comfortable'}">状態：${esc(m.cashRunway.status)}／目標：6か月以上</small></article><article class="metric status-card"><div class="status-heading">${pixelIcon('chart')}<span>今年度の営業利益</span></div><strong>${num(m.operatingProfit)}億円</strong><small>今年度目標：${num(data.annualTargets.operatingProfit)}億円</small></article></div>`;
+const primaryMetricCards=m=>`<div class="grid metrics primary-metrics"><article class="metric status-card required"><div class="status-heading">${pixelIcon('shield')}<span>安全</span></div><strong>${num(m.safety)}/10</strong><small>目標：8/10以上</small><small>設備は経年劣化します。</small></article><article class="metric status-card required"><div class="status-heading">${pixelIcon('coin')}<span>資金の残り期間</span></div><strong>${esc(runwayMonths(m.cashRunway.display))}</strong><small class="status ${m.cashRunway.status==='危険'?'danger':m.cashRunway.status==='標準'?'standard':'comfortable'}">状態：${esc(m.cashRunway.status)}／最低ライン：6か月以上</small></article><article class="metric status-card"><div class="status-heading">${pixelIcon('chart')}<span>今年度の営業利益</span></div><strong>${num(m.operatingProfit)}億円</strong><small>今年度目標：${num(data.annualTargets.operatingProfit)}億円</small></article></div>`;
 const secondaryMetricCards=(m,securityLevel=null)=>`<div class="grid metrics secondary-metrics${securityLevel==null?'':' has-security'}"><article class="metric"><span>お客さま満足</span><strong>${num(m.customerSatisfaction)}/10</strong></article><article class="metric"><span>社員の状態</span><strong>${num(m.employeeState)}/10</strong></article><article class="metric"><span>将来性</span><strong>${num(m.futureGrowth)}/10</strong></article>${securityLevel==null?'':`<article class="metric"><span>情報セキュリティ対策レベル</span><strong>${clampSecurity(securityLevel)}/10</strong></article>`}</div>`;
 const metricCards=(m,showAll=false,securityLevel=null)=>primaryMetricCards(m)+(showAll?secondaryMetricCards(m,securityLevel):'');
 const clampSecurity=value=>Math.max(1,Math.min(10,num(value)||5));
