@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#103b45"><meta name="color-scheme" content="light">
+<title>未来つくり鉄道｜経営シミュレーション RPG風スマホ試作</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;--ink:#12343e;--muted:#658088;--line:#dce9e6;--green:#138469;--green-dark:#076b56;--light:#e7f4ed;--paper:#fff;--bg:#f3f8f6;--danger:#b64336;--amber:#a06817}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--bg);min-height:100dvh}button{font:inherit;cursor:pointer}button:disabled{opacity:.33;cursor:not-allowed}button:focus-visible{outline:3px solid #eaad35;outline-offset:3px}button,.card,.mini{ -webkit-tap-highlight-color:transparent}#app{max-width:1160px;margin:0 auto;padding:18px 18px 60px}.header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 16px}.brand{display:flex;gap:11px;align-items:center}.brand-logo{width:40px;height:40px;border-radius:12px;background:#126e59;color:#fff;display:grid;place-items:center;font-size:22px;box-shadow:0 5px 14px #1465542c}.brand strong{font-size:18px;letter-spacing:.03em}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:2px}.header-right{display:flex;gap:7px;align-items:center}.chip{border:1px solid #cfdedb;background:white;border-radius:50px;padding:8px 11px;font-size:12px;font-weight:750}.ghost{border:1px solid var(--line);background:white;color:var(--ink);border-radius:10px;padding:9px 13px;font-weight:750;font-size:12px}.ghost:hover{background:#e9f5f1}.scene{height:275px;overflow:hidden;position:relative;background:linear-gradient(#c7e7e8,#e6f6ea 65%,#e7ede3);border-radius:19px;border:1px solid #d6e6dc;box-shadow:0 9px 30px #164e3e14}.scene svg{width:100%;height:100%;display:block}.sun{animation:sky 5s ease-in-out infinite alternate}.cloud1{animation:cloud 21s linear infinite}.cloud2{animation:cloud 28s linear infinite}.train-run{animation:train 13s linear infinite}.wheel{animation:bob .8s ease-in-out infinite alternate}.signal{animation:signal 2.4s ease-in-out infinite alternate}.active-construct{animation:build 2s ease-in-out infinite alternate}.fade-scene{opacity:.45}.scene-top{position:absolute;top:16px;left:16px;display:flex;gap:6px;flex-wrap:wrap;z-index:2}.scene-label{background:#ffffffdf;border:1px solid #ffffff;border-radius:8px;padding:7px 10px;font-size:12px;font-weight:800;box-shadow:0 2px 9px #18423b12}.scene-label.green{background:#126f5b;color:white;border-color:#126f5b}.scene-warning{position:absolute;z-index:3;right:16px;top:18px;background:#b64336;color:#fff;border-radius:9px;padding:9px 12px;font-size:12px;font-weight:900;animation:signal 1s ease-in-out infinite alternate}.scene-bottom{position:absolute;bottom:14px;right:15px;background:#fffefaee;border-radius:9px;padding:7px 10px;font-size:11px;font-weight:700}.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:13px 0 15px}.kpi{background:white;border:1px solid var(--line);border-radius:13px;padding:13px 16px;min-height:78px}.kpi small{display:block;color:var(--muted);font-weight:750;margin-bottom:4px;font-size:11px}.kpi strong{font-size:24px;font-weight:850;letter-spacing:-.04em}.kpi em{font-style:normal;font-size:12px;font-weight:700;margin-left:3px}.positive{color:var(--green-dark)!important}.negative{color:var(--danger)!important}.muted{color:var(--muted)!important}.track{display:flex;gap:5px;margin-bottom:14px}.track .block{height:6px;flex:1;background:#d5e7df;border-radius:10px}.track .block.done{background:#3ca886}.track .block.now{background:#e6a546}.mainpanel{border:1px solid var(--line);background:white;border-radius:17px;padding:23px 26px;box-shadow:0 7px 28px #164a3a0b}.eyebrow{font-size:12px;letter-spacing:.08em;font-weight:900;color:var(--green);margin:0 0 7px}.h1{font-size:26px;line-height:1.4;letter-spacing:-.02em;margin:0 0 10px}.lead{font-size:14px;line-height:1.85;color:#45656b;margin:0 0 18px}.split{display:grid;grid-template-columns:1.07fr .93fr;gap:17px}.box{border:1px solid var(--line);border-radius:13px;padding:17px;background:#fbfdfc}.box.soft{background:#f0f8f3;border-color:#d6ecdf}.boxtitle{font-weight:850;font-size:14px;margin:0 0 12px}.totalbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;background:#eff6f2;border-radius:12px;margin:12px 0}.totalbar .big{font-weight:850;font-size:23px}.totalbar small{font-size:11px;color:#496e66}.invest-row{display:grid;grid-template-columns:minmax(0,1fr) 126px;align-items:center;border-bottom:1px solid var(--line);padding:13px 0;gap:10px}.invest-row:last-child{border:0}.invest-label{font-size:14px;font-weight:850}.desc{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.7}.stepper{display:flex;align-items:center;justify-content:flex-end;gap:8px}.stepper button{height:32px;width:32px;border:1px solid #cadfda;border-radius:9px;background:white;color:var(--ink);font-weight:900;font-size:17px}.stepper b{font-size:17px;font-variant-numeric:tabular-nums;min-width:20px;text-align:center}.btn{border:0;border-radius:11px;background:var(--green-dark);color:white;padding:14px 22px;font-size:14px;font-weight:850;min-height:47px;box-shadow:0 6px 14px #0e68512e}.btn:hover{background:#0b5949}.btn.secondary{background:#eaf2ed;color:#155244;box-shadow:none}.btn.block{display:block;width:100%}.btn:disabled{background:#aabdb6;box-shadow:none}.actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:18px;flex-wrap:wrap}.note{color:#658078;font-size:12px;line-height:1.7;margin-top:10px}.warning{border:1px solid #eed9bd;background:#fff8ed;color:#7d592b;border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.75;margin:14px 0}.warning.red{background:#fff4f0;border-color:#f0d0c7;color:#9f4036}.badge{display:inline-block;background:#d9eee2;color:#13654f;border-radius:6px;font-size:11px;font-weight:850;padding:5px 9px}.badge.red{background:#fce2da;color:#af4234}.choice-list{display:grid;gap:10px}.choice{display:flex;align-items:center;gap:13px;border:1px solid #d8e7e2;border-radius:13px;background:white;width:100%;padding:15px;text-align:left;transition:background .15s,border-color .15s,transform .15s}.choice:hover{transform:translateY(-1px);background:#f4faf6;border-color:#93c9b1}.choice-key{width:32px;height:32px;border-radius:8px;background:#e7f2ed;display:grid;place-items:center;font-size:15px;font-weight:850;flex-shrink:0}.choice strong{display:block;font-size:15px}.choice small{display:block;margin-top:5px;color:var(--muted);font-size:12px}.choice .arr{margin-left:auto;font-size:19px;color:var(--green)}.metric-chips{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.mchip{padding:7px 10px;border-radius:50px;background:#edf6f2;font-size:11px;font-weight:800}.delta{display:grid;grid-template-columns:1fr 1fr;gap:10px}.delta .big{font-size:28px;font-weight:900;line-height:1.3}.delta .box{padding:20px}.ann-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.sheet{background:#fbfdfc;border:1px solid var(--line);border-radius:12px;padding:14px}.sheet h3{font-size:15px;margin:0 0 4px}.sheet p{font-size:11px;color:var(--muted);margin:0 0 12px}.sheet table{border-collapse:collapse;width:100%;font-size:12px}.sheet td{padding:7px 0;border-bottom:1px solid #e6eeea}.sheet td:last-child{text-align:right;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}.sheet tr.emph td{font-weight:900;border-top:2px solid #8ac6ad;color:#0b705b}.sheet tr:last-child td{border-bottom:0}.lineval{display:flex;justify-content:space-between;gap:12px;margin:9px 0;align-items:center;font-size:13px}.lineval strong{white-space:nowrap}.history-row{display:flex;align-items:center;gap:8px;margin:8px 0;font-size:12px}.bar-track{height:8px;flex:1;border-radius:10px;background:#d9e9e1;overflow:hidden}.bar-inner{height:100%;background:#3ba884;border-radius:10px}.vis-transition{animation:appear .35s ease-out}.fall{animation:fall .45s ease-out}.flash{animation:flash .65s ease-out}.finance-explain{margin:12px 0 0;color:#526d6d;font-size:12px;line-height:1.8}.footer{text-align:center;color:#8ba29a;font-size:11px;margin-top:19px}.cashlock{background:#fff8ed;border:1px solid #edd3a4;padding:14px 16px;border-radius:11px;font-size:13px;color:#8a581a;line-height:1.8;margin-top:12px}.final-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.final-grid .box{text-align:center}.final-grid strong{font-size:23px;display:block;margin-top:6px}.diagram-tags{display:flex;gap:8px;flex-wrap:wrap}.visually-hidden{position:absolute!important;clip:rect(0,0,0,0)!important;width:1px;height:1px;overflow:hidden;white-space:nowrap}
+@keyframes train{from{transform:translateX(-80px)}to{transform:translateX(1150px)}}@keyframes cloud{from{transform:translateX(-55px)}to{transform:translateX(200px)}}@keyframes sky{from{opacity:.65}to{opacity:1}}@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-2px)}}@keyframes signal{from{opacity:.35}to{opacity:1}}@keyframes build{from{opacity:.6}to{opacity:1}}@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@keyframes fall{from{transform:translateY(-10px);opacity:.5}to{transform:translateY(0);opacity:1}}@keyframes flash{0%{background:#f5fff1}100%{background:transparent}}
+@media(max-width:800px){#app{padding:11px 11px 35px}.scene{height:210px}.split{grid-template-columns:1fr}.ann-grid{grid-template-columns:1fr}.mainpanel{padding:19px 17px}.h1{font-size:22px}.final-grid{grid-template-columns:repeat(2,1fr)}.kpi{padding:11px}.kpi strong{font-size:19px}.kpis{gap:7px}.header-right .chip{display:none}}
+@media(max-width:500px){.scene{height:174px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.scene-label{font-size:10px;padding:6px 8px}.scene-bottom{display:none}.header .brand strong{font-size:15px}.brand-logo{width:34px;height:34px;font-size:19px}.ghost{padding:8px 9px}.totalbar .big{font-size:21px}.delta{grid-template-columns:1fr 1fr}.delta .big{font-size:23px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* スマートフォン向けレイアウト v0.3：変更対象は表示のみ */
+html{scroll-padding-top:12px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{overflow-x:hidden;touch-action:pan-y}
+#app{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+button{touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.brand,.brand>div:last-child,.mainpanel,.box,.split>*{min-width:0}
+.header-right{flex-shrink:0}
+.stepper button{min-width:44px;min-height:44px;height:44px;width:44px;font-size:23px;border-radius:11px}
+.stepper b{min-width:34px;font-size:20px}
+.choice{min-height:70px}
+.choice-key{width:38px;height:38px}
+.btn{min-height:52px}
+.cash-guide{border:1px solid #c8e1d3;background:#eef8f1;border-radius:12px;padding:13px 15px;margin:10px 0 14px;display:flex;gap:12px;justify-content:space-between;align-items:center}
+.cash-guide span{font-size:12px;color:#476c61;line-height:1.5}
+.cash-guide strong{font-size:23px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.budget-shell{display:grid;grid-template-columns:minmax(0,.93fr) minmax(0,1.07fr);gap:17px;align-items:start}
+.budget-finance,.budget-invest{min-width:0}
+.budget-finance .box{margin-bottom:12px}
+.budget-details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:#fff}
+.budget-details summary{cursor:pointer;font-size:13px;font-weight:800;min-height:28px;display:list-item;line-height:28px}
+.budget-details .lineval{font-size:12px}
+.budget-details:focus-visible{outline:2px solid var(--green)}
+.budget-topline{margin:0 0 10px;font-weight:750;font-size:13px}
+.invest-row .desc{line-height:1.45}
+.touch-helper{font-size:12px;color:var(--muted);line-height:1.6}
+@media(max-width:800px){
+ .budget-shell{grid-template-columns:1fr;gap:10px}
+ .budget-finance{order:0}
+ .budget-invest{order:1}
+ .budget-finance .box{padding:13px 15px}
+ .budget-finance .boxtitle{margin-bottom:8px}
+ .ann-grid{gap:9px}
+ .ann-grid .sheet{overflow-wrap:anywhere}
+}
+@media(max-width:540px){
+ #app{padding-top:9px}
+ .header{gap:7px;margin-bottom:10px}
+ .brand{gap:7px}
+ .brand-logo{width:35px;height:35px;border-radius:9px;font-size:19px;flex-shrink:0}
+ .brand strong{font-size:15px;line-height:1.2;white-space:nowrap}
+ .brand small{display:none}
+ .header-right{gap:5px}
+ .header-right .chip{display:none}
+ .ghost{font-size:12px;min-height:40px;padding:8px 10px}
+ .scene{height:142px;border-radius:13px}
+ .scene-label{font-size:10px;padding:4px 7px}
+ .scene-top{left:9px;top:9px;gap:4px}
+ .scene-warning{top:9px;right:8px;max-width:52%;font-size:10px;padding:6px}
+ .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:8px 0 10px}
+ .kpi{min-height:62px;padding:8px 11px;border-radius:10px}
+ .kpi small{font-size:11px;margin-bottom:0}
+ .kpi strong{font-size:22px}
+ .kpi em{font-size:12px}
+ .track{margin-bottom:10px}
+ .mainpanel{padding:16px 13px;border-radius:13px}
+ .h1{font-size:21px;line-height:1.4}
+ .lead{font-size:13.5px;line-height:1.65;margin-bottom:12px}
+ .eyebrow{font-size:11px}
+ .box{padding:13px}
+ .boxtitle{font-size:14px;margin-bottom:9px}
+ .lineval{font-size:12.5px;margin:8px 0;gap:7px}
+ .totalbar{padding:11px 12px;margin:8px 0}
+ .totalbar .big{font-size:22px}
+ .invest-row{grid-template-columns:minmax(0,1fr) auto;gap:6px;padding:12px 0}
+ .invest-label{font-size:13px;line-height:1.5}
+ .desc{font-size:10.5px}
+ .stepper{gap:4px}
+ .stepper button{width:44px;height:44px}
+ .stepper b{font-size:17px;min-width:23px}
+ .choice-list{gap:9px}
+ .choice{padding:13px 10px;min-height:70px;gap:10px}
+ .choice strong{font-size:14px}
+ .choice small{font-size:11.5px;line-height:1.55}
+ .choice .arr{font-size:17px}
+ .cash-guide{padding:10px 12px}
+ .cash-guide strong{font-size:23px}
+ .actions{position:sticky;bottom:0;z-index:10;margin:14px -13px -16px;padding:12px 13px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(#fffffff3,#fff);border-top:1px solid var(--line);border-radius:0 0 13px 13px}
+ .actions .btn{width:100%;font-size:15px;min-height:54px}
+ .sheet{padding:12px}
+ .sheet td{padding:8px 0;font-size:12px}
+ .sheet h3{font-size:14px}
+ .final-grid{gap:8px}
+ .final-grid .box{padding:10px 8px}
+ .final-grid strong{font-size:21px}
+ .delta .box{padding:13px}
+ .delta .big{font-size:22px;overflow-wrap:anywhere}
+ .metric-chips{margin:10px 0;gap:5px}
+ .mchip{padding:6px 8px;font-size:10.5px}
+ .footer{font-size:10px;margin-top:16px}
+}
+@media(max-width:355px){
+ .brand strong{font-size:13px}
+ .ghost{padding:7px 8px;font-size:11px}
+ .stepper button{width:42px;min-width:42px}
+ .invest-row{grid-template-columns:minmax(0,1fr) auto}
+ .desc{font-size:10px}
+ .kpi strong{font-size:20px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
+
+/* === JRPG retro town skin: visual-only; accounting engine unchanged === */
+:root{--ink:#263b36;--muted:#536861;--line:#a9cbbb;--bg:#e7f1db;--green:#177c54;--green-dark:#126747}
+body{background:repeating-linear-gradient(90deg,#eaf3df 0 14px,#e6f0db 14px 28px)}
+.scene{position:relative;height:350px;border:4px solid #3e6957;border-radius:10px;overflow:hidden;box-shadow:0 5px 0 #acc5a5;background:#92bd76}
+.scene canvas{display:block;width:100%;height:100%;object-fit:cover;image-rendering:pixelated;image-rendering:crisp-edges;cursor:crosshair;touch-action:manipulation}
+.scene-top{top:9px;left:9px;right:9px;pointer-events:none;gap:5px}
+.scene-label{border-radius:3px;border:2px solid #41584d;background:#fcf8d7;box-shadow:3px 3px 0 #273f325a;font:800 11px/1.15 ui-monospace,monospace;padding:5px 7px}
+.scene-label.green{background:#166349;border-color:#103b2b}
+.scene-bottom{display:none}
+.rpg-dialog{position:absolute;bottom:10px;left:10px;right:10px;max-width:700px;margin:0 auto;background:#fdf9e8;color:#18362e;border:3px solid #253f37;border-radius:5px;box-shadow:0 4px 0 #2a4036ac;padding:9px 12px 11px;z-index:4;pointer-events:none;font-size:12px;line-height:1.55;min-height:56px}
+.rpg-dialog strong{font-size:12px;color:#176447}
+.rpg-dialog::after{content:'▼';position:absolute;right:10px;bottom:4px;font-size:10px;color:#245f4e;animation:bob 0.6s steps(2,end) infinite alternate}
+.rpg-worldhint{position:absolute;right:9px;top:42px;background:#fff8d6d9;border:1px solid #366b50;padding:4px 7px;border-radius:3px;font-size:10px;color:#20533a;pointer-events:none}
+.mainpanel{background:#fcfff4;border:2px solid #4a7b5a;border-radius:9px;box-shadow:4px 4px 0 #a2bca0;padding:23px 26px}
+.box,.sheet,.kpi{border:2px solid #b1cdb6;background:#fffef4;border-radius:7px;box-shadow:2px 2px 0 #d1ddc5}
+.box.soft{background:#eff8e8;border-color:#8db995}
+.btn{border:2px solid #175739;border-bottom:5px solid #0b3f2c;background:#237c55;border-radius:5px;box-shadow:none;font-weight:900}
+.btn:hover{background:#166748}.ghost{border-radius:5px;border:2px solid #739980}
+.choice{border:2px solid #83aa89;border-bottom:4px solid #6c9877;border-radius:7px;background:#fefef3}
+.choice:hover{transform:translateY(-1px);background:#edf7de;border-color:#4a9162}
+.choice-key{background:#276b4d;border-radius:4px;color:white}
+.totalbar{background:#e5f3db;border:2px solid #aac8a4;border-radius:6px}
+.track .block{border-radius:1px;height:8px}.track .block.done{background:#448b5c}.track .block.now{background:#f3bd45}
+@media(max-width:800px){.scene{height:280px}.mainpanel{padding:19px 17px}}
+@media(max-width:540px){.scene{height:252px}.rpg-dialog{left:6px;right:6px;bottom:7px;font-size:11px;min-height:53px;padding:8px 10px 10px}.rpg-dialog strong{font-size:11px}.rpg-worldhint{font-size:9px;top:36px;right:7px}.mainpanel{padding:16px 13px}}
+@media(prefers-reduced-motion: reduce){.rpg-dialog::after{animation:none}}
+
+
+/* === One-screen RPG UI (v0.6): mobile viewport locked, no outer scrolling === */
+@media(max-width:800px){
+ html,body{height:100%;min-height:0;overflow:hidden;overscroll-behavior:none}
+ body{touch-action:manipulation}
+ #app{height:100dvh;min-height:0;max-height:100dvh;width:100%;max-width:600px;margin:auto;display:flex;flex-direction:column;overflow:hidden;gap:5px;padding: max(5px,env(safe-area-inset-top)) max(7px,env(safe-area-inset-right)) max(5px,env(safe-area-inset-bottom)) max(7px,env(safe-area-inset-left))}
+ .header{height:35px;min-height:35px;margin:0;gap:5px}
+ .brand strong{font-size:15px!important;white-space:nowrap}
+ .brand-logo{width:29px;height:29px;font-size:15px;border-radius:6px}
+ .header .brand small{display:none}
+ .header-right{gap:4px}
+ .ghost{font-size:10px;min-height:31px;height:31px;padding:4px 7px}
+ .scene{flex:0 0 clamp(130px,29dvh,245px);height:auto!important;min-height:0;margin:0;border-width:3px;border-radius:7px;box-shadow:0 2px 0 #acc5a5}
+ .scene-label{font-size:9px;padding:3px 5px;border-width:1px}
+ .scene-top{top:5px;left:5px;right:5px}
+ .scene-warning{font-size:9px;top:4px;right:4px;padding:3px}
+ .rpg-dialog{bottom:5px;left:5px;right:5px;padding:5px 18px 6px 7px;border-width:2px;min-height:0;font-size:10px;line-height:1.32;box-shadow:0 2px 0 #2a4036ac;max-height:42%;overflow:hidden}
+ .rpg-dialog strong{font-size:10px}
+ .rpg-dialog::after{font-size:8px;right:4px;bottom:2px}
+ .rpg-worldhint{display:none}
+ .kpis{flex:0 0 42px;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin:0}
+ .kpi{min-height:0;padding:4px 3px;border-width:1px;border-radius:5px;box-shadow:none;text-align:center;display:flex;flex-direction:column;justify-content:center}
+ .kpi small{font-size:9px;line-height:1.1;margin:0;white-space:nowrap}
+ .kpi strong{font-size:17px;line-height:1.2;letter-spacing:-.04em}
+ .kpi em{font-size:9px;margin-left:1px}
+ .track{flex:0 0 4px;min-height:0;margin:0;gap:3px}
+ .track .block{height:4px}
+ .mainpanel{flex:1 1 0;min-height:0;overflow:hidden;display:flex;flex-direction:column;padding:9px 10px 7px!important;border-width:2px;border-radius:7px;box-shadow:none;gap:4px}
+ .mainpanel > *{min-width:0;flex-shrink:0}
+ .eyebrow{font-size:10px;margin:0;line-height:1.2}
+ .h1{font-size:17px;line-height:1.22;margin:0}
+ .lead{font-size:12px;line-height:1.45;margin:0}
+ .actions{position:static!important;margin: auto 0 0!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;flex:none;justify-content:stretch;box-shadow:none!important}
+ .actions .btn,.btn{min-height:40px!important;height:40px;padding:6px 8px;font-size:13px;width:100%;white-space:nowrap}
+ .footer{display:none}
+ .event-compact,.budget-compact{display:flex;flex-direction:column;gap:5px;min-height:0;flex:1 1 0}
+ .choice-list{flex:1 1 0;min-height:0;display:grid;grid-template-rows:repeat(3,minmax(0,1fr));gap:6px;margin:0}
+ .choice{min-height:0;height:100%;padding:4px 9px;gap:9px;border-width:2px;border-bottom-width:3px}
+ .choice-key{width:30px;height:30px;font-size:14px;border-radius:3px;flex-shrink:0}
+ .choice-copy{flex:1;min-width:0}
+ .choice strong{font-size:13px;line-height:1.32}
+ .choice small{font-size:11px;line-height:1.23;margin-top:2px}
+ .choice .arr{font-size:16px}
+ .budget-title{display:flex;align-items:center;justify-content:space-between;gap:8px}
+ .budget-title strong{font-size:12px;white-space:nowrap}
+ .budget-title em{font-style:normal;font-size:15px;color:#126747}
+ .budget-borrow{display:flex;align-items:center;justify-content:space-between;background:#edf6e9;border:1px solid #b1cdb6;border-radius:5px;padding:2px 7px;font-size:11px;font-weight:800;min-height:35px}
+ .stepper{gap:6px}
+ .stepper button{width:32px!important;height:32px!important;min-width:32px!important;min-height:32px!important;font-size:19px;border-radius:5px}
+ .stepper b{font-size:15px;min-width:22px}
+ .budget-list{flex:1 1 0;min-height:0;display:grid;grid-template-rows:repeat(5,minmax(0,1fr))}
+ .invest-row{border-bottom:1px solid #cee0c8;padding:0 2px;min-height:0;grid-template-columns:minmax(0,1fr) auto;gap:3px}
+ .invest-label{font-size:12px;white-space:nowrap}
+ .budget-totals{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;gap:5px;white-space:nowrap}
+ .budget-totals strong{font-size:12px}
+ .budget-lock{font-size:10px;color:#9b5e20;margin:0;line-height:1.2}
+ .intro-badges{display:flex;gap:5px;flex-wrap:wrap}
+ .intro-badges span{font-size:11px;background:#eaf4e8;border:1px solid #aac8a4;padding:7px 5px;border-radius:5px;font-weight:800}
+ .delta{flex:0 0 auto;gap:6px}
+ .delta .box{padding:8px;border-width:1px;box-shadow:none}
+ .delta .boxtitle{font-size:11px;margin:0}
+ .delta .big{font-size:22px;line-height:1.25}
+ .desc{font-size:10px;margin:1px 0;line-height:1.25}
+ .finance-sentence{font-size:11px;line-height:1.35;color:#4c6c59;background:#eff8e8;border:1px solid #bad8b9;border-radius:5px;padding:6px 8px}
+ .finance-top{display:flex;align-items:center;justify-content:space-between;gap:5px}
+ .finance-top>span{font-size:10px;white-space:nowrap}
+ .finance-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+ .finance-tabs button{height:33px;border:1px solid #6a9676;border-radius:4px;background:#f1f6e7;color:#214735;font-weight:900}
+ .finance-tabs button.selected{background:#237c55;color:white}
+ .finance-one{flex:1 1 0;min-height:0;padding:7px 9px!important;overflow:hidden;box-shadow:none;border-width:1px}
+ .finance-one h3{font-size:12px;line-height:1.2;margin:0 0 3px}
+ .finance-one table{font-size:11px;table-layout:fixed}
+ .finance-one td{padding:3px 0;line-height:1.25}
+ .finance-one td:first-child{width:62%;overflow-wrap:anywhere}
+ .final-grid{grid-template-columns:repeat(2,1fr);gap:5px}
+ .final-grid .box{padding:8px;box-shadow:none;border-width:1px}
+ .final-grid strong{font-size:17px;margin-top:3px}
+ .accident-metrics{display:grid;gap:5px;flex:1;align-content:center}
+ .accident-metrics span{display:flex;justify-content:space-between;align-items:center;padding:8px;background:#f1f7ed;border:1px solid #abcaaa;border-radius:5px;font-size:12px}
+ .accident-metrics span:last-child{font-weight:800;background:#fff0de;border-color:#d8b894}
+ .accident-metrics b{font-size:16px}
+}
+@media(max-width:800px) and (max-height:660px){
+ .scene{flex-basis:clamp(118px,25dvh,166px)}
+ .rpg-dialog{font-size:9px;padding:3px 13px 4px 5px;line-height:1.2}
+ .kpis{flex-basis:35px}
+ .kpi strong{font-size:15px}
+ .header{height:30px;min-height:30px}
+ .choice-list{gap:4px}
+ .choice strong{font-size:12px}
+ .choice small{font-size:10px}
+ .mainpanel{padding:7px 8px 5px!important;gap:3px}
+ .invest-label{font-size:11px}
+ .stepper button{width:29px!important;height:29px!important;min-height:29px!important;min-width:29px!important}
+ .actions .btn,.btn{min-height:35px!important;height:35px;font-size:12px}
+}
+@media(max-width:800px) and (max-height:580px){
+ .scene{flex-basis:115px}
+ .kpis{flex-basis:32px}
+ .rpg-dialog{max-height:45px}
+ .h1{font-size:15px}
+ .finance-one td{padding:1px 0}
+ .finance-one h3{font-size:11px}
+}
+@media(max-width:800px) and (max-width:350px){
+ .brand strong{font-size:13px!important}
+ .header-right .ghost{font-size:9px;padding:3px 5px}
+ .invest-label{font-size:10.5px}
+ .choice strong{font-size:11.5px}
+ .choice small{font-size:9.5px}
+ .budget-totals{font-size:9px}
+}
+
+</style>
+</head>
+<body><main id="app" aria-live="polite"><div style="padding:24px;font:16px/1.8 -apple-system,sans-serif;max-width:600px;margin:auto"><h1>未来つくり鉄道</h1><p>ゲームを読み込んでいます。</p><p>この表示のまま変わらない場合、開いているアプリのプレビューではゲーム用のJavaScriptを実行できません。ブラウザのSafariでWebサイトとして開いてください。</p></div></main><noscript><div style="padding:16px;background:#fff3e8;color:#8b3b20;font-weight:bold">JavaScriptが実行されていないためゲームを開始できません。iPhoneのファイルプレビューではなく、SafariのWebサイトとして開いてください。</div></noscript>
+<script>
+(()=>{'use strict';
+const KEY='mirai-rail-finance-prototype-v1';
+const CATS=[
+ {key:'equipment',label:'設備投資',desc:'来年の売上が増える／固定資産になる',icon:'🏗️'},
+ {key:'recruit',label:'採用活動費',desc:'来年から社員＋10人・人件費＋1億円',icon:'🧑‍✈️'},
+ {key:'training',label:'リスク対応教育費',desc:'3年目の情報漏えい損失を減らす',icon:'🛡️'},
+ {key:'promotion',label:'販売促進費',desc:'来年の売上が増える',icon:'📣'},
+ {key:'repair',label:'追加修繕費',desc:'来年から安全性が上がる',icon:'🔧'}
+];
+const EVENTS={
+ '1-1':{title:'駅設備の故障が見つかった',description:'安全確保と支出のバランスが問われています。',options:[{label:'すぐ修繕する',cost:1,main:'安全＋2',safety:2},{label:'応急対応で済ませる',cost:0,main:'安全−1',safety:-1},{label:'広範囲を修繕する',cost:2,main:'安全＋3',safety:3}]},
+ '1-2':{title:'沿線の観光イベントが開かれる',description:'列車の利用を増やす機会です。',options:[{label:'臨時列車で集客する',cost:1,revenue:2,main:'売上＋2億円',satisfaction:1},{label:'告知だけ行う',cost:0,revenue:1,main:'売上＋1億円'},{label:'通常運行を維持する',cost:0,main:'支出なし',satisfaction:-1}]},
+ '1-3':{title:'社員の疲労が蓄積している',description:'働きやすさと当面の利益をどう両立させますか。',options:[{label:'勤務負担の軽減策を実施',cost:1,main:'社員の状態＋2',morale:2},{label:'現状を維持する',cost:0,main:'社員の状態−1',morale:-1},{label:'職場改善を徹底する',cost:2,main:'社員の状態＋3',morale:3}]},
+ '1-4':{title:'駅ホームの混雑が増えている',description:'お客さまの利便と安全を考える局面です。',options:[{label:'案内員を増やす',cost:1,main:'満足度＋2',satisfaction:2},{label:'現状のまま対応する',cost:0,main:'満足度−1',satisfaction:-1},{label:'案内と安全対策を強化する',cost:2,main:'安全＋2',safety:2,satisfaction:1}]},
+ '2-1':{title:'新しい住宅地ができた',description:'沿線の需要を取り込める機会です。',options:[{label:'利用促進キャンペーン',cost:1,revenue:2,main:'売上＋2億円',satisfaction:1},{label:'案内掲示だけ実施',cost:0,revenue:1,main:'売上＋1億円'},{label:'しばらく様子を見る',cost:0,main:'支出なし'}]},
+ '2-2':{title:'大雨への備えが必要',description:'事故を未然に防ぐための判断です。',options:[{label:'事前点検を実施',cost:1,main:'安全＋2',safety:2},{label:'最低限の確認にとどめる',cost:0,main:'安全−1',safety:-1},{label:'重点区間を含め広く点検',cost:2,main:'安全＋3',safety:3}]},
+ '2-3':{title:'駅で案内の待ち時間が増加',description:'お客さま対応に改善の余地があります。',options:[{label:'案内方法を改善する',cost:1,main:'満足度＋2',satisfaction:2},{label:'現行の方法を維持',cost:0,main:'満足度−1',satisfaction:-1},{label:'大幅な案内改善を実施',cost:2,main:'満足度＋3',satisfaction:3}]},
+ '2-4':{title:'技能継承に課題が見えてきた',description:'日々の運行を支える社員への配慮が必要です。',options:[{label:'引継ぎを改善する',cost:1,main:'社員の状態＋2',morale:2},{label:'現状を維持する',cost:0,main:'社員の状態−1',morale:-1},{label:'仕組みをまとめて整える',cost:2,main:'社員の状態＋3',morale:3}]},
+ '3-2':{title:'事故後、お客さまの不安が残る',description:'信頼を回復するための通常の経営判断です。',options:[{label:'案内を丁寧に改善する',cost:1,main:'満足度＋2',satisfaction:2},{label:'既存の案内を維持',cost:0,main:'満足度−1',satisfaction:-1},{label:'全駅で説明を徹底する',cost:2,main:'満足度＋3',satisfaction:3}]},
+ '3-3':{title:'繁忙期に利用客が増えている',description:'需要を取り込むか、運行を安定させるか。',options:[{label:'増発を実施する',cost:1,revenue:2,main:'売上＋2億円'},{label:'小規模な増発にとどめる',cost:0,revenue:1,main:'売上＋1億円'},{label:'安全を重視し現状維持',cost:0,main:'安全＋1',safety:1}]},
+ '3-4':{title:'次の時代に向けて駅の使い方を見直す',description:'3年間の最後の経営判断です。',options:[{label:'利便性向上を進める',cost:1,main:'満足度＋2',satisfaction:2},{label:'現状の運営を継続',cost:0,main:'支出なし'},{label:'社員提案を取り入れる',cost:1,main:'社員の状態＋2',morale:2}]}
+};
+const blankPL=()=>({revenue:0,personnel:0,operations:0,levies:0,depreciation:0,discretionary:0,incident:0,interest:0,tax:0});
+const blankCF=()=>({operating:0,investing:0,financing:0});
+const zeros=()=>Object.fromEntries(CATS.map(c=>[c.key,0]));
+const initial=()=>({version:1,phase:'intro',year:1,q:1,cash:3,ar:9,ap:4,otherAssets:4,fixed:140,longDebt:85,shortDebt:0,otherLiab:31,equity:36,employees:70,safety:6,satisfaction:6,morale:6,active:{sales:0,payroll:0,training:0,repair:0},planned:zeros(),spent:zeros(),borrowChoice:0,borrowCap:2,borrowed:0,quarterLog:[],history:[],allAllocations:[],pl:blankPL(),cf:blankCF(),openingCash:3,startSettled:false,incidentDone:false,priorCash:3,last:null,reason:'',snapshot:null});
+const clone=s=>JSON.parse(JSON.stringify(s));
+let s=load()||initial();const root=document.getElementById('app');
+function load(){try{const v=JSON.parse(localStorage.getItem(KEY));return v?.version===1&&v.phase?v:null}catch{return null}}
+function store(){try{localStorage.setItem(KEY,JSON.stringify(s))}catch{}}
+function fmt(n){return (n<0?'−':'')+Math.abs(n)+'億円'}
+function signed(n){return (n>0?'+':n<0?'−':'')+Math.abs(n)+'億円'}
+function esc(v){return String(v).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]))}
+function operatingProfit(p=s.pl){return p.revenue-p.personnel-p.operations-p.levies-p.depreciation-p.discretionary-p.incident}
+function netProfit(p=s.pl){return operatingProfit(p)-p.interest-p.tax}
+function bs(){const assets=s.cash+s.ar+s.otherAssets+s.fixed,liab=s.longDebt+s.shortDebt+s.ap+s.otherLiab+s.equity;return {assets,liab}}
+function invariants(){if(bs().assets!==bs().liab)throw Error(`貸借が不一致: ${JSON.stringify(bs())}`);for(let k of ['cash','ar','ap','otherAssets','fixed','longDebt','shortDebt','otherLiab','equity']){if(!Number.isInteger(s[k]))throw Error(`整数でない残高：${k} ${s[k]}`)} }
+function bankCheck(){invariants();if(s.cash<0){s.reason='現金が不足したため経営を継続できません。';s.phase='bankrupt';return true}return false}
+function cashFlow(kind,amount){s.cash+=amount;s.cf[kind]+=amount}
+function earn(amount){s.pl.revenue+=amount;s.ar+=amount;s.equity+=amount}
+function payExpense(kind,amount){if(amount<=0)return;s.pl[kind]+=amount;s.equity-=amount;cashFlow('operating',-amount)}
+function baseExpense(amount){s.pl.operations+=amount;s.equity-=amount;s.ap+=1;cashFlow('operating',-(amount-1))}
+function capitalSpend(amount){if(amount<=0)return;s.fixed+=amount;cashFlow('investing',-amount)}
+function depreciate(amount){s.fixed-=amount;s.pl.depreciation+=amount;s.equity-=amount}
+function credit(amount){if(amount<=0)return;s.shortDebt+=amount;cashFlow('financing',amount)}
+function settleOpening(repayPrincipal=false){const income=s.ar,expense=s.ap,repayment=repayPrincipal?s.shortDebt:0;s.ar=0;s.ap=0;if(repayPrincipal)s.shortDebt=0;s.cash+=income-expense-repayment;s.cf.operating+=income-expense;s.cf.financing-=repayment;return {income,expense,repayment}}
+function maxLoan(){if(s.year===1)return 2;const last=s.history[s.history.length-1];if(!last)return 2;if(last.profit>=3&&last.opCF>=6&&last.cash>=3&&last.debt<=2)return 3;if(last.profit>=0&&last.opCF>=0&&last.cash>=1)return 2;return 1}
+function beginYear(){s.phase='budget';s.q=1;s.pl=blankPL();s.cf=blankCF();s.openingCash=s.cash;s.planned=zeros();s.spent=zeros();s.borrowChoice=0;s.borrowed=0;s.borrowCap=maxLoan();
+ // Effects bought last year only become effective now.
+ if(s.allAllocations.length>0){const last=s.allAllocations[s.allAllocations.length-1];s.employees+=10*last.recruit;s.active.payroll+=last.recruit;s.active.training+=last.training;s.active.repair+=last.repair;const currentSales=s.active.sales;s.active.sales=Math.min(2,currentSales+last.equipment+last.promotion);s.safety=Math.min(10,s.safety+2*last.repair);s.morale=Math.min(10,s.morale+last.recruit)}
+ const settle=settleOpening(true);s.last={kind:'settle',...settle};s.startSettled=true;if(bankCheck())s.reason=`年度初めの精算（入金${settle.income}億円・買掛金支払${settle.expense}億円・借入返済${settle.repayment}億円）後、現金が不足しました。`;store();render()}
+function totalPlanned(){return Object.values(s.planned).reduce((a,b)=>a+b,0)}
+function capacity(){return Math.max(0,s.cash-2)+s.borrowChoice}
+function budgetChange(cat,delta){if(s.phase!=='budget')return;const n=s.planned[cat]+delta;if(n<0||n>4)return;if(delta>0&&totalPlanned()+delta>capacity())return;s.planned[cat]=n;store();render()}
+function setBorrow(v){const next=Math.max(0,Math.min(s.borrowCap,v));if(totalPlanned()>Math.max(0,s.cash-2)+next)return;s.borrowChoice=next;store();render()}
+function commitBudget(){if(s.phase!=='budget'||totalPlanned()>capacity())return;credit(s.borrowChoice);s.borrowed=s.borrowChoice;s.allAllocations.push(clone(s.planned));s.phase='event';if(bankCheck())return;store();render()}
+function planQuarterCost(quarter){const jobs=[]; // Round-robin staggered payment: each pledged 1-oku block is paid exactly once during the year.
+ let ix=0;for(const c of CATS){for(let n=0;n<s.planned[c.key];n++)jobs.push({cat:c.key,q:ix++%4+1})}return jobs.filter(j=>j.q===quarter)}
+function describePlan(){return `${totalPlanned()}億円を年度内に自動支払い`}
+function settleQuarter(){// Q1 is settled once at the fiscal-year start. Q2-Q4 are settled at turn start.
+ if(s.q===1)return {income:0,expense:0,repayment:0};return settleOpening(false)}
+function runQuarter(optionIndex){if(s.phase!=='event')return;if(s.year===3&&s.q===1)optionIndex=-1;
+ const event=EVENTS[`${s.year}-${s.q}`];if(optionIndex!==-1&&(!event||!event.options[optionIndex]))return;
+ const preCash=s.cash,preProfit=netProfit(),quarter=s.q,year=s.year;
+ const settlement=settleQuarter();if(bankCheck()){s.last={kind:'quarter',preCash,preProfit,settlement};store();render();return}
+ earn(9+(quarter===4?s.active.sales:0));payExpense('personnel',[2,2,2,1][quarter-1]+(quarter===4?s.active.payroll:0));baseExpense(4);
+ if(quarter===2||quarter===4)payExpense('levies',1);
+ depreciate([1,2,1,2][quarter-1]);
+ const yearJobs=planQuarterCost(quarter);for(const job of yearJobs){if(job.cat==='equipment')capitalSpend(1);else payExpense('discretionary',1);s.spent[job.cat]++}
+ let chosen=null,accident=0;
+ if(optionIndex===-1){accident=5-Math.min(3,s.active.training);payExpense('incident',accident);s.incidentDone=true;chosen={label:'情報セキュリティ事故',cost:accident,main:`教育投資により被害${5-accident}億円軽減`}}
+ else {chosen=event.options[optionIndex];if(chosen.cost)payExpense('discretionary',chosen.cost);if(chosen.revenue)earn(chosen.revenue);s.safety=Math.max(0,Math.min(10,s.safety+(chosen.safety||0)));s.satisfaction=Math.max(0,Math.min(10,s.satisfaction+(chosen.satisfaction||0)));s.morale=Math.max(0,Math.min(10,s.morale+(chosen.morale||0)))}
+ if(quarter===4){payExpense('interest',1);if(operatingProfit()-s.pl.interest>0)payExpense('tax',1)}
+ s.last={kind:'quarter',year,quarter,preCash,preProfit,settlement,chosen,accident,paidJobs:yearJobs,afterCash:s.cash,afterProfit:netProfit(),safety:s.safety,morale:s.morale,satisfaction:s.satisfaction};
+ s.quarterLog.push({year,quarter,chosen:chosen.label,changeCash:s.cash-preCash,net:netProfit()-preProfit});
+ if(bankCheck()){store();render();return}
+ s.phase='result';store();render()}
+function nextFromResult(){if(s.phase!=='result')return;if(s.q===4){const stat={year:s.year,profit:netProfit(),operatingProfit:operatingProfit(),opCF:s.cf.operating,investCF:s.cf.investing,finCF:s.cf.financing,cash:s.cash,debt:s.shortDebt,employees:s.employees,pl:clone(s.pl),cf:clone(s.cf),bs:clone({cash:s.cash,ar:s.ar,fixed:s.fixed,ap:s.ap,shortDebt:s.shortDebt,equity:s.equity}),openingCash:s.openingCash};s.history.push(stat);s.snapshot=stat;s.phase='annual'}else{s.q++;s.phase='event'}store();render()}
+function nextFromAnnual(){if(s.phase!=='annual')return;if(s.year===3){const projected=s.cash+s.ar-s.ap-s.shortDebt;if(projected<0){s.reason='翌年度初めに借入金を返済すると、現金が不足します。';s.phase='bankrupt'}else s.phase='final';store();render();return}s.year++;beginYear()}
+function projectedCash(){return s.cash+s.ar-s.ap-s.shortDebt}
+function futureScore(){const pool=zeros();for(const a of s.allAllocations)for(const c of CATS)pool[c.key]+=a[c.key];const points=Object.values(pool).reduce((sum,n)=>sum+Math.min(2,n),0);const need=Math.ceil((7+s.active.payroll+16+2+1+1)/2),cash=projectedCash(),penalty=cash>=need?0:cash>=Math.ceil(need/2)?1:2;return {points,penalty,score:Math.max(0,points-penalty),need,cash}}
+function resetGame(){if(!window.confirm('現在の経営データを消して、最初から始めますか？'))return;s=initial();store();render()}
+function focusTop(){const target=document.getElementById('gameContent');if(target)target.focus({preventScroll:true})}
+// A camera into an RPG-style town. Render-only view: no financial mutations.
+let rpgFrame=0, rpgFrameHandle=null, rpgTarget=280, rpgHeroX=246, rpgWalk=0;
+function rpgNarration(){
+  if(s.phase==='intro')return ['駅長','ここは未来町。小さな鉄道会社の3年間が始まります！'];
+  if(s.phase==='budget')return ['経営会議',`${s.year}年目の投資を決めましょう。現金が足りないと、街を育てられません。`];
+  if(s.phase==='event'&&s.year===3&&s.q===1)return ['緊急連絡','情報セキュリティ事故！ 過去の教育投資が被害を左右します。'];
+  if(s.phase==='event'){const e=EVENTS[`${s.year}-${s.q}`];return ['町の人',e?e.title+'。どうしますか？':'次の経営判断です。'];}
+  if(s.phase==='result')return ['駅長',`現金は ${s.cash}億円。今回の判断が街と会社を動かしました。`];
+  if(s.phase==='annual')return ['決算発表',`${s.year}年目が終了！ 利益だけでなく現金残高も確認しましょう。`];
+  if(s.phase==='bankrupt')return ['駅長','手元現金が尽き、鉄道の運行継続が難しくなりました。'];
+  return ['駅長','3年間の経営が終了しました。未来町はどう成長したでしょうか？'];
+}
+function trainScene(){
+ const n=rpgNarration();const warning=s.phase==='event'&&s.year===3&&s.q===1;
+ return `<section class="scene" aria-label="ドット絵RPGの未来町。駅・線路・歩く社員と、投資によって変化する建物が見られます"><canvas id="rpgCanvas" width="480" height="270" role="img" aria-label="ドット絵の街と駅、列車が走る鉄道ゲーム"></canvas><div class="scene-top"><span class="scene-label green">🗺 未来町</span><span class="scene-label">${s.phase==='intro'?'PROLOGUE':`YEAR ${s.year}・Q${s.q}`}</span><span class="scene-label">🛡 ${s.safety}/10</span></div>${warning?'<div class="scene-warning">⚠ 重大イベント</div>':''}<div class="rpg-worldhint">👆 街をタップで歩く</div><div class="rpg-dialog"><strong>▶ ${esc(n[0])}</strong>　${esc(n[1])}</div></section>`;
+}
+function startRpgWorld(){
+ if(rpgFrameHandle!==null)cancelAnimationFrame(rpgFrameHandle);
+ const canvas=document.getElementById('rpgCanvas');if(!canvas)return;
+ const ctx=canvas.getContext('2d',{alpha:false});ctx.imageSmoothingEnabled=false;
+ const W=480,H=270;let ready=true,last=0;
+ const invested={equipment:false,promotion:false,recruit:false,training:false,repair:false};
+ // Only upgrades from PREVIOUS fiscal years appear on map.
+ const prior=s.allAllocations.slice(0,Math.max(0,s.year-1));
+ for(const a of prior)for(const k of Object.keys(invested))if(a[k]>0)invested[k]=true;
+ const colors={grass:'#83ba70',light:'#9dcc83',deep:'#5d9a58',path:'#cfb88c',pathEdge:'#b69f78',rail:'#4d5d63',railTie:'#796956',water:'#5daabe'};
+ function rect(x,y,w,h,color){ctx.fillStyle=color;ctx.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h))}
+ function pixels(x,y,arr,palette,scale=2){for(let r=0;r<arr.length;r++)for(let c=0;c<arr[r].length;c++){const p=arr[r][c];if(p!==' '&&palette[p])rect(x+c*scale,y+r*scale,scale,scale,palette[p]);}}
+ function tree(x,y,k=0){rect(x-3,y+12,7,12,'#6b5639');rect(x-14,y+1,29,22,'#347347');rect(x-11,y-5,23,19,'#448c54');rect(x-6,y-12,17,17,'#68a45a');rect(x+4,y-6,5,4,'#99ce80')}
+ function house(x,y,type=0){
+  rect(x+3,y+30,58,39,'#8c795a');rect(x+5,y+29,54,36,type?'#f4d7b1':'#e9e1ba');
+  rect(x-2,y+20,69,12,'#694c42');rect(x+8,y+9,48,18,type?'#b05e52':'#8b6662');
+  rect(x+17,y+40,11,13,'#6badb6');rect(x+35,y+40,11,13,'#6badb6');
+  rect(x+21,y+57,14,11,'#815b4d');rect(x+26,y+59,2,3,'#edcd80')
+ }
+ function station(){
+  const upgraded=invested.equipment;
+  // rear building with a platform and station-front sign
+  rect(182,63,135,73,'#536c66');rect(186,66,127,66,upgraded?'#d7efe0':'#e5e8d0');
+  rect(176,57,146,12,upgraded?'#126d52':'#537b6c');rect(182,51,133,9,'#c5d7b6');
+  rect(199,84,22,26,'#5899a5');rect(228,84,22,26,'#5899a5');rect(258,84,22,26,'#5899a5');
+  rect(286,90,17,40,'#4a716e');rect(289,93,12,36,'#85c1b8');
+  rect(220,70,59,11,'#fff7d2');ctx.fillStyle='#315d50';ctx.font='bold 9px monospace';ctx.fillText('MIRAI ST.',226,79);
+  if(upgraded){rect(200,105,81,5,'#198c6f');rect(185,58,132,3,'#46a77f');rect(271,47,18,4,'#e2bb49')}
+  rect(180,133,148,9,'#d6cbb0');rect(180,139,148,3,'#8f8f78');
+  if(invested.promotion){rect(341,98,9,42,'#416a57');rect(328,91,38,21,'#f9d366');rect(331,94,32,16,'#1b946b');rect(337,100,21,2,'#fff9d7')}
+  if(invested.training){rect(303,68,12,14,'#246e9b');rect(307,72,4,6,'#ffffff')}
+ }
+ function person(x,y,body='#246d9c',walk=0){const dy=Math.sin(walk)*1.3;
+  rect(x-4,y-13+dy,9,7,'#44382b');rect(x-4,y-9+dy,9,8,'#efc18d');
+  rect(x-1,y-6+dy,2,2,'#3e3c3b');rect(x+3,y-6+dy,2,2,'#3e3c3b');
+  rect(x-6,y-1+dy,13,11,body);rect(x-9,y+0+dy,3,8,'#e8b888');rect(x+7,y+0+dy,3,8,'#e8b888');
+  rect(x-5,y+10+dy,5,6,'#3d4953');rect(x+2,y+10-dy,5,6,'#3d4953');}
+ function rails(){
+  rect(0,148,480,48,'#716d64');
+  for(let x=0;x<480;x+=17)rect(x,150,7,43,'#5c554c');
+  rect(0,157,480,5,'#283e47');rect(0,181,480,5,'#283e47');
+  rect(0,155,480,2,'#bdc7bd');rect(0,179,480,2,'#bdc7bd');
+ }
+ function train(t){
+  const x=Math.round(15+(t%600));const y=157;for(let car=0;car<2;car++){
+   const px=x+car*125;rect(px,y,119,28,'#294c4e');rect(px+2,y+2,115,24,'#eff6e9');
+   rect(px+3,y+18,114,6,'#1b9b6f');for(let w=0;w<4;w++){rect(px+10+w*27,y+5,19,11,'#518e9e');rect(px+11+w*27,y+5,2,9,'#93c5ca')}
+   rect(px+17,y+26,16,4,'#3b3c3b');rect(px+91,y+26,16,4,'#3b3c3b');
+  }
+ }
+ function grass(){rect(0,0,W,H,colors.grass);for(let y=0;y<H;y+=16)for(let x=0;x<W;x+=16){
+  if((x/16+y/16)%3===0)rect(x+1,y+1,15,15,colors.light);
+  if(((x*23+y*41)%117)<16){rect(x+5,y+11,2,3,colors.deep);rect(x+8,y+8,2,3,colors.deep)}
+  if(((x*7+y*5)%139)<13){rect(x+12,y+5,2,2,'#fbdd80')}
+ }}
+ function paths(){rect(0,198,480,38,colors.pathEdge);rect(0,201,480,32,colors.path);rect(230,111,38,152,colors.pathEdge);rect(234,113,30,150,colors.path);for(let y=116;y<260;y+=16)rect(242,y,2,5,'#d9caa6');}
+ function draw(now){if(!canvas.isConnected||!ready)return;
+  if(now-last<48){rpgFrameHandle=requestAnimationFrame(draw);return;}last=now;rpgFrame++;
+  grass();
+  // Deep horizon town, lake, homes and side streets
+  rect(0,43,125,53,'#4b96a7');rect(0,47,125,3,'#72bbc3');for(let i=0;i<8;i++)rect((i*43+rpgFrame)%130,57+i%3*12,13,2,'#95d5cb');
+  rect(338,33,142,86,'#a3ce86');
+  house(22,107,0);house(383,87,1);
+  for(const [x,y] of [[140,38],[340,46],[25,246],[107,232],[367,240],[457,237],[444,33],[139,235]])tree(x,y);
+  station();paths();rails();train(rpgFrame*3);
+  // station passengers. Recruitment increases number of staff characters.
+  person(342,123,'#b65a50',rpgFrame*.14);
+  person(166,120,'#495cad',rpgFrame*.13);
+  if(invested.recruit){person(118,217,'#49895c',rpgFrame*.12);person(383,210,'#355b98',rpgFrame*.09)}
+  if(invested.repair){rect(350,139,10,5,'#34bd80');rect(350,144,3,8,'#366b54');}
+  // Wanderer/manager can be guided with a tap; optional, no impact on decisions.
+  if(Math.abs(rpgHeroX-rpgTarget)>1){rpgHeroX+=(rpgTarget>rpgHeroX?1.8:-1.8);rpgWalk+=.48;}else {rpgHeroX=rpgTarget;rpgWalk=0;}
+  person(rpgHeroX,218,'#316eae',rpgWalk);
+  rect(rpgHeroX-10,191,21,3,'#e6c256');rect(rpgHeroX-5,187,11,4,'#eee0aa');
+  if(s.phase==='event'){const alert=s.year===3&&s.q===1;rect(313,100,15,17,alert?'#a83e31':'#f8dc69');ctx.fillStyle=alert?'#fff':'#645022';ctx.font='bold 13px monospace';ctx.fillText('!',317,113);}
+  if(s.phase==='budget'&&Math.max(0,s.cash-2)+s.borrowChoice===0){rect(312,99,22,20,'#9b5141');ctx.fillStyle='#fff';ctx.font='bold 15px monospace';ctx.fillText('×',317,115)}
+  rpgFrameHandle=requestAnimationFrame(draw);
+ }
+ canvas.addEventListener('pointerdown',ev=>{const b=canvas.getBoundingClientRect();const scale=Math.max(b.width/W,b.height/H);const offsetX=(b.width-W*scale)/2;const point=(ev.clientX-b.left-offsetX)/scale;rpgTarget=Math.max(65,Math.min(410,point));});
+ if(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches){draw(100);ready=false;return;}
+ rpgFrameHandle=requestAnimationFrame(draw);
+}
+function kpis(){return `<section class="kpis" aria-label="経営状況"><div class="kpi"><small>現金残高</small><strong class="${s.cash<2?'negative':''}">${s.cash}</strong><em>億円</em></div><div class="kpi"><small>今年の営業利益</small><strong class="${operatingProfit()<0?'negative':'positive'}">${operatingProfit()}</strong><em>億円</em></div><div class="kpi"><small>借入残高（短期）</small><strong>${s.shortDebt}</strong><em>億円</em></div><div class="kpi"><small>利用者の満足度</small><strong>${s.satisfaction}</strong><em>/ 10</em></div></section>`}
+function track(){return `<div class="track" aria-label="12四半期の進行状況">${Array.from({length:12},(_,i)=>{const current=(s.year-1)*4+s.q-1;return `<div class="block ${s.phase==='final'||i<current?'done':i===current?'now':''}"></div>`}).join('')}</div>`}
+function intro(){return `<div class="eyebrow">経営RPG｜3年間の旅</div><h1 class="h1">未来町の鉄道会社を育てよう</h1><p class="lead">年初に投資を決め、四半期ごとに経営判断。<b>利益が出ても現金がないと、次の投資はできません。</b></p><div class="intro-badges"><span>投資 3回</span><span>経営判断 11回</span><span>決算 3回</span></div><div class="actions"><button class="btn" data-action="start">▶ 経営を始める</button></div>`}
+function investCard(cat){const selected=s.planned[cat.key],rem=capacity()-totalPlanned();return `<div class="invest-row"><div class="invest-text"><div class="invest-label">${cat.icon} ${cat.label}</div></div><div class="stepper"><button aria-label="${cat.label}を1億円減らす" data-action="invest" data-cat="${cat.key}" data-delta="-1" ${selected<=0?'disabled':''}>−</button><b aria-label="${selected}億円">${selected}</b><button aria-label="${cat.label}を1億円増やす" data-action="invest" data-cat="${cat.key}" data-delta="1" ${selected>=4||rem<1?'disabled':''}>＋</button></div></div>`}
+function budget(){
+ const spendable=Math.max(0,s.cash-2),limit=capacity(),t=totalPlanned();
+ return `<div class="budget-compact"><div class="budget-title"><span class="eyebrow">${s.year}年目｜投資計画</span><strong>投資可能 <em>${limit}億円</em></strong></div>
+ <div class="budget-borrow"><span>🏦 借入（上限${s.borrowCap}億円）</span><div class="stepper"><button aria-label="借入を1億円減らす" data-action="borrow" data-value="${s.borrowChoice-1}" ${s.borrowChoice===0||t>spendable+s.borrowChoice-1?'disabled':''}>−</button><b>${s.borrowChoice}</b><button aria-label="借入を1億円増やす" data-action="borrow" data-value="${s.borrowChoice+1}" ${s.borrowChoice>=s.borrowCap?'disabled':''}>＋</button></div></div>
+ <div class="budget-list">${CATS.map(investCard).join('')}</div>
+ <div class="budget-totals"><span>現金で投資可能 ${spendable}億円</span><strong>配分 ${t} / ${limit}億円</strong></div>
+ ${spendable===0?'<p class="budget-lock">🔒 現金不足。借入を使うか、投資を見送ろう。</p>':''}
+ <div class="actions"><button class="btn" data-action="commit">この投資で1年を始める ▶</button></div></div>`
+}
+function eventScreen(){
+ if(s.year===3&&s.q===1)return `<div class="event-compact"><div class="eyebrow">YEAR 3・Q1｜緊急イベント</div><h1 class="h1">情報セキュリティ事故</h1><div class="accident-metrics"><span>基本損失 <b>5億円</b></span><span>教育効果 <b>−${Math.min(3,s.active.training)}億円</b></span><span>実際の損失 <b>${5-Math.min(3,s.active.training)}億円</b></span></div><div class="actions"><button class="btn" data-action="incident">事故の影響を確認 ▶</button></div></div>`;
+ const e=EVENTS[`${s.year}-${s.q}`];return `<div class="event-compact"><div class="eyebrow">${s.year}年目 第${s.q}四半期｜経営イベント</div><h1 class="h1">どう判断しますか？</h1><div class="choice-list">${e.options.map((o,i)=>`<button class="choice" data-action="choice" data-idx="${i}"><span class="choice-key">${'ABC'[i]}</span><span class="choice-copy"><strong>${esc(o.label)}</strong><small>費用 ${o.cost}億円｜${esc(o.main)}</small></span><span class="arr">›</span></button>`).join('')}</div></div>`
+}
+function resultScreen(){const d=s.last,pdelta=d.afterProfit-d.preProfit,cdelta=d.afterCash-d.preCash;const story=d.accident?`事前教育で事故損失を${5-d.accident}億円軽減。`:`「${esc(d.chosen.label)}」を実施。`;return `<div class="eyebrow">${d.year}年目 第${d.quarter}四半期｜結果</div><h1 class="h1">経営判断の結果</h1><p class="lead">${story}現金と利益は別々に変化します。</p><div class="delta"><div class="box"><div class="boxtitle">現金残高</div><div class="big" id="cashAnimated" data-from="${d.preCash}" data-to="${d.afterCash}">${fmt(d.afterCash)}</div><div class="desc">今期 ${signed(cdelta)}</div></div><div class="box"><div class="boxtitle">今年の純利益</div><div class="big ${d.afterProfit<0?'negative':'positive'}">${fmt(d.afterProfit)}</div><div class="desc">今期 ${signed(pdelta)}</div></div></div><div class="finance-sentence">売上は翌期入金。借入元本の返済は利益を減らさず、現金を減らします。</div><div class="actions"><button class="btn" data-action="nextQuarter">${d.quarter===4?'年度末決算へ':'次の四半期へ'} ▶</button></div>`}
+function row(name,val,emph=false){return `<tr class="${emph?'emph':''}"><td>${esc(name)}</td><td>${val}</td></tr>`}
+let financeTab='pl';
+function annualScreen(){const d=s.snapshot,p=d.pl,cf=d.cf;const assets=bs().assets,liab=bs().liab;
+ const plrows=[row('売上',fmt(p.revenue)),row('人件費',fmt(-p.personnel)),row('営業費用・追加費',fmt(-p.operations-p.discretionary-p.incident)),row('諸税・減価償却',fmt(-p.levies-p.depreciation)),row('営業利益',fmt(d.operatingProfit),true),row('利息・法人税',fmt(-p.interest-p.tax)),row('当期純利益',fmt(d.profit),true)];
+ const bsrows=[row('現金',fmt(s.cash)),row('売掛金・その他資産',fmt(s.ar+s.otherAssets)),row('固定資産',fmt(s.fixed)),row('資産合計',fmt(assets),true),row('負債',fmt(s.longDebt+s.shortDebt+s.otherLiab+s.ap)),row('純資産',fmt(s.equity)),row('負債＋純資産',fmt(liab),true)];
+ const cfrows=[row('営業CF',fmt(cf.operating)),row('投資CF',fmt(cf.investing)),row('財務CF',fmt(cf.financing)),row('現金の増減',fmt(cf.operating+cf.investing+cf.financing),true),row('期首現金',fmt(d.openingCash)),row('期末現金',fmt(s.cash),true)];
+ const datas={pl:{title:'P/L：今年はいくら儲かった？',rows:plrows},bs:{title:'B/S：現金・資産・負債は？',rows:bsrows},cf:{title:'C/F：現金はどう動いた？',rows:cfrows}};
+ const active=datas[financeTab]||datas.pl;
+ return `<div class="eyebrow">${s.year}年目｜年度末決算</div><div class="finance-top"><h1 class="h1">3つの財務諸表</h1><span>利益 ${signed(d.profit)} ／ 現金 ${fmt(s.cash)}</span></div><div class="finance-tabs" role="group" aria-label="見る財務諸表">${[['pl','P/L'],['bs','B/S'],['cf','C/F']].map(([v,label])=>`<button data-action="tab" data-tab="${v}" class="${financeTab===v?'selected':''}" aria-pressed="${financeTab===v}">${label}</button>`).join('')}</div><div class="sheet finance-one"><h3>${active.title}</h3><table>${active.rows.join('')}</table></div><div class="finance-sentence">${financeTab==='pl'?'利益は現金と同じではありません。':financeTab==='bs'?'設備投資は現金を減らし、固定資産を増やします。':'営業・投資・財務の現金の流れを確認しましょう。'} ${assets===liab?'':'※貸借不一致（要検証）'}</div><div class="actions"><button class="btn" data-action="nextYear">${s.year===3?'最終結果へ':'翌年度の投資へ'} ▶</button></div>`
+}
+function finalScreen(){const score=futureScore(),total=s.history.reduce((a,h)=>a+h.profit,0),review=total>4&&score.score>=6?'財務と将来への投資を両立できました。':total<0?'利益を生む仕組みの見直しが必要です。':score.cash<score.need?'経営を続けましたが、現金と返済に注意が必要です。':'利益・現金・安全の関係を振り返りましょう。';return `<div class="eyebrow">経営シミュレーション完了</div><h1 class="h1">3年間の経営結果</h1><div class="final-grid"><div class="box"><div class="desc">累計純利益</div><strong>${fmt(total)}</strong></div><div class="box"><div class="desc">翌年期首の現金</div><strong>${fmt(score.cash)}</strong></div><div class="box"><div class="desc">短期借入残高</div><strong>${fmt(s.shortDebt)}</strong></div><div class="box"><div class="desc">将来性</div><strong>${score.score} / 10点</strong></div></div><p class="finance-sentence">${review} 現金を確保するのは、次の投資を選べるようにするためです。</p><div class="actions"><button class="btn" data-action="restart">もう一度経営する ▶</button></div>`}
+function bankruptScreen(){return `<div class="eyebrow">経営シミュレーション終了</div><h1 class="h1 negative">現金不足で経営終了</h1><p class="lead">${esc(s.reason)}</p><div class="delta"><div class="box"><div class="boxtitle">現金</div><div class="big negative">${fmt(s.cash)}</div></div><div class="box"><div class="boxtitle">純利益</div><div class="big">${fmt(netProfit())}</div></div></div><p class="finance-sentence">利益が黒字でも、支払いに使える現金がなければ投資や事業継続はできません。</p><div class="actions"><button class="btn" data-action="restart">再挑戦する ▶</button></div>`}
+function render(){let content='';try{invariants();}catch(e){console.error(e);content=`<p>会計データの整合性エラーです。試作版のデータを初期化してください。</p><button class="btn" data-action="restart">やり直す</button>`}
+ if(!content)content=({intro,budget,event:eventScreen,result:resultScreen,annual:annualScreen,final:finalScreen,bankrupt:bankruptScreen})[s.phase]?.()||intro();
+ root.innerHTML=`<header class="header"><div class="brand"><div class="brand-logo">🚆</div><div><strong>未来つくり鉄道</strong><small>ドット絵RPG｜1画面 v0.6</small></div></div><div class="header-right"><span class="chip">3年間・12四半期</span><button class="ghost" data-action="help">ルール</button><button class="ghost" data-action="restart">最初から</button></div></header>${trainScene()}${kpis()}${track()}<section id="gameContent" class="mainpanel vis-transition" tabindex="-1">${content}</section><div class="footer">金額はすべて億円の整数／試作版の財務数値・イベントは教育用モデルです／自動保存 ／ 借入の翌年度返済を修正 ／ 1画面 v0.6</div>`;
+ bind();startRpgWorld();if(s.phase==='result')animateCash()}
+function animateCash(){const el=document.getElementById('cashAnimated');if(!el||window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)return;const from=Number(el.dataset.from),to=Number(el.dataset.to);const start=performance.now();const duration=500;function frame(t){if(!el.isConnected)return;const d=Math.min(1,(t-start)/duration);el.textContent=fmt(Math.round(from+(to-from)*(1-Math.pow(1-d,3))));if(d<1)requestAnimationFrame(frame)}requestAnimationFrame(frame)}
+function help(){alert('【未来つくり鉄道】\n・3年間（12四半期）を経営します。\n・各年初に5項目へ1億円ずつ投資配分します。\n・現金から運転資金2億円を差し引いた範囲で投資できます。\n・銀行借入を選べますが、翌年度初めに元本を全額返済します。\n・四半期イベントの3択で経営を判断します。\n・3年目Q1は情報漏えい事故の自動結果確認です。\n・各年度末にP/L・B/S・C/Fの3表を見ます。\n・金額はすべて整数の億円、結果は自動保存されます。')}
+function bind(){root.querySelectorAll('[data-action]').forEach(el=>{el.addEventListener('click',()=>{const action=el.dataset.action;try{if(action==='start'){beginYear();focusTop();return}if(action==='restart'){resetGame();return}if(action==='help'){help();return}if(action==='tab'){financeTab=el.dataset.tab;render();return}if(action==='borrow'){setBorrow(Number(el.dataset.value));return}if(action==='invest'){budgetChange(el.dataset.cat,Number(el.dataset.delta));return}if(action==='commit'){commitBudget();focusTop();return}if(action==='choice'){runQuarter(Number(el.dataset.idx));focusTop();return}if(action==='incident'){runQuarter(-1);focusTop();return}if(action==='nextQuarter'){nextFromResult();focusTop();return}if(action==='nextYear'){nextFromAnnual();focusTop();return}}catch(e){console.error(e);alert('計算エラーが発生しました。コンソールとゲームの状態を確認してください。')}})})}
+// Public test-only hooks: invoked by developer tools without affecting the participant UI.
+window.__MIRAI_TEST__={getState:()=>clone(s),reset:()=>{s=initial();store();render()},start:()=>beginYear(),borrow:setBorrow,allocate:budgetChange,commit:commitBudget,turn:runQuarter,next:nextFromResult,advance:nextFromAnnual,assert:invariants,allEvents:EVENTS};
+render();
+})();
+</script>
+</body></html>
