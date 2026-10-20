@@ -609,7 +609,7 @@ function startRpgWorld(){
   if(active.promotion||festival||poster){r(446,79,5,47,'#526b5a');r(423,74,41,18,'#f0ca59');text(427,86,'FEST!', '#805b2c',9)}
  }
  function train(t){
-  const x=-258+(t%710),y=171+x*.085;ctx.save();ctx.translate(x,y);ctx.rotate(.085);for(let i=0;i<3;i++){
+  const x=-140+((t+200)%760),y=171+x*.085;ctx.save();ctx.translate(x,y);ctx.rotate(.085);for(let i=0;i<3;i++){
    const px=i*112; r(px,0,109,37,'#29374a');r(px+3,2,104,31,'#b9d6cb');r(px+3,26,104,7,'#248a6a');
    for(let w=0;w<4;w++){r(px+8+w*25,5,18,17,'#3d8299');r(px+10+w*25,7,14,7,'#79b7c3')}
    r(px+3,33,104,3,'#45535c');r(px+21,36,16,4,'#273c42');r(px+80,36,15,4,'#273c42')
