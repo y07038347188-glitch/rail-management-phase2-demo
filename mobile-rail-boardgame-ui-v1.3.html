@@ -1,0 +1,960 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#103b45"><meta name="color-scheme" content="light">
+<title>未来つくり鉄道｜経営シミュレーション RPG風スマホ試作</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;--ink:#12343e;--muted:#658088;--line:#dce9e6;--green:#138469;--green-dark:#076b56;--light:#e7f4ed;--paper:#fff;--bg:#f3f8f6;--danger:#b64336;--amber:#a06817}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--bg);min-height:100dvh}button{font:inherit;cursor:pointer}button:disabled{opacity:.33;cursor:not-allowed}button:focus-visible{outline:3px solid #eaad35;outline-offset:3px}button,.card,.mini{ -webkit-tap-highlight-color:transparent}#app{max-width:1160px;margin:0 auto;padding:18px 18px 60px}.header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 16px}.brand{display:flex;gap:11px;align-items:center}.brand-logo{width:40px;height:40px;border-radius:12px;background:#126e59;color:#fff;display:grid;place-items:center;font-size:22px;box-shadow:0 5px 14px #1465542c}.brand strong{font-size:18px;letter-spacing:.03em}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:2px}.header-right{display:flex;gap:7px;align-items:center}.chip{border:1px solid #cfdedb;background:white;border-radius:50px;padding:8px 11px;font-size:12px;font-weight:750}.ghost{border:1px solid var(--line);background:white;color:var(--ink);border-radius:10px;padding:9px 13px;font-weight:750;font-size:12px}.ghost:hover{background:#e9f5f1}.scene{height:275px;overflow:hidden;position:relative;background:linear-gradient(#c7e7e8,#e6f6ea 65%,#e7ede3);border-radius:19px;border:1px solid #d6e6dc;box-shadow:0 9px 30px #164e3e14}.scene svg{width:100%;height:100%;display:block}.sun{animation:sky 5s ease-in-out infinite alternate}.cloud1{animation:cloud 21s linear infinite}.cloud2{animation:cloud 28s linear infinite}.train-run{animation:train 13s linear infinite}.wheel{animation:bob .8s ease-in-out infinite alternate}.signal{animation:signal 2.4s ease-in-out infinite alternate}.active-construct{animation:build 2s ease-in-out infinite alternate}.fade-scene{opacity:.45}.scene-top{position:absolute;top:16px;left:16px;display:flex;gap:6px;flex-wrap:wrap;z-index:2}.scene-label{background:#ffffffdf;border:1px solid #ffffff;border-radius:8px;padding:7px 10px;font-size:12px;font-weight:800;box-shadow:0 2px 9px #18423b12}.scene-label.green{background:#126f5b;color:white;border-color:#126f5b}.scene-warning{position:absolute;z-index:3;right:16px;top:18px;background:#b64336;color:#fff;border-radius:9px;padding:9px 12px;font-size:12px;font-weight:900;animation:signal 1s ease-in-out infinite alternate}.scene-bottom{position:absolute;bottom:14px;right:15px;background:#fffefaee;border-radius:9px;padding:7px 10px;font-size:11px;font-weight:700}.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:13px 0 15px}.kpi{background:white;border:1px solid var(--line);border-radius:13px;padding:13px 16px;min-height:78px}.kpi small{display:block;color:var(--muted);font-weight:750;margin-bottom:4px;font-size:11px}.kpi strong{font-size:24px;font-weight:850;letter-spacing:-.04em}.kpi em{font-style:normal;font-size:12px;font-weight:700;margin-left:3px}.positive{color:var(--green-dark)!important}.negative{color:var(--danger)!important}.muted{color:var(--muted)!important}.track{display:flex;gap:5px;margin-bottom:14px}.track .block{height:6px;flex:1;background:#d5e7df;border-radius:10px}.track .block.done{background:#3ca886}.track .block.now{background:#e6a546}.mainpanel{border:1px solid var(--line);background:white;border-radius:17px;padding:23px 26px;box-shadow:0 7px 28px #164a3a0b}.eyebrow{font-size:12px;letter-spacing:.08em;font-weight:900;color:var(--green);margin:0 0 7px}.h1{font-size:26px;line-height:1.4;letter-spacing:-.02em;margin:0 0 10px}.lead{font-size:14px;line-height:1.85;color:#45656b;margin:0 0 18px}.split{display:grid;grid-template-columns:1.07fr .93fr;gap:17px}.box{border:1px solid var(--line);border-radius:13px;padding:17px;background:#fbfdfc}.box.soft{background:#f0f8f3;border-color:#d6ecdf}.boxtitle{font-weight:850;font-size:14px;margin:0 0 12px}.totalbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;background:#eff6f2;border-radius:12px;margin:12px 0}.totalbar .big{font-weight:850;font-size:23px}.totalbar small{font-size:11px;color:#496e66}.invest-row{display:grid;grid-template-columns:minmax(0,1fr) 126px;align-items:center;border-bottom:1px solid var(--line);padding:13px 0;gap:10px}.invest-row:last-child{border:0}.invest-label{font-size:14px;font-weight:850}.desc{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.7}.stepper{display:flex;align-items:center;justify-content:flex-end;gap:8px}.stepper button{height:32px;width:32px;border:1px solid #cadfda;border-radius:9px;background:white;color:var(--ink);font-weight:900;font-size:17px}.stepper b{font-size:17px;font-variant-numeric:tabular-nums;min-width:20px;text-align:center}.btn{border:0;border-radius:11px;background:var(--green-dark);color:white;padding:14px 22px;font-size:14px;font-weight:850;min-height:47px;box-shadow:0 6px 14px #0e68512e}.btn:hover{background:#0b5949}.btn.secondary{background:#eaf2ed;color:#155244;box-shadow:none}.btn.block{display:block;width:100%}.btn:disabled{background:#aabdb6;box-shadow:none}.actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:18px;flex-wrap:wrap}.note{color:#658078;font-size:12px;line-height:1.7;margin-top:10px}.warning{border:1px solid #eed9bd;background:#fff8ed;color:#7d592b;border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.75;margin:14px 0}.warning.red{background:#fff4f0;border-color:#f0d0c7;color:#9f4036}.badge{display:inline-block;background:#d9eee2;color:#13654f;border-radius:6px;font-size:11px;font-weight:850;padding:5px 9px}.badge.red{background:#fce2da;color:#af4234}.choice-list{display:grid;gap:10px}.choice{display:flex;align-items:center;gap:13px;border:1px solid #d8e7e2;border-radius:13px;background:white;width:100%;padding:15px;text-align:left;transition:background .15s,border-color .15s,transform .15s}.choice:hover{transform:translateY(-1px);background:#f4faf6;border-color:#93c9b1}.choice-key{width:32px;height:32px;border-radius:8px;background:#e7f2ed;display:grid;place-items:center;font-size:15px;font-weight:850;flex-shrink:0}.choice strong{display:block;font-size:15px}.choice small{display:block;margin-top:5px;color:var(--muted);font-size:12px}.choice .arr{margin-left:auto;font-size:19px;color:var(--green)}.metric-chips{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}.mchip{padding:7px 10px;border-radius:50px;background:#edf6f2;font-size:11px;font-weight:800}.delta{display:grid;grid-template-columns:1fr 1fr;gap:10px}.delta .big{font-size:28px;font-weight:900;line-height:1.3}.delta .box{padding:20px}.ann-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.sheet{background:#fbfdfc;border:1px solid var(--line);border-radius:12px;padding:14px}.sheet h3{font-size:15px;margin:0 0 4px}.sheet p{font-size:11px;color:var(--muted);margin:0 0 12px}.sheet table{border-collapse:collapse;width:100%;font-size:12px}.sheet td{padding:7px 0;border-bottom:1px solid #e6eeea}.sheet td:last-child{text-align:right;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}.sheet tr.emph td{font-weight:900;border-top:2px solid #8ac6ad;color:#0b705b}.sheet tr:last-child td{border-bottom:0}.lineval{display:flex;justify-content:space-between;gap:12px;margin:9px 0;align-items:center;font-size:13px}.lineval strong{white-space:nowrap}.history-row{display:flex;align-items:center;gap:8px;margin:8px 0;font-size:12px}.bar-track{height:8px;flex:1;border-radius:10px;background:#d9e9e1;overflow:hidden}.bar-inner{height:100%;background:#3ba884;border-radius:10px}.vis-transition{animation:appear .35s ease-out}.fall{animation:fall .45s ease-out}.flash{animation:flash .65s ease-out}.finance-explain{margin:12px 0 0;color:#526d6d;font-size:12px;line-height:1.8}.footer{text-align:center;color:#8ba29a;font-size:11px;margin-top:19px}.cashlock{background:#fff8ed;border:1px solid #edd3a4;padding:14px 16px;border-radius:11px;font-size:13px;color:#8a581a;line-height:1.8;margin-top:12px}.final-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.final-grid .box{text-align:center}.final-grid strong{font-size:23px;display:block;margin-top:6px}.diagram-tags{display:flex;gap:8px;flex-wrap:wrap}.visually-hidden{position:absolute!important;clip:rect(0,0,0,0)!important;width:1px;height:1px;overflow:hidden;white-space:nowrap}
+@keyframes train{from{transform:translateX(-80px)}to{transform:translateX(1150px)}}@keyframes cloud{from{transform:translateX(-55px)}to{transform:translateX(200px)}}@keyframes sky{from{opacity:.65}to{opacity:1}}@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-2px)}}@keyframes signal{from{opacity:.35}to{opacity:1}}@keyframes build{from{opacity:.6}to{opacity:1}}@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@keyframes fall{from{transform:translateY(-10px);opacity:.5}to{transform:translateY(0);opacity:1}}@keyframes flash{0%{background:#f5fff1}100%{background:transparent}}
+@media(max-width:800px){#app{padding:11px 11px 35px}.scene{height:210px}.split{grid-template-columns:1fr}.ann-grid{grid-template-columns:1fr}.mainpanel{padding:19px 17px}.h1{font-size:22px}.final-grid{grid-template-columns:repeat(2,1fr)}.kpi{padding:11px}.kpi strong{font-size:19px}.kpis{gap:7px}.header-right .chip{display:none}}
+@media(max-width:500px){.scene{height:174px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.scene-label{font-size:10px;padding:6px 8px}.scene-bottom{display:none}.header .brand strong{font-size:15px}.brand-logo{width:34px;height:34px;font-size:19px}.ghost{padding:8px 9px}.totalbar .big{font-size:21px}.delta{grid-template-columns:1fr 1fr}.delta .big{font-size:23px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* スマートフォン向けレイアウト v0.3：変更対象は表示のみ */
+html{scroll-padding-top:12px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{overflow-x:hidden;touch-action:pan-y}
+#app{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+button{touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.brand,.brand>div:last-child,.mainpanel,.box,.split>*{min-width:0}
+.header-right{flex-shrink:0}
+.stepper button{min-width:44px;min-height:44px;height:44px;width:44px;font-size:23px;border-radius:11px}
+.stepper b{min-width:34px;font-size:20px}
+.choice{min-height:70px}
+.choice-key{width:38px;height:38px}
+.btn{min-height:52px}
+.cash-guide{border:1px solid #c8e1d3;background:#eef8f1;border-radius:12px;padding:13px 15px;margin:10px 0 14px;display:flex;gap:12px;justify-content:space-between;align-items:center}
+.cash-guide span{font-size:12px;color:#476c61;line-height:1.5}
+.cash-guide strong{font-size:23px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.budget-shell{display:grid;grid-template-columns:minmax(0,.93fr) minmax(0,1.07fr);gap:17px;align-items:start}
+.budget-finance,.budget-invest{min-width:0}
+.budget-finance .box{margin-bottom:12px}
+.budget-details{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;background:#fff}
+.budget-details summary{cursor:pointer;font-size:13px;font-weight:800;min-height:28px;display:list-item;line-height:28px}
+.budget-details .lineval{font-size:12px}
+.budget-details:focus-visible{outline:2px solid var(--green)}
+.budget-topline{margin:0 0 10px;font-weight:750;font-size:13px}
+.invest-row .desc{line-height:1.45}
+.touch-helper{font-size:12px;color:var(--muted);line-height:1.6}
+@media(max-width:800px){
+ .budget-shell{grid-template-columns:1fr;gap:10px}
+ .budget-finance{order:0}
+ .budget-invest{order:1}
+ .budget-finance .box{padding:13px 15px}
+ .budget-finance .boxtitle{margin-bottom:8px}
+ .ann-grid{gap:9px}
+ .ann-grid .sheet{overflow-wrap:anywhere}
+}
+@media(max-width:540px){
+ #app{padding-top:9px}
+ .header{gap:7px;margin-bottom:10px}
+ .brand{gap:7px}
+ .brand-logo{width:35px;height:35px;border-radius:9px;font-size:19px;flex-shrink:0}
+ .brand strong{font-size:15px;line-height:1.2;white-space:nowrap}
+ .brand small{display:none}
+ .header-right{gap:5px}
+ .header-right .chip{display:none}
+ .ghost{font-size:12px;min-height:40px;padding:8px 10px}
+ .scene{height:142px;border-radius:13px}
+ .scene-label{font-size:10px;padding:4px 7px}
+ .scene-top{left:9px;top:9px;gap:4px}
+ .scene-warning{top:9px;right:8px;max-width:52%;font-size:10px;padding:6px}
+ .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:8px 0 10px}
+ .kpi{min-height:62px;padding:8px 11px;border-radius:10px}
+ .kpi small{font-size:11px;margin-bottom:0}
+ .kpi strong{font-size:22px}
+ .kpi em{font-size:12px}
+ .track{margin-bottom:10px}
+ .mainpanel{padding:16px 13px;border-radius:13px}
+ .h1{font-size:21px;line-height:1.4}
+ .lead{font-size:13.5px;line-height:1.65;margin-bottom:12px}
+ .eyebrow{font-size:11px}
+ .box{padding:13px}
+ .boxtitle{font-size:14px;margin-bottom:9px}
+ .lineval{font-size:12.5px;margin:8px 0;gap:7px}
+ .totalbar{padding:11px 12px;margin:8px 0}
+ .totalbar .big{font-size:22px}
+ .invest-row{grid-template-columns:minmax(0,1fr) auto;gap:6px;padding:12px 0}
+ .invest-label{font-size:13px;line-height:1.5}
+ .desc{font-size:10.5px}
+ .stepper{gap:4px}
+ .stepper button{width:44px;height:44px}
+ .stepper b{font-size:17px;min-width:23px}
+ .choice-list{gap:9px}
+ .choice{padding:13px 10px;min-height:70px;gap:10px}
+ .choice strong{font-size:14px}
+ .choice small{font-size:11.5px;line-height:1.55}
+ .choice .arr{font-size:17px}
+ .cash-guide{padding:10px 12px}
+ .cash-guide strong{font-size:23px}
+ .actions{position:sticky;bottom:0;z-index:10;margin:14px -13px -16px;padding:12px 13px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(#fffffff3,#fff);border-top:1px solid var(--line);border-radius:0 0 13px 13px}
+ .actions .btn{width:100%;font-size:15px;min-height:54px}
+ .sheet{padding:12px}
+ .sheet td{padding:8px 0;font-size:12px}
+ .sheet h3{font-size:14px}
+ .final-grid{gap:8px}
+ .final-grid .box{padding:10px 8px}
+ .final-grid strong{font-size:21px}
+ .delta .box{padding:13px}
+ .delta .big{font-size:22px;overflow-wrap:anywhere}
+ .metric-chips{margin:10px 0;gap:5px}
+ .mchip{padding:6px 8px;font-size:10.5px}
+ .footer{font-size:10px;margin-top:16px}
+}
+@media(max-width:355px){
+ .brand strong{font-size:13px}
+ .ghost{padding:7px 8px;font-size:11px}
+ .stepper button{width:42px;min-width:42px}
+ .invest-row{grid-template-columns:minmax(0,1fr) auto}
+ .desc{font-size:10px}
+ .kpi strong{font-size:20px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
+
+/* === JRPG retro town skin: visual-only; accounting engine unchanged === */
+:root{--ink:#263b36;--muted:#536861;--line:#a9cbbb;--bg:#e7f1db;--green:#177c54;--green-dark:#126747}
+body{background:repeating-linear-gradient(90deg,#eaf3df 0 14px,#e6f0db 14px 28px)}
+.scene{position:relative;height:350px;border:4px solid #3e6957;border-radius:10px;overflow:hidden;box-shadow:0 5px 0 #acc5a5;background:#92bd76}
+.scene canvas{display:block;width:100%;height:100%;object-fit:cover;image-rendering:pixelated;image-rendering:crisp-edges;cursor:crosshair;touch-action:manipulation}
+.scene-top{top:9px;left:9px;right:9px;pointer-events:none;gap:5px}
+.scene-label{border-radius:3px;border:2px solid #41584d;background:#fcf8d7;box-shadow:3px 3px 0 #273f325a;font:800 11px/1.15 ui-monospace,monospace;padding:5px 7px}
+.scene-label.green{background:#166349;border-color:#103b2b}
+.scene-bottom{display:none}
+.rpg-dialog{position:absolute;bottom:10px;left:10px;right:10px;max-width:700px;margin:0 auto;background:#fdf9e8;color:#18362e;border:3px solid #253f37;border-radius:5px;box-shadow:0 4px 0 #2a4036ac;padding:9px 12px 11px;z-index:4;pointer-events:none;font-size:12px;line-height:1.55;min-height:56px}
+.rpg-dialog strong{font-size:12px;color:#176447}
+.rpg-dialog::after{content:'▼';position:absolute;right:10px;bottom:4px;font-size:10px;color:#245f4e;animation:bob 0.6s steps(2,end) infinite alternate}
+.rpg-worldhint{position:absolute;right:9px;top:42px;background:#fff8d6d9;border:1px solid #366b50;padding:4px 7px;border-radius:3px;font-size:10px;color:#20533a;pointer-events:none}
+.mainpanel{background:#fcfff4;border:2px solid #4a7b5a;border-radius:9px;box-shadow:4px 4px 0 #a2bca0;padding:23px 26px}
+.box,.sheet,.kpi{border:2px solid #b1cdb6;background:#fffef4;border-radius:7px;box-shadow:2px 2px 0 #d1ddc5}
+.box.soft{background:#eff8e8;border-color:#8db995}
+.btn{border:2px solid #175739;border-bottom:5px solid #0b3f2c;background:#237c55;border-radius:5px;box-shadow:none;font-weight:900}
+.btn:hover{background:#166748}.ghost{border-radius:5px;border:2px solid #739980}
+.choice{border:2px solid #83aa89;border-bottom:4px solid #6c9877;border-radius:7px;background:#fefef3}
+.choice:hover{transform:translateY(-1px);background:#edf7de;border-color:#4a9162}
+.choice-key{background:#276b4d;border-radius:4px;color:white}
+.totalbar{background:#e5f3db;border:2px solid #aac8a4;border-radius:6px}
+.track .block{border-radius:1px;height:8px}.track .block.done{background:#448b5c}.track .block.now{background:#f3bd45}
+@media(max-width:800px){.scene{height:280px}.mainpanel{padding:19px 17px}}
+@media(max-width:540px){.scene{height:252px}.rpg-dialog{left:6px;right:6px;bottom:7px;font-size:11px;min-height:53px;padding:8px 10px 10px}.rpg-dialog strong{font-size:11px}.rpg-worldhint{font-size:9px;top:36px;right:7px}.mainpanel{padding:16px 13px}}
+@media(prefers-reduced-motion: reduce){.rpg-dialog::after{animation:none}}
+
+
+/* === One-screen RPG UI (v0.6): mobile viewport locked, no outer scrolling === */
+@media(max-width:800px){
+ html,body{height:100%;min-height:0;overflow:hidden;overscroll-behavior:none}
+ body{touch-action:manipulation}
+ #app{height:100dvh;min-height:0;max-height:100dvh;width:100%;max-width:600px;margin:auto;display:flex;flex-direction:column;overflow:hidden;gap:5px;padding: max(5px,env(safe-area-inset-top)) max(7px,env(safe-area-inset-right)) max(5px,env(safe-area-inset-bottom)) max(7px,env(safe-area-inset-left))}
+ .header{height:35px;min-height:35px;margin:0;gap:5px}
+ .brand strong{font-size:15px!important;white-space:nowrap}
+ .brand-logo{width:29px;height:29px;font-size:15px;border-radius:6px}
+ .header .brand small{display:none}
+ .header-right{gap:4px}
+ .ghost{font-size:10px;min-height:31px;height:31px;padding:4px 7px}
+ .scene{flex:0 0 clamp(130px,29dvh,245px);height:auto!important;min-height:0;margin:0;border-width:3px;border-radius:7px;box-shadow:0 2px 0 #acc5a5}
+ .scene-label{font-size:9px;padding:3px 5px;border-width:1px}
+ .scene-top{top:5px;left:5px;right:5px}
+ .scene-warning{font-size:9px;top:4px;right:4px;padding:3px}
+ .rpg-dialog{bottom:5px;left:5px;right:5px;padding:5px 18px 6px 7px;border-width:2px;min-height:0;font-size:10px;line-height:1.32;box-shadow:0 2px 0 #2a4036ac;max-height:42%;overflow:hidden}
+ .rpg-dialog strong{font-size:10px}
+ .rpg-dialog::after{font-size:8px;right:4px;bottom:2px}
+ .rpg-worldhint{display:none}
+ .kpis{flex:0 0 42px;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;margin:0}
+ .kpi{min-height:0;padding:4px 3px;border-width:1px;border-radius:5px;box-shadow:none;text-align:center;display:flex;flex-direction:column;justify-content:center}
+ .kpi small{font-size:9px;line-height:1.1;margin:0;white-space:nowrap}
+ .kpi strong{font-size:17px;line-height:1.2;letter-spacing:-.04em}
+ .kpi em{font-size:9px;margin-left:1px}
+ .track{flex:0 0 4px;min-height:0;margin:0;gap:3px}
+ .track .block{height:4px}
+ .mainpanel{flex:1 1 0;min-height:0;overflow:hidden;display:flex;flex-direction:column;padding:9px 10px 7px!important;border-width:2px;border-radius:7px;box-shadow:none;gap:4px}
+ .mainpanel > *{min-width:0;flex-shrink:0}
+ .eyebrow{font-size:10px;margin:0;line-height:1.2}
+ .h1{font-size:17px;line-height:1.22;margin:0}
+ .lead{font-size:12px;line-height:1.45;margin:0}
+ .actions{position:static!important;margin: auto 0 0!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important;flex:none;justify-content:stretch;box-shadow:none!important}
+ .actions .btn,.btn{min-height:40px!important;height:40px;padding:6px 8px;font-size:13px;width:100%;white-space:nowrap}
+ .footer{display:none}
+ .event-compact,.budget-compact{display:flex;flex-direction:column;gap:5px;min-height:0;flex:1 1 0}
+ .choice-list{flex:1 1 0;min-height:0;display:grid;grid-template-rows:repeat(3,minmax(0,1fr));gap:6px;margin:0}
+ .choice{min-height:0;height:100%;padding:4px 9px;gap:9px;border-width:2px;border-bottom-width:3px}
+ .choice-key{width:30px;height:30px;font-size:14px;border-radius:3px;flex-shrink:0}
+ .choice-copy{flex:1;min-width:0}
+ .choice strong{font-size:13px;line-height:1.32}
+ .choice small{font-size:11px;line-height:1.23;margin-top:2px}
+ .choice .arr{font-size:16px}
+ .budget-title{display:flex;align-items:center;justify-content:space-between;gap:8px}
+ .budget-title strong{font-size:12px;white-space:nowrap}
+ .budget-title em{font-style:normal;font-size:15px;color:#126747}
+ .budget-borrow{display:flex;align-items:center;justify-content:space-between;background:#edf6e9;border:1px solid #b1cdb6;border-radius:5px;padding:2px 7px;font-size:11px;font-weight:800;min-height:35px}
+ .stepper{gap:6px}
+ .stepper button{width:32px!important;height:32px!important;min-width:32px!important;min-height:32px!important;font-size:19px;border-radius:5px}
+ .stepper b{font-size:15px;min-width:22px}
+ .budget-list{flex:1 1 0;min-height:0;display:grid;grid-template-rows:repeat(5,minmax(0,1fr))}
+ .invest-row{border-bottom:1px solid #cee0c8;padding:0 2px;min-height:0;grid-template-columns:minmax(0,1fr) auto;gap:3px}
+ .invest-label{font-size:12px;white-space:nowrap}
+ .budget-totals{display:flex;justify-content:space-between;align-items:center;font-size:10.5px;gap:5px;white-space:nowrap}
+ .budget-totals strong{font-size:12px}
+ .budget-lock{font-size:10px;color:#9b5e20;margin:0;line-height:1.2}
+ .intro-badges{display:flex;gap:5px;flex-wrap:wrap}
+ .intro-badges span{font-size:11px;background:#eaf4e8;border:1px solid #aac8a4;padding:7px 5px;border-radius:5px;font-weight:800}
+ .delta{flex:0 0 auto;gap:6px}
+ .delta .box{padding:8px;border-width:1px;box-shadow:none}
+ .delta .boxtitle{font-size:11px;margin:0}
+ .delta .big{font-size:22px;line-height:1.25}
+ .desc{font-size:10px;margin:1px 0;line-height:1.25}
+ .finance-sentence{font-size:11px;line-height:1.35;color:#4c6c59;background:#eff8e8;border:1px solid #bad8b9;border-radius:5px;padding:6px 8px}
+ .finance-top{display:flex;align-items:center;justify-content:space-between;gap:5px}
+ .finance-top>span{font-size:10px;white-space:nowrap}
+ .finance-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+ .finance-tabs button{height:33px;border:1px solid #6a9676;border-radius:4px;background:#f1f6e7;color:#214735;font-weight:900}
+ .finance-tabs button.selected{background:#237c55;color:white}
+ .finance-one{flex:1 1 0;min-height:0;padding:7px 9px!important;overflow:hidden;box-shadow:none;border-width:1px}
+ .finance-one h3{font-size:12px;line-height:1.2;margin:0 0 3px}
+ .finance-one table{font-size:11px;table-layout:fixed}
+ .finance-one td{padding:3px 0;line-height:1.25}
+ .finance-one td:first-child{width:62%;overflow-wrap:anywhere}
+ .final-grid{grid-template-columns:repeat(2,1fr);gap:5px}
+ .final-grid .box{padding:8px;box-shadow:none;border-width:1px}
+ .final-grid strong{font-size:17px;margin-top:3px}
+ .accident-metrics{display:grid;gap:5px;flex:1;align-content:center}
+ .accident-metrics span{display:flex;justify-content:space-between;align-items:center;padding:8px;background:#f1f7ed;border:1px solid #abcaaa;border-radius:5px;font-size:12px}
+ .accident-metrics span:last-child{font-weight:800;background:#fff0de;border-color:#d8b894}
+ .accident-metrics b{font-size:16px}
+}
+@media(max-width:800px) and (max-height:660px){
+ .scene{flex-basis:clamp(118px,25dvh,166px)}
+ .rpg-dialog{font-size:9px;padding:3px 13px 4px 5px;line-height:1.2}
+ .kpis{flex-basis:35px}
+ .kpi strong{font-size:15px}
+ .header{height:30px;min-height:30px}
+ .choice-list{gap:4px}
+ .choice strong{font-size:12px}
+ .choice small{font-size:10px}
+ .mainpanel{padding:7px 8px 5px!important;gap:3px}
+ .invest-label{font-size:11px}
+ .stepper button{width:29px!important;height:29px!important;min-height:29px!important;min-width:29px!important}
+ .actions .btn,.btn{min-height:35px!important;height:35px;font-size:12px}
+}
+@media(max-width:800px) and (max-height:580px){
+ .scene{flex-basis:115px}
+ .kpis{flex-basis:32px}
+ .rpg-dialog{max-height:45px}
+ .h1{font-size:15px}
+ .finance-one td{padding:1px 0}
+ .finance-one h3{font-size:11px}
+}
+@media(max-width:800px) and (max-width:350px){
+ .brand strong{font-size:13px!important}
+ .header-right .ghost{font-size:9px;padding:3px 5px}
+ .invest-label{font-size:10.5px}
+ .choice strong{font-size:11.5px}
+ .choice small{font-size:9.5px}
+ .budget-totals{font-size:9px}
+}
+
+
+/* v0.7: four evaluation metrics, transparent investment cash, readable events */
+@media(max-width:800px){
+ .scene{flex-basis:clamp(120px,25dvh,215px)!important}
+ .kpis{flex:0 0 66px!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:32px 30px;gap:4px!important;margin:0!important}
+ .kpi{padding:2px 4px!important;min-height:0!important}
+ .kpi small{font-size:9px!important;white-space:nowrap}
+ .kpi strong{font-size:15px!important}
+ .kpi em{font-size:10px!important}
+ .eval-kpis{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;min-height:0}
+ .eval-kpis span{border:1px solid #b0d1b9;border-radius:5px;background:#f4fbef;font-size:9.5px;font-weight:750;display:flex;align-items:center;justify-content:center;white-space:nowrap;padding:2px 0;letter-spacing:-.03em}
+ .eval-kpis b{font-size:13px;color:#135c45;margin:0 2px}
+ .eval-kpis sup{font-size:7px;align-self:flex-start}
+ .budget-compact{gap:3px!important}
+ .budget-title strong{font-size:11px}
+ .budget-title em{font-size:15px}
+ .cash-explanation{flex:none;background:#eef6ea;border:1px solid #b4d6bd;border-radius:5px;padding:3px 6px;display:grid;gap:1px;font-size:10.2px;line-height:1.28;letter-spacing:-.035em}
+ .cash-explanation div{display:flex;justify-content:space-between;gap:4px;white-space:nowrap}
+ .cash-explanation b{font-size:10.3px;white-space:nowrap}
+ .budget-borrow{min-height:30px!important;padding:0 5px!important}
+ .budget-borrow span{font-size:10px}
+ .budget-borrow .stepper button{height:28px!important;min-height:28px!important;width:28px!important;min-width:28px!important}
+ .budget-list{min-height:0}
+ .invest-row{padding:0!important}
+ .invest-label{font-size:11px!important}
+ .invest-row .stepper button{height:29px!important;min-height:29px!important;width:29px!important;min-width:29px!important}
+ .budget-totals{font-size:10px!important}
+ .cash-advice{display:flex;align-items:center;justify-content:space-between;gap:4px;flex-shrink:0;font-size:9px;line-height:1.15;background:#e5f5eb;border:1px solid #a8ceb9;padding:3px 5px;border-radius:5px}
+ .cash-advice span{min-width:0}
+ .cash-advice strong{white-space:nowrap;font-size:10px}
+ .cash-advice-warn{background:#fff2db;border-color:#e0ba82;color:#81521c}
+ .event-compact{gap:4px!important}
+ .event-compact .h1{font-size:16px!important;line-height:1.2}
+ .event-context{margin:0;padding:1px 0;font-size:10.5px;color:#426756;line-height:1.2}
+ .choice-list{gap:5px!important}
+ .choice strong{font-size:12px!important}
+ .choice small{font-size:10.5px!important}
+ .mainpanel{gap:3px!important}
+}
+@media(max-width:800px) and (max-height:690px){
+ .scene{flex-basis:clamp(112px,23dvh,155px)!important}
+ .kpis{flex-basis:59px!important;grid-template-rows:28px 27px!important}
+ .eval-kpis span{font-size:8.7px}
+ .eval-kpis b{font-size:12px}
+ .cash-explanation{font-size:9px}
+ .cash-explanation b{font-size:9.2px}
+ .cash-advice{font-size:8.5px}
+ .cash-advice strong{font-size:9px}
+ .event-context{font-size:10px}
+ .choice-list{gap:4px!important}
+}
+@media(max-width:800px) and (max-height:590px){
+ .scene{flex-basis:100px!important}
+ .kpis{flex-basis:54px!important;grid-template-rows:25px 25px!important}
+ .budget-compact{gap:2px!important}
+ .budget-title strong{font-size:10px}
+ .cash-explanation{padding:1px 4px;line-height:1.12}
+ .cash-advice{padding:1px 4px}
+ .invest-row .stepper button{height:25px!important;min-height:25px!important;width:25px!important;min-width:25px!important}
+ .event-context{font-size:9px}
+}
+@media(max-width:800px) and (max-width:345px){
+ .cash-explanation{font-size:8.2px!important;letter-spacing:-.05em}
+ .cash-explanation b{font-size:8.2px!important}
+ .eval-kpis span{font-size:8px!important}
+ .eval-kpis b{font-size:11px!important}
+ .cash-advice{font-size:8px!important}
+ .cash-advice strong{font-size:8.5px!important}
+ .invest-label{font-size:10px!important}
+}
+
+
+/* v1.1: world-first RPG decision UI, same simulation engine */
+.scene{border-color:#5e6958;background:#91ae90}
+.scene canvas{image-rendering:pixelated;image-rendering:crisp-edges}
+.choice.choice-selected{background:#fff4c8!important;border-color:#c18a2d!important;box-shadow:inset 0 0 0 1px #dfb351}
+.choice.choice-selected .choice-key{background:#9d681c}
+.decision-forecast{border:2px solid #bd9d53;border-radius:5px;padding:7px 9px;background:#fff9e3;display:grid;gap:3px;color:#4d452e}
+.decision-forecast>div{display:flex;justify-content:space-between;gap:8px;font-size:11px}
+.decision-forecast>div span{white-space:nowrap}
+.decision-forecast>strong{font-size:11px;color:#275b3d}
+.decision-forecast p{margin:0;font-size:10.5px;line-height:1.3}
+.decision-forecast small{font-size:10px;color:#7f5832}
+.decision-wait{background:#f0f5e6;border:1px dashed #9ac0a4;border-radius:5px;padding:7px 9px;font-size:11px;color:#39634a;font-weight:700}
+.result-v08{display:flex;flex-direction:column;gap:6px;flex:1 1 0;min-height:0}
+.result-learning{margin:0;border:1px solid #a7c6a1;background:#edf7de;border-radius:5px;padding:7px;font-size:12px;line-height:1.5}
+.result-why{font-size:11px;line-height:1.6;border:1px solid #bad4ba;background:#f8f9ee;padding:9px;border-radius:5px}
+@media(max-width:800px){
+ .scene{flex-basis:clamp(143px,27dvh,242px)!important}
+ .scene .rpg-dialog{max-height:28%;line-height:1.25;font-size:10px!important}
+ .event-v08 .choice-list{flex:1 1 0;gap:4px!important}
+ .event-v08 .choice{min-height:0;padding:3px 7px!important}
+ .event-v08 .choice-key{width:25px;height:25px;font-size:12px}
+ .event-v08 .choice strong{font-size:11.5px!important;line-height:1.2}
+ .event-v08 .choice small{font-size:10px!important}
+ .event-v08 .h1{font-size:14px!important}
+ .event-v08 .event-context{font-size:10px;line-height:1.25}
+ .decision-forecast{flex:0 0 auto;padding:4px 7px;gap:2px}
+ .decision-forecast>div{font-size:10px}
+ .decision-forecast>strong{font-size:10px;line-height:1.12}
+ .decision-forecast p{font-size:9.5px;line-height:1.15}
+ .decision-forecast small{font-size:9.5px}
+ .decision-wait{font-size:10px;padding:4px 6px}
+ .result-v08{gap:4px}
+ .result-v08 .h1{font-size:15px}
+ .result-learning{padding:5px;font-size:11px;line-height:1.3}
+ .result-why{padding:6px;font-size:10px;line-height:1.4}
+}
+@media(max-width:800px) and (max-height:710px){
+ .scene{flex-basis:clamp(116px,22dvh,158px)!important}
+ .event-v08 .h1{font-size:13px!important}
+ .event-v08 .event-context{font-size:9px}
+ .decision-forecast{padding:3px 5px}
+ .decision-forecast>div,.decision-forecast>strong,.decision-forecast p,.decision-forecast small{font-size:9px}
+ .choice strong{font-size:11px!important}
+ .choice small{font-size:9px!important}
+}
+@media(max-width:800px) and (max-height:600px){
+ .scene{flex-basis:105px!important}
+ .kpis{flex-basis:53px!important}
+ .choice-key{width:21px!important;height:21px!important}
+ .choice-list{gap:2px!important}
+ .decision-forecast small{display:none}
+ .rpg-dialog{display:none}
+}
+
+
+.crisis-banner{margin:2px 0 7px;padding:6px 9px;border:1px solid #d1a56a;background:#3c3029;color:#fff4d8;border-radius:8px;font-size:11px;line-height:1.45} .crisis-result{margin:3px 0 7px;border-left:4px solid #dc8f52;padding:5px 8px;background:#fff0d9;color:#794d2a;font-size:11px;line-height:1.4}.choice:disabled{opacity:.38!important;cursor:not-allowed!important}.choice:disabled:hover{transform:none!important}
+/* v1.1: cash-flow learning and non-overlapping station illustration */
+.scene canvas{image-rendering:auto!important}
+.rpg-storyline{background:#f6f7ed;border:1px solid #92b09d;border-left:4px solid #408b6e;border-radius:7px;color:#214a3f;font-size:12px;line-height:1.35;padding:7px 10px;display:flex;gap:5px;align-items:center;min-height:30px;overflow:hidden}
+.rpg-storyline strong{white-space:nowrap;flex:0 0 auto;color:#176c51}
+.rpg-storyline span{min-width:0;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.budget-step-guide{background:#e8f3e9;border:1px solid #9dc7ae;border-radius:7px;padding:7px 9px;font-size:11px;line-height:1.35;color:#275d48}
+.annual-bridge{background:#e9f3e6;border-left:3px solid #448b64;font-size:10.5px;color:#285b47;line-height:1.25;padding:4px 7px;border-radius:4px}
+.cash-flow-story{border:1px solid #a7cbbb;border-radius:8px;padding:7px 10px;background:#f6fcf7;display:flex;flex-direction:column;gap:3px}
+.cash-flow-story>b{font-size:13px}
+.cash-money-eq{font-size:13px;font-weight:800;color:#206d4f;display:flex;justify-content:space-between;gap:4px}
+.cash-money-eq span{color:#a6822f}
+.money-lines{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3px 9px}
+.money-lines div{display:flex;justify-content:space-between;gap:5px;border-bottom:1px solid #e0eae0;font-size:10px;min-width:0}
+.money-lines div span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.money-lines div strong{white-space:nowrap}
+.cash-invest-summary{font-size:10px;line-height:1.2;color:#5a603d;background:#fff3d2;padding:5px 7px;border-radius:5px}
+.cash-flow-story p{margin:1px 0;font-size:10px;line-height:1.25;color:#557066}
+@media(max-width:800px){
+  .scene{flex:0 0 clamp(124px,19dvh,190px)!important;min-height:110px!important}
+  .rpg-storyline{flex:0 0 auto;min-height:30px;max-height:39px;font-size:10.5px;padding:4px 7px}
+  .budget-step-guide{font-size:9.8px;padding:4px 6px;line-height:1.22}
+  .annual-bridge{font-size:9.3px;padding:3px 5px;line-height:1.18}
+  .result-v08 .cash-flow-story{flex:1 1 auto;min-height:0;overflow:auto}
+  .result-v08 .result-learning{flex:0 0 auto}
+  .result-v08 .cash-flow-story .money-lines{gap:1px 8px}
+  .result-v08 .cash-flow-story .money-lines div{font-size:9.3px}
+  .result-v08 .cash-flow-story p{font-size:9px}
+  .result-v08 .cash-flow-story>b{font-size:11px}
+  .result-v08 .cash-invest-summary{font-size:9px;padding:3px 5px}
+}
+@media(max-width:380px){.money-lines{grid-template-columns:1fr}.money-lines div:nth-child(n+5){display:none}}
+
+/* v1.1: Perspective rail-town scene and an explicit two-stage financial cause chain */
+.scene{background:#a8d1bb;border-color:#6a9789;box-shadow:0 6px 18px rgba(31,82,67,.2)}
+.scene canvas{image-rendering:auto!important;object-fit:cover}
+.scene-label{border-radius:7px!important;border-width:1px!important;font-family:system-ui,sans-serif!important;box-shadow:0 2px 7px rgba(24,58,58,.12)}
+.rpg-storyline{background:#e8f4ee;border-left:4px solid #27836b}
+.impact-preview{border:1px solid #9acfb3;background:#eff9f0;border-radius:7px;padding:5px 7px;display:grid;gap:3px;color:#245b43;font-size:10.5px;line-height:1.25}
+.impact-preview strong{color:#145c48}.impact-preview small{color:#476e5d;font-size:10px}
+.annual-bridge{display:grid!important;gap:4px;background:#edf6ee;border:1px solid #b2d9be;border-left:4px solid #368d69!important;border-radius:6px!important;color:#284f43}
+.annual-bridge>div{font-size:10.5px;line-height:1.2}.annual-bridge span{color:#496e5d}.annual-bridge .investment-link{padding:3px 4px;background:#d8eee1;border-radius:4px}
+@media(max-width:800px){.scene{flex-basis:clamp(155px,23dvh,203px)!important}.scene-top{top:6px!important;left:7px!important}.scene-label{font-size:9px!important;padding:3px 5px!important}.annual-bridge{gap:2px;padding:3px 5px!important}.annual-bridge>div{font-size:10.5px;line-height:1.22}.impact-preview{padding:3px 5px;font-size:9.2px;gap:2px}.impact-preview small{font-size:8.7px}.budget-step-guide{line-height:1.2}}
+@media(max-width:800px) and (max-height:720px){.scene{flex-basis:clamp(108px,23dvh,157px)!important}.annual-bridge .investment-link{display:block}.annual-bridge>div{font-size:9.5px}}
+
+/* 未来つくり鉄道 v1.2 : original, bright railway board-game UI. */
+:root{--sky:#edf7ff;--blue:#17558c;--navy:#133856;--yellow:#ffbb46;--orange:#ed8128;--ink:#18364a;--green:#15825d;--line:#b7d4e5}
+html,body{margin:0;min-height:0;height:100%;overflow:hidden;background:#dceff7;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif}
+#app{width:100%;max-width:720px;margin:0 auto;height:100dvh;min-height:0;display:flex;flex-direction:column;gap:6px;overflow:hidden;padding:7px max(7px,env(safe-area-inset-right)) max(7px,env(safe-area-inset-bottom)) max(7px,env(safe-area-inset-left));background:linear-gradient(170deg,#eaf7ff,#fffbea 75%)}
+.header{flex:0 0 39px;min-height:39px;height:39px;display:flex;align-items:center;gap:7px;margin:0;padding:0 2px;justify-content:space-between}
+.brand{gap:7px;min-width:0}.brand strong{font-size:17px!important;letter-spacing:0;color:#16425d}.brand small{display:none!important}.brand-logo{height:32px;width:32px;border-radius:10px;background:#227ca3;display:grid;place-items:center;font-size:20px;box-shadow:0 2px 0 #0d476c}
+.header-right{gap:5px;flex-shrink:0}.header-right .chip{display:none}.ghost{background:#fff;border:2px solid #93b9d2;border-radius:11px;height:34px;min-height:34px;padding:3px 8px;font-size:11px;font-weight:900;color:#254e6b}
+.time-tag{font-size:11px;font-weight:1000;background:#ffdc78;border:2px solid #d5922d;color:#77421d;border-radius:9px;padding:5px 8px;white-space:nowrap}
+.money-strip{flex:0 0 55px;min-height:55px;background:linear-gradient(105deg,#225c94,#124474);border:2px solid #103d68;border-bottom:4px solid #092f53;color:#fff;border-radius:15px;display:grid;grid-template-columns:1.12fr 1fr 1fr;align-items:center;padding:4px 8px;gap:4px;box-shadow:0 3px 0 #abcbdc}
+.money-item{min-width:0;text-align:center;border-right:1px solid #ffffff4c}.money-item:last-child{border:0}.money-item small{display:block;font-size:10px;color:#d8eeff;font-weight:800}.money-item strong{font-size:24px;line-height:1.18;color:#fff;letter-spacing:-.03em;font-variant-numeric:tabular-nums}.money-item em{font-style:normal;font-size:11px;margin-left:2px}.money-item:nth-child(1) strong{color:#ffdf75}
+.scene{flex:0 0 clamp(145px,26dvh,270px)!important;min-height:0;height:auto!important;margin:0;border:3px solid #7db1c8!important;border-radius:16px!important;background:#96c5ce!important;box-shadow:0 3px 0 #b5c9cf!important;overflow:hidden;position:relative}
+.scene canvas{display:block;width:100%;height:100%;object-fit:cover;image-rendering:auto;cursor:pointer}
+.scene:after{content:'';position:absolute;inset:0;border-radius:13px;pointer-events:none;box-shadow:inset 0 0 0 2px #ffffff78}
+.scene-top{top:8px;left:8px;right:auto;z-index:2}.scene-label{font-family:inherit;font-size:11px;padding:5px 8px;background:#fffefa;color:#2a576a;border:1px solid #a7c9cd;border-radius:9px;box-shadow:0 2px 0 #75aab2}.scene-label.green{background:#1b7b79;color:#fff;border-color:#0d6168}.scene-warning{top:10px;right:8px;z-index:3;font-size:11px;background:#b63b2c;border-radius:8px}
+.eval-strip{flex:0 0 28px;min-height:28px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;align-items:stretch}
+.eval-strip span{display:flex;align-items:center;justify-content:center;gap:3px;min-width:0;border-radius:9px;border:1px solid #b4cfda;background:#fffdf6;font-size:10px;font-weight:800;white-space:nowrap;color:#315568}.eval-strip b{font-size:11px;color:#14426c}
+.track{flex:0 0 5px;margin:0;gap:4px}.track .block{height:5px;background:#d5e4e6}.track .block.done{background:#58a7c4}.track .block.now{background:#ffae32}
+.mainpanel{flex:1 1 0;min-height:0;overflow:hidden;display:flex;flex-direction:column;padding:11px 12px 10px!important;border:2px solid #b5d5e2!important;border-radius:16px!important;background:#fffef9!important;box-shadow:0 3px 0 #cbd5cf!important;gap:5px!important;position:relative}
+.mainpanel h1,.h1{color:#184d78;margin:0!important;font-size:20px!important;line-height:1.25!important}.eyebrow{color:#3383a5!important;font-size:10px;font-weight:900;margin:0!important}.lead{line-height:1.55;color:#496677;font-size:13px;margin:0!important}.actions{margin-top:auto!important;padding:3px 0 0!important;background:transparent!important;position:static!important;border:0!important;box-shadow:none!important;flex:0 0 auto}
+.btn,.actions .btn{width:100%;min-height:45px!important;height:45px!important;background:linear-gradient(#ffb84b,#ee8626)!important;border:2px solid #be6319!important;border-bottom:5px solid #a85311!important;color:#4b2c0b!important;border-radius:12px!important;box-shadow:none!important;font-size:15px!important;font-weight:1000!important;text-shadow:0 1px #ffda82}.btn:active{transform:translateY(2px);border-bottom-width:3px!important}.btn.secondary{background:#e8f5ff!important;border-color:#90baca!important;color:#194b70!important;text-shadow:none}
+.footer{display:none!important}
+/* Budget: one accessible row per item, important information, no microscopic overlap. */
+.budget-shell-v12,.event-shell-v12,.result-shell-v12{display:flex;flex-direction:column;min-height:0;height:100%;gap:5px}
+.hero-line{display:flex;align-items:center;justify-content:space-between;gap:5px}.hero-line b{font-size:21px;color:#196397;white-space:nowrap}.hero-line small{font-weight:850;color:#68879a}
+.cash-simple{background:#e9f5ff;border:1px solid #b5d8eb;border-radius:10px;padding:5px 9px;font-size:11px;line-height:1.35;color:#295575;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.cash-simple strong{color:#115f8e;font-size:13px;white-space:nowrap}
+.cash-simple details{font-size:11px;max-width:100%}.cash-simple summary{cursor:pointer;font-weight:900;min-height:21px;list-style:none}.cash-simple summary::-webkit-details-marker{display:none}.cash-simple summary:after{content:' ▾';color:#287f9f}.cash-simple .formula{padding:5px 1px;line-height:1.45}
+.borrow-line{display:flex;align-items:center;justify-content:space-between;background:#fff4d9;border:1px solid #eaca8b;border-radius:10px;padding:4px 8px;min-height:38px;font-size:12px;font-weight:850}
+.borrow-line .stepper,.invest-row .stepper{gap:4px}.borrow-line .stepper button,.invest-row .stepper button{width:34px!important;height:34px!important;min-height:34px!important;min-width:34px!important;border:1px solid #80b2c9!important;border-radius:9px!important;background:#e5f5ff!important;color:#145280!important;font-size:21px!important;padding:0!important;box-shadow:0 2px 0 #a2bdca}.stepper b{font-size:18px!important;font-variant-numeric:tabular-nums;min-width:23px!important;text-align:center}
+.budget-list{display:grid;gap:4px;min-height:0;flex:1 1 0;grid-template-rows:repeat(5,minmax(0,1fr));overflow:hidden}
+.budget-list .invest-row{display:flex;align-items:center;justify-content:space-between;gap:5px;min-height:0;height:100%;padding:3px 8px!important;margin:0!important;border:1px solid #b6cfdd!important;border-radius:11px!important;background:#f6fbff!important}
+.invest-text{min-width:0}.invest-label{font-size:12px!important;line-height:1.25!important;font-weight:950;color:#24506d}.invest-hint{font-size:9.5px;color:#638698;line-height:1.25;margin-top:2px}.invest-row .stepper{flex-shrink:0}
+.budget-bottom{border:1px solid #b8dbca;background:#edf9ed;border-radius:10px;padding:6px 9px;flex:0 0 auto}
+.budget-bottom .line{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:850;gap:3px}
+.budget-bottom strong{font-size:16px;color:#167150}
+.budget-bottom .effect{margin-top:4px;font-size:11px;line-height:1.3;color:#356c55}
+.budget-bottom .risk-note{margin-top:2px;color:#99651b;font-size:10px}
+/* Event cards and selected-impact forecast */
+.event-headline{display:flex;justify-content:space-between;align-items:center;gap:5px}.event-headline .label{background:#eaf3fc;border:1px solid #8db9db;color:#1a568a;font-size:10px;font-weight:900;padding:3px 7px;border-radius:8px;white-space:nowrap}
+.event-headline .label.major{background:#ffe1d8;color:#a13d25;border-color:#eca998}
+.event-context{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:11px!important;color:#4b6374!important;line-height:1.35!important}
+.event-link{font-size:10px;border-radius:8px;background:#e4f4ff;padding:5px 7px;color:#236383;line-height:1.3;font-weight:700}
+.event-link strong{color:#095481}.crisis-banner{background:#fff0da!important;border:1px solid #dbab65!important;color:#92501b!important;padding:4px 7px!important;font-size:10px!important;border-radius:8px!important;line-height:1.2!important;margin:0!important}
+.event-shell-v12 .choice-list{display:grid;grid-template-rows:repeat(3,minmax(0,1fr));gap:5px;flex:1 1 0;min-height:0;margin:0}
+.event-shell-v12 .choice{display:flex;height:100%;min-height:0!important;padding:5px 9px!important;gap:9px;background:#fff;border:2px solid #b5d6e6!important;border-bottom-width:3px!important;border-radius:10px!important;text-align:left}
+.event-shell-v12 .choice.choice-selected{background:#fff3d9!important;border-color:#e6a743!important;box-shadow:inset 0 0 0 1px #fff8e6!important}
+.event-shell-v12 .choice-key{border-radius:8px!important;background:#e8f4ff!important;color:#165b96!important;width:31px!important;height:31px!important;font-weight:1000!important;font-size:15px!important}
+.event-shell-v12 .choice-selected .choice-key{background:#ffb744!important;color:#54360e!important}
+.event-shell-v12 .choice strong{font-size:12.5px!important;color:#274d63!important;line-height:1.2!important}.event-shell-v12 .choice small{font-size:10.5px!important;color:#60809a!important;margin-top:1px!important;line-height:1.25!important}
+.event-forecast{background:#fff8e4;border:1px solid #e5ba73;border-radius:10px;padding:5px 8px;font-size:11px;line-height:1.25;min-height:44px;flex:0 0 auto}.event-forecast b{color:#a25717}.event-forecast p{margin:1px 0;color:#634c30}.event-forecast .blurb{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#6b6860;font-size:10px}
+/* Result cash reconciliation */
+.result-summary{background:#eaf6ff;border:1px solid #a9cddd;border-radius:13px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;gap:6px}
+.result-summary>span{font-size:11px;font-weight:900;color:#356d8c}.result-summary strong{font-size:20px;color:#155c8a;white-space:nowrap}
+.result-profit{font-size:11px;color:#538079}.result-profit b{color:#167758}
+.money-lines-v12{display:flex;flex-direction:column;gap:1px;flex:1 1 auto;min-height:0;overflow:hidden}.money-lines-v12 .money-row{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:3px 7px;font-size:11px;border-bottom:1px dashed #c6dadd;min-height:0;flex:1 1 0}
+.money-lines-v12 .money-row span{color:#44667a}.money-lines-v12 .money-row strong{font-size:13px;white-space:nowrap}.money-row.important{background:#f0f8ff;border-radius:6px}
+.result-explain{font-size:10.5px;line-height:1.4;color:#4c736c;background:#eefaef;padding:6px 8px;border-radius:9px;flex:0 0 auto}
+/* Existing fiscal and final content */
+.finance-tabs button{min-height:36px!important;border-radius:9px!important;font-size:13px!important}.finance-one{min-height:0!important;overflow:auto!important;flex:1 1 auto;border-color:#bcd6e5!important;background:#f7fbff!important}.finance-one td{font-size:12px;padding:5px 0!important}.finance-top{gap:5px}.finance-top span{font-size:10px}.finance-sentence{font-size:11px;line-height:1.45}.final-grid .box{padding:7px!important}.final-grid strong{font-size:18px!important}
+/* Responsive: the entire interaction stays on the first screen; tiny viewports allow panel-only scrolling. */
+@media(max-width:800px){
+ .mainpanel{overflow:hidden!important}.mainpanel>*{max-width:100%}
+ .scene{flex-basis:clamp(120px,25dvh,230px)!important}
+ #app.phase-budget .scene{flex-basis:clamp(98px,19dvh,175px)!important}
+ #app.phase-result .scene,#app.phase-annual .scene{flex-basis:clamp(100px,19dvh,160px)!important}
+ #app.phase-intro .scene{flex-basis:clamp(160px,34dvh,300px)!important}
+}
+@media(max-width:360px){.brand strong{font-size:14px!important}.money-item strong{font-size:20px}.event-shell-v12 .choice strong{font-size:11.5px!important}.event-shell-v12 .choice small{font-size:9.7px!important}.invest-label{font-size:11px!important}.invest-hint{font-size:8.6px!important}.mainpanel{padding:7px!important}.time-tag{font-size:10px;padding:4px 5px}}
+@media(max-height:700px){#app{gap:4px}.header{flex-basis:34px;min-height:34px;height:34px}.money-strip{flex-basis:48px;min-height:48px}.money-item strong{font-size:20px}.scene{flex-basis:clamp(96px,22dvh,158px)!important}#app.phase-budget .scene{flex-basis:clamp(80px,16dvh,130px)!important}.eval-strip{flex-basis:23px;min-height:23px}.mainpanel{padding:7px 9px!important;gap:3px!important}.btn,.actions .btn{min-height:38px!important;height:38px!important;font-size:13px!important}.invest-row .stepper button,.borrow-line .stepper button{width:28px!important;height:28px!important;min-width:28px!important;min-height:28px!important}.money-lines-v12 .money-row{padding:1px 5px;font-size:10px}.event-shell-v12 .choice strong{font-size:11px!important}.event-forecast{font-size:10px;padding:3px 6px;min-height:34px}.hero-line b{font-size:17px}}
+@media(max-height:620px){.scene{flex-basis:84px!important}#app.phase-budget .scene{flex-basis:70px!important}.money-strip{flex-basis:43px;min-height:43px}.eval-strip{font-size:9px;flex-basis:20px;min-height:20px}.mainpanel{overflow:hidden!important}.budget-list{overflow-y:auto!important;grid-template-rows:repeat(5,minmax(42px,1fr))!important}.event-shell-v12 .choice-list{grid-template-rows:repeat(3,minmax(47px,1fr));overflow-y:auto}.event-forecast{min-height:32px;font-size:9px}.event-link{font-size:9px;padding:3px 5px}.result-shell-v12 .money-lines-v12{overflow-y:auto}}
+@media(prefers-reduced-motion:reduce){.scene canvas{animation:none!important}}
+
+
+/* v1.3: mobile-first three-step annual investment wizard */
+.mobile-budget-wizard{display:flex;flex-direction:column;height:100%;min-height:0;gap:9px;color:#23475d}
+.mobile-budget-wizard *{box-sizing:border-box}
+.wz-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex:0 0 auto;font-weight:950;font-size:14px;color:#17527d}
+.wz-headcount{font-size:12px;color:#fff;background:#2672a1;border-radius:20px;padding:5px 12px}
+.wz-progress{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;flex:0 0 auto}
+.wz-progress span{border-radius:8px;padding:7px 3px;background:#edf4f6;border:1px solid #d0dee2;text-align:center;font-size:10.5px;font-weight:850;color:#6a8491;white-space:nowrap}
+.wz-progress span.current{background:#ffe3a2;border:2px solid #e8ae45;color:#73420a}
+.wz-progress span.done{background:#d8f4e2;color:#126342;border:1px solid #9fcfb1}
+.wz-content{flex:1 1 0;min-height:0;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:10px;padding:2px 1px}
+.wz-page-title{font-size:21px;font-weight:1000;line-height:1.25;color:#184c72}
+.wz-money-hero,.wz-review-hero{display:grid;grid-template-columns:1fr 20px 1fr;align-items:center;background:#e5f3ff;border:2px solid #a9d2eb;border-radius:15px;padding:13px 10px;gap:2px}
+.wz-money-hero>div,.wz-review-hero>div{min-width:0;text-align:center}.wz-money-hero>span{text-align:center;color:#2b86b0;font-size:21px}
+.wz-money-hero small,.wz-review-hero small{display:block;color:#45728f;font-size:11px;font-weight:850;line-height:1.3}
+.wz-money-hero strong,.wz-review-hero strong{font-size:32px;color:#135984;line-height:1.3;font-variant-numeric:tabular-nums}
+.wz-money-hero em,.wz-review-hero em{font-style:normal;font-size:14px}
+.wz-formula{border:1px solid #c7dce9;background:#fcfeff;border-radius:12px;padding:9px 12px;display:grid;gap:6px}
+.wz-formula>div{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13.5px;color:#486b7e}.wz-formula b{font-size:16px;color:#1b5b82;white-space:nowrap}
+.wz-formula .total{padding-top:6px;border-top:2px solid #c7dce9;color:#134a73;font-weight:900}.wz-formula .total b{font-size:21px}
+.wz-borrow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:11px 12px;background:#fff6dc;border:1px solid #e8cb8a;border-radius:13px}
+.wz-borrow>div:first-child{display:flex;flex-direction:column;gap:3px;min-width:0}.wz-borrow b{font-size:15px;color:#754e1a}.wz-borrow small{font-size:11px;color:#8e7148}
+.wz-steps,.wz-steps-big{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.wz-steps button,.wz-steps-big button{min-width:46px;min-height:46px;height:46px;width:46px;border:2px solid #9abed4;border-bottom:4px solid #7aa9c1;background:#e5f5ff;border-radius:12px;font-size:28px;color:#145587;font-weight:900;line-height:1}
+.wz-steps button:disabled,.wz-steps-big button:disabled{opacity:.3;cursor:not-allowed}.wz-steps strong{font-size:20px;min-width:35px;text-align:center}.wz-steps strong small{font-size:11px}
+.wz-hint,.wz-disclaimer,.wz-opening{padding:10px 12px;background:#edf8e9;border:1px solid #b6d5b5;border-radius:11px;font-size:12.5px;line-height:1.5;color:#3c6850}
+.wz-hint b{font-weight:950}.wz-opening{background:#f3f9ff;border-color:#c8ddeb;color:#55718c}.wz-opening summary{cursor:pointer;font-weight:800}.wz-opening>div{margin-top:6px}
+.wz-actions{display:flex;gap:8px;flex:0 0 auto;margin-top:auto;padding-top:3px}.wz-actions.duo{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr)}
+.wz-primary,.wz-secondary{height:52px;min-height:52px;border-radius:14px;font-size:15px;font-weight:950;padding:8px 10px;border:2px solid #b96719;border-bottom:5px solid #985018;background:linear-gradient(#ffbb4b,#f3912b);color:#543411;flex:1;white-space:nowrap}
+.wz-secondary{border-color:#9fc2d6;border-bottom-color:#79a6c0;background:#e8f5ff;color:#245f84}
+.wz-mini-progress{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;color:#66869a;font-weight:850}.wz-mini-progress b{font-size:14px;color:#155b8c}
+.wz-dots{display:flex;justify-content:center;gap:7px;flex:0 0 auto}.wz-dots button{width:38px;height:36px;border-radius:10px;border:1px solid #b2cddc;color:#476f87;background:#f0f6f9;font-size:14px;font-weight:900}.wz-dots button.on{background:#ffdf8c;border:2px solid #d9a038;color:#784b13}.wz-dots button.has:not(.on){background:#dff3e8;border-color:#6daf87;color:#216846}
+.wz-invest-card{display:flex;flex-direction:column;align-items:center;gap:6px;justify-content:center;padding:12px 10px;background:linear-gradient(#f4fbff,#eaf7ff);border:2px solid #bdd9e9;border-radius:17px;flex:1 1 auto;min-height:185px;text-align:center}
+.wz-invest-icon{font-size:32px;line-height:1.2}.wz-invest-card h2{font-size:23px;font-weight:1000;line-height:1.25;margin:0;color:#194e78}.wz-invest-detail{font-size:12px;color:#5b7b91;margin:0;line-height:1.25}
+.wz-invest-unit{display:grid;gap:2px;max-width:95%;font-size:11px;color:#658399}.wz-invest-unit strong{font-size:12px;color:#245d80;line-height:1.35}
+.wz-steps-big{margin-top:6px;gap:16px}.wz-steps-big button{height:56px;width:56px;min-width:56px;min-height:56px;font-size:32px}.wz-steps-big>div{min-width:90px;display:grid;gap:0}.wz-steps-big>div b{font-size:44px;color:#0e5b8c;line-height:1}.wz-steps-big>div small{font-size:12px;color:#618295}
+.wz-effect{background:#f1f9ec;border:1px solid #c3dda8;border-radius:12px;padding:8px 11px;color:#316549;font-size:12px;line-height:1.4}.wz-effect p{margin:2px 0}.wz-sticky-summary{display:flex;justify-content:space-between;align-items:center;gap:4px;padding:6px 8px;background:#e8f5ed;border-radius:10px;border:1px solid #c0dbc8;font-size:10px;color:#496b5d;flex:0 0 auto}.wz-sticky-summary b{font-size:13px;color:#126d4b;white-space:nowrap}
+.wz-review-hero{grid-template-columns:1fr 1fr}.wz-review-hero strong.caution{color:#bf6731}.wz-review-list{display:grid;gap:3px;border:1px solid #c6dce6;background:#fbfefe;border-radius:12px;padding:8px 12px}.wz-review-list>div{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:27px;font-size:13px;color:#406883}.wz-review-list strong{font-size:15px;color:#155b88;white-space:nowrap}
+.wz-impact{background:#edf8eb;border:1px solid #c6dfc4;border-radius:11px;padding:9px 11px;font-size:12px;line-height:1.4;color:#365e42}.wz-impact p{margin:3px 0 0}.wz-consequence{padding:7px 10px;background:#e8f8e9;color:#2a7050;border:1px solid #b5d8c2;border-radius:10px;font-size:12px;line-height:1.4;font-weight:850}.wz-consequence.warn{background:#fff1dd;border-color:#e9c793;color:#9a6122}.wz-consequence small{font-size:10px;font-weight:500}
+/* Free the vertical area for investment choices, without modifying other phases. */
+#app.phase-budget .eval-strip,#app.phase-budget .track{display:none!important}
+#app.phase-budget .money-strip{grid-template-columns:1fr 1fr;flex-basis:49px;min-height:49px}
+#app.phase-budget .money-strip .money-item:nth-child(2){display:none}
+#app.phase-budget .money-strip .money-item strong{font-size:22px}
+#app.phase-budget .scene{flex-basis:90px!important;max-height:100px!important;min-height:0!important}
+#app.phase-budget .mainpanel{padding:12px 12px 10px!important;gap:0!important;overflow:hidden!important}
+@media(max-width:400px){#app.phase-budget .scene{flex-basis:73px!important}.mobile-budget-wizard{gap:7px}.wz-head{font-size:13px}.wz-progress span{font-size:9.5px;padding:6px 0}.wz-page-title{font-size:18px}.wz-money-hero{padding:8px}.wz-money-hero strong{font-size:27px}.wz-formula{gap:4px;padding:7px 10px}.wz-formula>div{font-size:12.5px}.wz-formula b{font-size:14px}.wz-borrow{padding:7px 9px}.wz-hint,.wz-disclaimer,.wz-opening{padding:7px 9px;font-size:11px}.wz-invest-card{min-height:140px;padding:7px}.wz-invest-icon{font-size:26px}.wz-invest-card h2{font-size:21px}.wz-steps-big button{width:50px;height:50px;min-width:50px;min-height:50px}.wz-steps-big>div b{font-size:40px}.wz-review-hero strong{font-size:27px}.wz-review-list>div{min-height:24px;font-size:12px}.wz-invest-unit strong{font-size:11px}.wz-effect{padding:6px 8px;font-size:11px}.wz-sticky-summary{font-size:9px;padding:5px}.wz-sticky-summary b{font-size:12px}}
+@media(max-height:690px){#app.phase-budget .scene{flex-basis:54px!important;max-height:54px!important}#app.phase-budget .money-strip{flex-basis:42px;min-height:42px}#app.phase-budget .header{flex-basis:31px!important;min-height:31px!important}.mobile-budget-wizard{gap:5px}.wz-head{font-size:12px}.wz-progress span{padding:4px 0}.wz-page-title{font-size:17px}.wz-content{gap:6px}.wz-invest-card{min-height:110px;padding:4px}.wz-invest-icon{font-size:22px}.wz-steps-big button{min-height:44px;height:44px;min-width:44px;width:44px}.wz-steps-big>div b{font-size:32px}.wz-actions button{height:42px;min-height:42px;font-size:13px}.wz-review-list>div{min-height:19px;font-size:11px}.wz-impact{padding:5px 8px;font-size:11px}.wz-consequence{font-size:11px}.wz-formula>div{font-size:11px}.wz-formula .total b{font-size:16px}.wz-hint{font-size:10.5px}}
+
+
+/* Compact devices: keep the amount controls visible without extra scrolling. */
+@media(max-height:690px){
+ .wz-invest-card .wz-invest-icon,.wz-invest-card .wz-invest-detail,.wz-invest-card .wz-invest-unit>span{display:none}
+ .wz-invest-card{min-height:90px!important;padding:5px 7px;gap:4px}
+ .wz-invest-card h2{font-size:18px}
+ .wz-invest .wz-disclaimer{display:none}
+ .wz-dots button{height:32px;width:34px}
+ .wz-invest-unit strong{font-size:11px}
+ .wz-invest .wz-page-title{font-size:16px}
+ .wz-mini-progress{font-size:10px}
+ .wz-invest .wz-steps-big{gap:10px;margin-top:0}
+ .wz-sticky-summary{padding:3px 6px}
+}
+</style>
+</head>
+<body><main id="app" aria-live="polite"><div style="padding:24px;font:16px/1.8 -apple-system,sans-serif;max-width:600px;margin:auto"><h1>未来つくり鉄道</h1><p>ゲームを読み込んでいます。</p><p>この表示のまま変わらない場合、開いているアプリのプレビューではゲーム用のJavaScriptを実行できません。ブラウザのSafariでWebサイトとして開いてください。</p></div></main><noscript><div style="padding:16px;background:#fff3e8;color:#8b3b20;font-weight:bold">JavaScriptが実行されていないためゲームを開始できません。iPhoneのファイルプレビューではなく、SafariのWebサイトとして開いてください。</div></noscript>
+<script>
+(()=>{'use strict';
+const KEY='mirai-rail-boardgame-v13';
+const CATS=[
+ {key:'equipment',label:'設備投資',desc:'来年の売上が増える／固定資産になる',icon:'🏗️'},
+ {key:'recruit',label:'採用活動費',desc:'来年から社員＋10人・人件費＋1億円',icon:'🧑‍✈️'},
+ {key:'training',label:'リスク対応教育費',desc:'3年目の情報漏えい損失を減らす',icon:'🛡️'},
+ {key:'promotion',label:'販売促進費',desc:'来年の売上が増える',icon:'📣'},
+ {key:'repair',label:'追加修繕費',desc:'来年から安全性が上がる',icon:'🔧'}
+];
+const EVENTS={"1-1":{"title":"回復後の投資配分","description":"駅長：鉄道の利用が戻り始めました。しかし設備も人材も課題があります。限られた資金を何に使いますか？","options":[{"label":"安全設備をまとめて更新","cost":2,"main":"安全＋3","safety":3},{"label":"駅と沿線サービスを拡大","cost":1,"main":"売上＋2億","revenue":2,"satisfaction":1},{"label":"社員教育と業務改善","cost":1,"main":"社員＋2","morale":2}]},"1-2":{"title":"鉄道か、生活サービスか","description":"営業担当：鉄道の安定運行に加え、駅や沿線での買物・生活サービスも求められています。どちらを優先しますか？","options":[{"label":"鉄道の安全と品質を優先","cost":2,"main":"安全＋2・顧客＋1","safety":2,"satisfaction":1},{"label":"生活サービスの収益拡大","cost":1,"main":"売上＋2億・社員−1","revenue":2,"satisfaction":1,"morale":-1},{"label":"小規模な実証から始める","cost":1,"main":"顧客＋1・社員＋1","satisfaction":1,"morale":1}]},"1-3":{"title":"現場負荷と保守計画","description":"保線担当：設備の点検が追いついていません。大型台風が来る前に、どこまで備えますか？","options":[{"label":"予防保全を優先","cost":2,"main":"安全＋3","safety":3},{"label":"増員・外注で保守を両立","cost":1,"main":"安全＋1・社員＋2","safety":1,"morale":2},{"label":"重要箇所だけ段階対応","cost":0,"main":"安全−1・社員−1","safety":-1,"morale":-1}]},"1-4":{"title":"大型台風発生","description":"緊急連絡：台風で設備が損傷し、一部の列車が運休。前の四半期までに安全8以上なら、被害を軽減できます。どう復旧しますか？","options":[{"label":"自己資金で全面早期復旧","cost":2,"main":"安全＋2・顧客＋2","safety":2,"satisfaction":2},{"label":"借入を併用し計画復旧","cost":1,"main":"新規借入＋1億・安全＋1","borrowExtra":1,"safety":1,"satisfaction":1},{"label":"重要区間を優先し復旧","cost":0,"main":"顧客−2・安全−1","satisfaction":-2,"safety":-1}],"major":true,"kind":"typhoon"},"2-1":{"title":"人手不足と採用難","description":"緊急連絡：沿線の利用増で現場の人員が足りません。前年の採用で80人以上なら臨時外注費を回避できます。","options":[{"label":"採用と処遇改善を進める","cost":2,"main":"社員＋3・顧客＋1","morale":3,"satisfaction":1},{"label":"省力化と自動化を進める","cost":2,"main":"売上＋1億・社員−1","revenue":1,"morale":-1},{"label":"協力会社・地域人材と連携","cost":1,"main":"社員＋2・安全−1","morale":2,"safety":-1}],"major":true,"kind":"staff"},"2-2":{"title":"技能継承と世代交代","description":"現場社員：熟練社員の技能が次世代へ伝わっていません。今の運行と将来の人材をどう両立しますか？","options":[{"label":"時間を確保してOJT","cost":1,"main":"社員＋2","morale":2},{"label":"技能を動画・データ化","cost":1,"main":"社員＋1・顧客＋1","morale":1,"satisfaction":1},{"label":"経験者を重要業務へ集中","cost":0,"main":"安全＋1・社員−1","safety":1,"morale":-1}]},"2-3":{"title":"情報精度とデータ活用","description":"企画担当：設備や売上のデータが部署ごとに分かれています。正しい情報を集め、どう意思決定しますか？","options":[{"label":"全社データ統合","cost":2,"main":"顧客＋2・社員−1","satisfaction":2,"morale":-1},{"label":"安全・保守だけで実証","cost":1,"main":"安全＋2","safety":2},{"label":"既存情報で素早く判断","cost":0,"main":"社員−1・安全−2","morale":-1,"safety":-2}]},"2-4":{"title":"AI・DX活用要請","description":"企画担当：AIやデジタル技術の導入が求められています。ただし、現場の負担と費用も無視できません。","options":[{"label":"AI・DXを全社へ一斉導入","cost":2,"main":"売上＋2億・社員−2","revenue":2,"morale":-2},{"label":"重要領域から段階導入","cost":1,"main":"顧客＋1・社員＋1","satisfaction":1,"morale":1},{"label":"データ基盤とルール整備","cost":1,"main":"社員＋2","morale":2}]},"3-2":{"title":"公共性と採算性","description":"自治体担当：利用者が少ない路線を維持してほしいという要請。一方、運行経費も増加しています。","options":[{"label":"公共交通として運行維持","cost":2,"main":"顧客＋2","satisfaction":2},{"label":"採算に合わせサービス再設計","cost":0,"main":"売上＋1億・顧客−2","revenue":1,"satisfaction":-2},{"label":"自治体・外部企業と連携","cost":1,"main":"顧客＋1・社員＋1","satisfaction":1,"morale":1}]},"3-3":{"title":"新型感染症の世界的流行","description":"緊急連絡：感染症の拡大で鉄道利用が急減し、今期の売上見込みが3億円減ります。生活交通と資金をどう守りますか？","options":[{"label":"運行を最大限維持する","cost":2,"main":"顧客＋2・社員−1","satisfaction":2,"morale":-1},{"label":"運行本数を減らし現金確保","cost":0,"main":"社員＋1・顧客−2","morale":1,"satisfaction":-2},{"label":"生活支援事業へ人員転換","cost":1,"main":"売上＋2億・社員−1","revenue":2,"morale":-1,"satisfaction":1}],"major":true,"kind":"pandemic"},"3-4":{"title":"自動運転・無人化革命","description":"社長室：感染症と人手不足を受け、自動運転・遠隔監視が普及。今の現金を使ってどこまで将来に備えますか？","options":[{"label":"全社で一気に自動化","cost":2,"main":"売上＋2億・社員−2","revenue":2,"morale":-2,"safety":-1},{"label":"一部路線から段階導入","cost":1,"main":"安全＋1・社員＋1","safety":1,"morale":1},{"label":"人による運営を中心に維持","cost":0,"main":"社員＋1","morale":1}]}};
+const EVENT_META={"1-1":["💼 経営の出発点","駅長"],"1-2":["🏪 鉄道と生活サービス","営業担当"],"1-3":["🛠 保守・台風準備","保線担当"],"1-4":["🚨 年1回の緊急事態","運行指令"],"2-1":["🚨 年1回の緊急事態","人事担当"],"2-2":["👥 技能継承","現場社員"],"2-3":["📊 データ活用","企画担当"],"2-4":["🤖 AI・DX","企画担当"],"3-2":["🤝 公共性と採算","自治体担当"],"3-3":["🚨 年1回の緊急事態","運行指令"],"3-4":["🚄 自動運転革命","社長室"]};
+const EVENT_STORY={"1-1":"駅長：鉄道の利用が戻り始めました。しかし設備も人材も課題があります。限られた資金を何に使いますか？","1-2":"営業担当：鉄道の安定運行に加え、駅や沿線での買物・生活サービスも求められています。どちらを優先しますか？","1-3":"保線担当：設備の点検が追いついていません。大型台風が来る前に、どこまで備えますか？","1-4":"緊急連絡：台風で設備が損傷し、一部の列車が運休。前の四半期までに安全8以上なら、被害を軽減できます。どう復旧しますか？","2-1":"緊急連絡：沿線の利用増で現場の人員が足りません。前年の採用で80人以上なら臨時外注費を回避できます。","2-2":"現場社員：熟練社員の技能が次世代へ伝わっていません。今の運行と将来の人材をどう両立しますか？","2-3":"企画担当：設備や売上のデータが部署ごとに分かれています。正しい情報を集め、どう意思決定しますか？","2-4":"企画担当：AIやデジタル技術の導入が求められています。ただし、現場の負担と費用も無視できません。","3-2":"自治体担当：利用者が少ない路線を維持してほしいという要請。一方、運行経費も増加しています。","3-3":"緊急連絡：感染症の拡大で鉄道利用が急減し、今期の売上見込みが3億円減ります。生活交通と資金をどう守りますか？","3-4":"社長室：感染症と人手不足を受け、自動運転・遠隔監視が普及。今の現金を使ってどこまで将来に備えますか？"};
+const DECISION_NOTES={"1-1":[["安全設備が増え、今の現金が2億円減ります。","安全設備を更新"],["駅と沿線に収益サービスが増えます。","駅前サービス店が増加"],["社員の業務改善を進めます。","社員の業務改善が進む"]],"1-3":[["台風前の準備を強化します。安全8以上を目指しましょう。","点検と保全が進む"],["保守と社員負担を両立します。","現場の応援体制を整備"],["現金を守れますが、台風時の被害が拡大し得ます。","未整備の箇所が残る"]],"1-4":[["早期復旧を優先し、現金を使います。","被災設備を早期復旧"],["銀行から追加で1億円借り、来年度初めに返済します。","復旧工事を段階的に進行"],["当面の現金を守りますが、復旧と安全に課題が残ります。","一部路線が運休を継続"]],"2-1":[["人件費・処遇改善へ資金を使います。","働く社員を支援"],["省力化を進めますが導入期の負担が残ります。","省力化設備を導入"],["外部と分担して社員を支えます。","地域人材との協力"]],"3-3":[["運行を守るため費用2億円が必要です。","減収下でも運行を維持"],["運行本数を絞り現金を守りますが、お客さまの利便性は低下します。","列車の本数を減らす"],["新しい生活支援事業の収入を試します。","非対面・生活支援を開始"]],"3-4":[["自動化設備への投資で今期の収益は増えるが、移行負担が大きい選択です。","自動運転を広域に展開"],["試して学び、安全と社員の負担を見ながら進めます。","自動化の実証を開始"],["大きな支出を避け、既存の技能を維持します。","人によるサービスを継続"]]};
+const EVENT_VISUALS={"1-1":["安全設備をまとめて更新","駅と沿線サービスを拡大","社員教育と業務改善"],"1-2":["鉄道の安全と品質を優先","生活サービスの収益拡大","小規模な実証から始める"],"1-3":["予防保全を優先","増員・外注で保守を両立","重要箇所だけ段階対応"],"1-4":["ホームと架線を早期修復","復旧工事と臨時借入","一部区間の復旧を先送り"],"2-1":["駅の応援社員が増える","自動化機器が増える","地域の応援人員が来る"],"2-2":["時間を確保してOJT","技能を動画・データ化","経験者を重要業務へ集中"],"2-3":["全社データ統合","安全・保守だけで実証","既存情報で素早く判断"],"2-4":["AI・DXを全社へ一斉導入","重要領域から段階導入","データ基盤とルール整備"],"3-2":["公共交通として運行維持","採算に合わせサービス再設計","自治体・外部企業と連携"],"3-3":["減便せず生活交通を維持","減便で人出が減る","新しい生活支援を始める"],"3-4":["自動改札・遠隔監視を導入","一部駅で自動化を実証","駅員の対面案内を維持"]};
+function chosenPreview(e,idx){
+ const o=e.options[idx], key=`${s.year}-${s.q}`;
+ const note=DECISION_NOTES[key]?.[idx]?.[0]||'目先の費用と会社の状態を比較してください。';
+ const seen=[];
+ if(o.safety)seen.push(`安全 ${o.safety>0?'+':''}${o.safety}`);
+ if(o.satisfaction)seen.push(`顧客 ${o.satisfaction>0?'+':''}${o.satisfaction}`);
+ if(o.morale)seen.push(`社員 ${o.morale>0?'+':''}${o.morale}`);
+ if(o.revenue)seen.push(`売上 +${o.revenue}億（入金は翌期）`);
+ if(o.borrowExtra)seen.push(`短期借入＋${o.borrowExtra}億（来年度返済）`);
+ if(!seen.length)seen.push('直接の指標増加なし');
+ return {o,note,seen:seen.join(' ／ '),scene:EVENT_VISUALS[key]?.[idx]||o.label};
+}
+const blankPL=()=>({revenue:0,personnel:0,operations:0,levies:0,depreciation:0,discretionary:0,incident:0,interest:0,tax:0});
+const blankCF=()=>({operating:0,investing:0,financing:0});
+const zeros=()=>Object.fromEntries(CATS.map(c=>[c.key,0]));
+const initial=()=>({version:1,phase:'intro',year:1,q:1,cash:3,ar:9,ap:4,otherAssets:4,fixed:140,longDebt:85,shortDebt:0,otherLiab:31,equity:36,employees:70,safety:6,satisfaction:6,morale:6,active:{sales:0,payroll:0,training:0,repair:0},planned:zeros(),spent:zeros(),borrowChoice:0,borrowCap:2,borrowed:0,quarterLog:[],history:[],allAllocations:[],pl:blankPL(),cf:blankCF(),openingCash:3,startSettled:false,incidentDone:false,priorCash:3,last:null,reason:'',snapshot:null});
+const clone=s=>JSON.parse(JSON.stringify(s));
+let s=load()||initial();const root=document.getElementById('app');
+function load(){try{const v=JSON.parse(localStorage.getItem(KEY));return v?.version===1&&v.phase?v:null}catch{return null}}
+function store(){try{localStorage.setItem(KEY,JSON.stringify(s))}catch{}}
+function fmt(n){return (n<0?'−':'')+Math.abs(n)+'億円'}
+function signed(n){return (n>0?'+':n<0?'−':'')+Math.abs(n)+'億円'}
+function esc(v){return String(v).replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]))}
+function operatingProfit(p=s.pl){return p.revenue-p.personnel-p.operations-p.levies-p.depreciation-p.discretionary-p.incident}
+function netProfit(p=s.pl){return operatingProfit(p)-p.interest-p.tax}
+function bs(){const assets=s.cash+s.ar+s.otherAssets+s.fixed,liab=s.longDebt+s.shortDebt+s.ap+s.otherLiab+s.equity;return {assets,liab}}
+function invariants(){if(bs().assets!==bs().liab)throw Error(`貸借が不一致: ${JSON.stringify(bs())}`);for(let k of ['cash','ar','ap','otherAssets','fixed','longDebt','shortDebt','otherLiab','equity']){if(!Number.isInteger(s[k]))throw Error(`整数でない残高：${k} ${s[k]}`)} }
+function bankCheck(){invariants();if(s.cash<0){s.reason='現金が不足したため経営を継続できません。';s.phase='bankrupt';return true}return false}
+function cashFlow(kind,amount){s.cash+=amount;s.cf[kind]+=amount}
+function earn(amount){s.pl.revenue+=amount;s.ar+=amount;s.equity+=amount}
+function payExpense(kind,amount){if(amount<=0)return;s.pl[kind]+=amount;s.equity-=amount;cashFlow('operating',-amount)}
+function baseExpense(amount){s.pl.operations+=amount;s.equity-=amount;s.ap+=1;cashFlow('operating',-(amount-1))}
+function capitalSpend(amount){if(amount<=0)return;s.fixed+=amount;cashFlow('investing',-amount)}
+function depreciate(amount){s.fixed-=amount;s.pl.depreciation+=amount;s.equity-=amount}
+function credit(amount){if(amount<=0)return;s.shortDebt+=amount;cashFlow('financing',amount)}
+function settleOpening(repayPrincipal=false){const income=s.ar,expense=s.ap,repayment=repayPrincipal?s.shortDebt:0;s.ar=0;s.ap=0;if(repayPrincipal)s.shortDebt=0;s.cash+=income-expense-repayment;s.cf.operating+=income-expense;s.cf.financing-=repayment;return {income,expense,repayment}}
+function maxLoan(){if(s.year===1)return 2;const last=s.history[s.history.length-1];if(!last)return 2;if(last.profit>=3&&last.opCF>=6&&last.cash>=3&&last.debt<=2)return 3;if(last.profit>=0&&last.opCF>=0&&last.cash>=1)return 2;return 1}
+function beginYear(){budgetStep=0;budgetCatIdx=0;selectedChoice=-1;s.phase='budget';s.q=1;s.pl=blankPL();s.cf=blankCF();s.openingCash=s.cash;s.planned=zeros();s.spent=zeros();s.borrowChoice=0;s.borrowed=0;s.borrowCap=maxLoan();
+ // Effects bought last year only become effective now.
+ if(s.allAllocations.length>0){const last=s.allAllocations[s.allAllocations.length-1];s.employees+=10*last.recruit;s.active.payroll+=last.recruit;s.active.training+=last.training;s.active.repair+=last.repair;const currentSales=s.active.sales;s.active.sales=Math.min(2,currentSales+last.equipment+last.promotion);s.safety=Math.min(10,s.safety+2*last.repair);s.morale=Math.min(10,s.morale+last.recruit)}
+ const settle=settleOpening(true);s.last={kind:'settle',...settle};s.startSettled=true;if(bankCheck())s.reason=`年度初めの精算（入金${settle.income}億円・買掛金支払${settle.expense}億円・借入返済${settle.repayment}億円）後、現金が不足しました。`;store();render()}
+function totalPlanned(){return Object.values(s.planned).reduce((a,b)=>a+b,0)}
+function capacity(){return Math.max(0,s.cash-2)+s.borrowChoice}
+function budgetChange(cat,delta){if(s.phase!=='budget')return;const n=s.planned[cat]+delta;if(n<0||n>4)return;if(delta>0&&totalPlanned()+delta>capacity())return;s.planned[cat]=n;store();render()}
+function setBorrow(v){const next=Math.max(0,Math.min(s.borrowCap,v));if(totalPlanned()>Math.max(0,s.cash-2)+next)return;s.borrowChoice=next;store();render()}
+function commitBudget(){if(s.phase!=='budget'||totalPlanned()>capacity())return;selectedChoice=-1;credit(s.borrowChoice);s.borrowed=s.borrowChoice;s.allAllocations.push(clone(s.planned));s.phase='event';if(bankCheck())return;store();render()}
+function planQuarterCost(quarter){const jobs=[]; // Round-robin staggered payment: each pledged 1-oku block is paid exactly once during the year.
+ let ix=0;for(const c of CATS){for(let n=0;n<s.planned[c.key];n++)jobs.push({cat:c.key,q:ix++%4+1})}return jobs.filter(j=>j.q===quarter)}
+function describePlan(){return `${totalPlanned()}億円を年度内に自動支払い`}
+function settleQuarter(){// Q1 is settled once at the fiscal-year start. Q2-Q4 are settled at turn start.
+ if(s.q===1)return {income:0,expense:0,repayment:0};return settleOpening(false)}
+function runQuarter(optionIndex){if(s.phase!=='event')return;if(s.year===3&&s.q===1)optionIndex=-1;
+ const keyNow=`${s.year}-${s.q}`;const pendingOption=optionIndex>=0?EVENTS[keyNow]?.options[optionIndex]:null;if(pendingOption?.borrowExtra&&s.borrowed+pendingOption.borrowExtra>s.borrowCap)return;
+ const event=EVENTS[`${s.year}-${s.q}`];if(optionIndex!==-1&&(!event||!event.options[optionIndex]))return;
+ const preCash=s.cash,preProfit=netProfit(),quarter=s.q,year=s.year;
+ const routinePayroll=[2,2,2,1][quarter-1]+(quarter===4?s.active.payroll:0);const routineLevies=(quarter===2||quarter===4)?1:0;
+ const settlement=settleQuarter();if(bankCheck()){s.last={kind:'quarter',preCash,preProfit,settlement};store();render();return}
+ earn(9+(quarter===4?s.active.sales:0));payExpense('personnel',routinePayroll);baseExpense(4);
+ if(quarter===2||quarter===4)payExpense('levies',1);
+ depreciate([1,2,1,2][quarter-1]);
+ const yearJobs=planQuarterCost(quarter);for(const job of yearJobs){if(job.cat==='equipment')capitalSpend(1);else payExpense('discretionary',1);s.spent[job.cat]++}
+ let chosen=null,accident=0,shock=null;
+ // Annual emergency consequences: the crisis happens regardless of which response is selected.
+ if(year===1&&quarter===4){const prepared=s.safety>=8;const loss=prepared?1:2;payExpense('incident',loss);if(!prepared)s.safety=Math.max(0,s.safety-2);s.satisfaction=Math.max(0,s.satisfaction-1);shock={title:'台風被害',loss,prepared,detail:prepared?'安全8以上：被害を1億円に軽減':'安全8未満：損失2億円と安全低下'};}
+ if(year===2&&quarter===1){const prepared=s.employees>=80;const loss=prepared?0:1;if(loss)payExpense('incident',loss);if(!prepared)s.morale=Math.max(0,s.morale-1);shock={title:'採用難・現場の欠員対応',loss,prepared,detail:prepared?'社員80人以上：追加の応援費を回避':'臨時応援費1億円・社員状態−1'};}
+ if(year===3&&quarter===3){earn(-3);s.satisfaction=Math.max(0,s.satisfaction-1);shock={title:'感染症による需要減少',loss:3,prepared:false,detail:'売上−3億円（現金入金は翌期に減少）'};}
+
+ if(optionIndex===-1){accident=5-Math.min(3,s.active.training);payExpense('incident',accident);s.incidentDone=true;chosen={label:'情報セキュリティ事故',cost:accident,main:`教育投資により被害${5-accident}億円軽減`}}
+ else {chosen=event.options[optionIndex];if(chosen.borrowExtra){credit(chosen.borrowExtra);s.borrowed+=chosen.borrowExtra;}if(chosen.cost)payExpense('discretionary',chosen.cost);if(chosen.revenue)earn(chosen.revenue);s.safety=Math.max(0,Math.min(10,s.safety+(chosen.safety||0)));s.satisfaction=Math.max(0,Math.min(10,s.satisfaction+(chosen.satisfaction||0)));s.morale=Math.max(0,Math.min(10,s.morale+(chosen.morale||0)))}
+ let periodInterest=0,periodTax=0;
+ if(quarter===4){periodInterest=1;payExpense('interest',periodInterest);if(operatingProfit()-s.pl.interest>0){periodTax=1;payExpense('tax',periodTax)}}
+ // The annual budget is a commitment, not an immediate cash payment.
+ // Explain cash movements with the same amounts the engine actually booked.
+ const plannedPaid=yearJobs.length, choicePaid=optionIndex===-1?0:(chosen.cost||0);
+ const crisisPaid=accident+(shock&&shock.title!=='感染症による需要減少'?shock.loss:0);
+ const routinePaid=routinePayroll+3+routineLevies+periodInterest+periodTax;
+ const extraBorrow=(chosen.borrowExtra||0);
+ const movements=[
+  {label:'前期売上の入金',value:settlement.income},
+  {label:'買掛金等の支払',value:-settlement.expense},
+  {label:'通常運行・給料・税金',value:-routinePaid},
+  {label:'年初に決めた投資の支払',value:-plannedPaid},
+  {label:'今回の経営判断の追加費用',value:-choicePaid},
+  {label:'緊急事態の損失支払',value:-crisisPaid},
+  {label:'イベント時の銀行借入',value:extraBorrow}
+ ];
+ const explained=preCash+movements.reduce((total,m)=>total+m.value,0);
+ if(explained!==s.cash)throw Error(`現金の説明が合いません：${explained} / ${s.cash}`);
+ const yearBudget=totalPlanned(),paidSoFar=Object.values(s.spent).reduce((a,b)=>a+b,0);
+ s.last={movements,yearBudget,paidSoFar,plannedPaid,choicePaid,crisisPaid,kind:'quarter',year,quarter,preCash,preProfit,settlement,chosen,accident,shock,paidJobs:yearJobs,afterCash:s.cash,afterProfit:netProfit(),safety:s.safety,morale:s.morale,satisfaction:s.satisfaction};
+ s.quarterLog.push({year,quarter,chosen:chosen.label,changeCash:s.cash-preCash,net:netProfit()-preProfit});
+ if(bankCheck()){store();render();return}
+ s.phase='result';store();render()}
+function nextFromResult(){if(s.phase!=='result')return;selectedChoice=-1;if(s.q===4){const stat={year:s.year,profit:netProfit(),operatingProfit:operatingProfit(),opCF:s.cf.operating,investCF:s.cf.investing,finCF:s.cf.financing,cash:s.cash,debt:s.shortDebt,employees:s.employees,pl:clone(s.pl),cf:clone(s.cf),bs:clone({cash:s.cash,ar:s.ar,fixed:s.fixed,ap:s.ap,shortDebt:s.shortDebt,equity:s.equity}),openingCash:s.openingCash};s.history.push(stat);s.snapshot=stat;s.phase='annual'}else{s.q++;s.phase='event'}store();render()}
+function nextFromAnnual(){if(s.phase!=='annual')return;if(s.year===3){const projected=s.cash+s.ar-s.ap-s.shortDebt;if(projected<0){s.reason='翌年度初めに借入金を返済すると、現金が不足します。';s.phase='bankrupt'}else s.phase='final';store();render();return}s.year++;beginYear()}
+function projectedCash(){return s.cash+s.ar-s.ap-s.shortDebt}
+function futureScore(){const pool=zeros();for(const a of s.allAllocations)for(const c of CATS)pool[c.key]+=a[c.key];const points=Object.values(pool).reduce((sum,n)=>sum+Math.min(2,n),0);const need=Math.ceil((7+s.active.payroll+16+2+1+1)/2),cash=projectedCash(),penalty=cash>=need?0:cash>=Math.ceil(need/2)?1:2;return {points,penalty,score:Math.max(0,points-penalty),need,cash}}
+function resetGame(){budgetStep=0;budgetCatIdx=0;selectedChoice=-1;if(!window.confirm('現在の経営データを消して、最初から始めますか？'))return;s=initial();store();render()}
+function focusTop(){const target=document.getElementById('gameContent');if(target)target.focus({preventScroll:true})}
+// A camera into an RPG-style town. Render-only view: no financial mutations.
+let rpgFrame=0, rpgFrameHandle=null, rpgTarget=280, rpgHeroX=246, rpgWalk=0;
+function lastYearImprovements(){
+ if(s.year<=1)return [];
+ const prev=s.allAllocations[s.year-2]||{};
+ return CATS.filter(c=>(prev[c.key]||0)>0).map(c=>c.label);
+}
+function pendingProjectNames(){
+ const a=s.phase==='budget'?s.planned:(s.allAllocations[s.year-1]||{});
+ return CATS.filter(c=>(a[c.key]||0)>0).map(c=>c.label);
+}
+function growthPoints(){const amounts=zeros();for(const a of s.allAllocations)for(const c of CATS)amounts[c.key]+=a[c.key]||0;return Math.min(10,Object.values(amounts).reduce((sum,n)=>sum+Math.min(2,n),0));}
+function rpgNarration(){
+  if(s.phase==='intro')return ['駅長','ここは未来町。小さな鉄道会社の3年間が始まります！'];
+  if(s.phase==='budget'){const done=lastYearImprovements();const pending=pendingProjectNames();if(pending.length)return ['駅長',`来年の建設予定：${pending.join('・')}。実際の完成は翌年度です。`];if(done.length)return ['駅長',`昨年の投資が完成！ ${done.join('・')}が街に反映されました。`];return ['駅長',`現金を全部投資せず、次の支払いにも備えよう。`];}
+  if(s.phase==='event'&&s.year===3&&s.q===1)return ['緊急連絡','情報セキュリティ事故！ 過去の教育投資が被害を左右します。'];
+  if(s.phase==='event'){const key=`${s.year}-${s.q}`,e=EVENTS[key],meta=EVENT_META[key];return [meta?meta[1]:'町の人',e?`${e.title}。どの方針を選びますか？`:'次の経営判断です。'];}
+  if(s.phase==='result'){const d=s.last;const k=`${d.year}-${d.quarter}`;const v=EVENT_VISUALS[k]?.[EVENTS[k]?.options.findIndex(o=>o.label===d.chosen?.label)]||d.chosen?.label||'街に変化';return ['駅長',`${v}。街の変化と利益・現金の両方を確認してね。`];}
+  if(s.phase==='annual')return ['決算発表',`${s.year}年目が終了！ 利益だけでなく現金残高も確認しましょう。`];
+  if(s.phase==='bankrupt')return ['駅長','手元現金が尽き、鉄道の運行継続が難しくなりました。'];
+  return ['駅長','3年間の経営が終了しました。未来町はどう成長したでしょうか？'];
+}
+function trainScene(){
+ const isCritical=s.phase==='event'&&(s.year===3&&s.q===1||EVENTS[`${s.year}-${s.q}`]?.major);
+ return `<section class="scene" aria-label="未来町の駅を見下ろす箱庭ゲーム。投資や判断で街が変わります"><canvas id="rpgCanvas" width="480" height="270" role="img" aria-label="斜め見下ろしの駅・列車・沿線の街"></canvas><div class="scene-top"><span class="scene-label green">🚉 未来町駅</span></div>${isCritical?'<div class="scene-warning">⚠ 緊急事態</div>':''}</section>`;
+}
+function startRpgWorld(){
+ if(rpgFrameHandle!==null)cancelAnimationFrame(rpgFrameHandle);
+ const canvas=document.getElementById('rpgCanvas');if(!canvas)return;
+ const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)return;
+ ctx.imageSmoothingEnabled=true;
+ const W=480,H=270;let frame=0,lastTick=0;
+ const prior=s.allAllocations.slice(0,Math.max(0,s.year-1));
+ const active=Object.fromEntries(CATS.map(c=>[c.key,prior.some(v=>(v[c.key]||0)>0)]));
+ const pending=s.phase==='budget'?s.planned:(s.allAllocations[s.year-1]||{});
+ const pendingProjects=CATS.filter(c=>(pending[c.key]||0)>0);
+ const picked=(y,q)=>s.quarterLog?.find(z=>z.year===y&&z.quarter===q)?.chosen||'';
+ const repaired=/安全設備|安全と品質|予防保全|計画復旧|全面早期復旧/.test(s.quarterLog?.map(x=>x.chosen).join(' ')||'');
+ const typhoonDeferred=/重要区間を優先/.test(picked(1,4));
+ const festival=/沿線サービスを拡大|生活サービスの収益拡大/.test(s.quarterLog?.map(x=>x.chosen).join(' ')||'');
+ const automation=/自動化|段階導入/.test(picked(3,4));
+ function polygon(points,fill,stroke=null,width=1){ctx.beginPath();ctx.moveTo(points[0][0],points[0][1]);for(let i=1;i<points.length;i++)ctx.lineTo(points[i][0],points[i][1]);ctx.closePath();ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=width;ctx.stroke()}}
+ function rect(x,y,w,h,color,radius=0){ctx.fillStyle=color;if(radius){ctx.beginPath();ctx.roundRect(x,y,w,h,radius);ctx.fill()}else ctx.fillRect(x,y,w,h)}
+ function line(x1,y1,x2,y2,color,width=1){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.stroke()}
+ function text(t,x,y,size=11,color='#193c3a',weight='700'){ctx.fillStyle=color;ctx.font=`${weight} ${size}px system-ui, sans-serif`;ctx.fillText(t,x,y)}
+ function isoBlock(x,y,w,h,d,roof,side,front){polygon([[x,y],[x+w,y-17],[x+w+d,y-17+d*.38],[x+d,y+d*.38]],roof);polygon([[x,y],[x+d,y+d*.38],[x+d,y+h+d*.38],[x,y+h]],side);polygon([[x+d,y+d*.38],[x+w+d,y-17+d*.38],[x+w+d,y+h-17+d*.38],[x+d,y+h+d*.38]],front)}
+ function tree(x,y,size=1){ctx.save();ctx.translate(x,y);ctx.scale(size,size);ctx.fillStyle='#315940';ctx.beginPath();ctx.ellipse(3,12,17,5,0,0,Math.PI*2);ctx.fill();polygon([[-2,-6],[4,-9],[4,12],[-2,12]],'#786042');for(const [dx,dy,r,c] of [[-8,-14,13,'#317855'],[9,-14,12,'#2c9065'],[0,-24,15,'#53a775'],[-2,-28,7,'#83c78b']]){ctx.beginPath();ctx.arc(dx,dy,r,0,7);ctx.fillStyle=c;ctx.fill()}ctx.restore()}
+ function person(x,y,col,step=0,scale=1){ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);ctx.fillStyle='#355a50';ctx.beginPath();ctx.ellipse(0,11,7,3,0,0,7);ctx.fill();line(-3,6,-4,12,'#283e4a',3);line(3,6,4+(step%2),12,'#283e4a',3);rect(-5,-9,10,16,col,2);rect(-6,-17,12,10,'#f1c69d',3);rect(-7,-20,14,6,'#42535a',4);rect(-7,-6,3,10,'#f1c69d',1);rect(5,-6,3,10,'#f1c69d',1);ctx.restore()}
+ function drawSky(){const g=ctx.createLinearGradient(0,0,0,260);g.addColorStop(0,'#d5eef6');g.addColorStop(.58,'#bbdcca');g.addColorStop(1,'#7fae94');rect(0,0,W,H,g);polygon([[0,71],[480,9],[480,165],[0,239]],'#accaa4');polygon([[0,92],[480,25],[480,176],[0,254]],'#a1c09e');for(let k=0;k<5;k++)tree(18+k*108,49-(k%3)*9,.62);
+  polygon([[0,143],[480,75],[480,129],[0,197]],'#d0d5c4');for(let k=0;k<16;k++)line(k*34,140-k*4.8,k*34+15,148-k*4.8,'#b4c8b3',1);
+  polygon([[0,239],[480,170],[480,270],[0,270]],'#7baf85');for(let x=11;x<460;x+=44){polygon([[x,247-x*.14],[x+7,246-x*.14],[x+7,248-x*.14],[x,249-x*.14]],'#9dc2a4')}
+ }
+ function station(){ // Isometric station with rooftop and depth
+  polygon([[177,93],[358,57],[418,88],[242,124]],'#558f83');
+  polygon([[182,100],[358,66],[408,91],[230,127]],'#e0ecdd');
+  // vertical faces of elevated building
+  polygon([[230,126],[408,90],[408,166],[230,201]],'#d4e1dc','#739189',1);
+  polygon([[182,100],[230,126],[230,201],[182,169]],'#a6c2b4','#6b9486');
+  polygon([[173,94],[356,54],[416,88],[230,132]],'#3b766f','#315e61',2);
+  polygon([[185,91],[355,61],[398,88],[227,122]],'#5ea397');
+  line(198,93,356,65,'#91c9ad',3);
+  // facade windows perspective along near front
+  for(let k=0;k<5;k++){const wx=248+k*31, wy=137-k*6;polygon([[wx,wy],[wx+24,wy-4],[wx+24,wy+19],[wx,wy+24]],'#3f8297','#c9efe8',2);polygon([[wx+2,wy+2],[wx+22,wy-2],[wx+22,wy+6],[wx+2,wy+10]],'#a6e3e9')}
+  // station ground entrance and ticket gate
+  polygon([[303,175],[344,167],[344,196],[303,205]],'#3f7579');
+  polygon([[307,177],[334,172],[334,196],[307,203]],'#91c9d0');
+  polygon([[226,198],[408,162],[425,179],[247,214]],'#789d8e');
+  for(let k=0;k<3;k++){const x=354+k*18;polygon([[x,182-k*3],[x+12,180-k*3],[x+12,188-k*3],[x,190-k*3]],'#c1e3b1');}
+  rect(248,112,99,21,'#f6eed6',4);text('MIRAI  STATION',252,127,12,'#265d59');
+  if(active.equipment){polygon([[234,211],[416,175],[419,184],[234,221]],'#48b4a1');rect(354,155,34,13,'#228a72',3);text('NEW',357,165,10,'#ffffff')}
+  if(active.training){rect(363,185,28,19,'#385f99',3);text('SEC',368,198,9,'#fff6b8')}
+  if(automation){rect(302,203,40,13,'#305d82',3);text('AUTO',307,213,10,'#fff')}
+ }
+ function shop(){isoBlock(57,74,99,51,28,'#d16f56','#b77961','#f5d9ae');
+  polygon([[56,72],[153,50],[187,62],[88,92]],active.promotion?'#da6a58':'#c67e6b');
+  for(let k=0;k<6;k++){const xx=88+k*15,yy=92-k*3;polygon([[xx,yy],[xx+11,yy-2],[xx+11,yy+8],[xx,yy+11]],k%2===0?'#f3efc3':'#d4684d')}
+  rect(103,115,30,23,'#654e47',3);rect(109,117,17,9,'#7bc0b7',2);text('CAFE',94,109,11,'#5a3e38');
+  if(festival||active.promotion){rect(22,64,42,19,'#f5dc67',4);text('EVENT',25,77,9,'#775032');rect(39,83,3,44,'#715d41');}
+  if(active.recruit){person(162,116,'#2f8ea1',frame%7,.8);person(172,119,'#268d86',(frame+1)%6,.8)}
+ }
+ function platform(){ // Slanted track and elevated platform
+  polygon([[0,164],[480,96],[480,143],[0,210]],'#c3c8b8','#91a696',2);
+  polygon([[0,153],[480,85],[480,110],[0,179]],'#e7e2ca','#95a89f',2);
+  line(0,161,480,93,'#ffd46e',4);
+  // slim canopy struts
+  for(const x of [37,138,442]){const y=148-x*.142;line(x,y-18,x,y+7,'#708f89',3);polygon([[x-11,y-19],[x+29,y-25],[x+36,y-20],[x-5,y-13]],'#64a08f')}
+  polygon([[0,189],[480,121],[480,236],[0,270]],'#666c6b');
+  for(let x=-16;x<520;x+=22){let y=205-x*.142;polygon([[x,y],[x+7,y-1],[x+25,y+27],[x+17,y+30]],'#8e8c7a')}
+  for(let d=0;d<2;d++){const gap=36*d;line(0,197+gap,480,129+gap,'#2b3537',8);line(0,195+gap,480,127+gap,'#d6e0db',4);line(0,201+gap,480,133+gap,'#61746a',1)}
+  if(repaired||active.repair){for(let x=9;x<136;x+=18){let y=160-x*.142;line(x,y-14,x,y+3,'#358e70',3);line(x,y-13,x+16,y-16,'#65cb9c',2)}}
+  if(typhoonDeferred){rect(13,178,27,18,'#d3994e',3);text('!',24,192,13,'#713b2b')}
+ }
+ function train(){ // Smooth, three-quarter view with roof thickness and visible sides.
+  const x=56+45*Math.sin(frame/64),y=185-x*.142;
+  ctx.save();ctx.translate(x,y);ctx.rotate(-.14);
+  // train shadow below the track
+  ctx.fillStyle='rgba(24,42,45,.26)';ctx.beginPath();ctx.ellipse(150,35,160,19,0,0,Math.PI*2);ctx.fill();
+  // railcar front face depth and side
+  polygon([[0,-35],[267,-35],[287,-14],[20,-14]],'#e5eef0','#4a777d',2); // rooftop
+  polygon([[20,-14],[287,-14],[287,28],[20,28]],'#eef5ef','#50767b',2);
+  polygon([[0,-35],[20,-14],[20,28],[0,6]],'#b6d7d0','#4b8581',2);
+  polygon([[0,-35],[267,-35],[287,-14],[20,-14]],'#d7e9e7');
+  polygon([[0,-23],[20,-9],[20,17],[0,0]],'#66a2b0');
+  // windows and doors
+  for(let k=0;k<9;k++){const a=30+k*27;rect(a,-8,19,21,'#4a8699',3);rect(a+2,-6,15,8,'#9cd2dc',2);if(k===4){rect(a+7,-7,2,31,'#d2e5d8')}}
+  rect(20,13,267,9,'#149477');rect(0,3,20,8,'#27987b');rect(25,27,254,6,'#83948c');
+  for(let k of [50,120,200,259]){rect(k,29,21,4,'#374a4b',3)}
+  // pantograph
+  line(127,-37,145,-50,'#536866',2);line(145,-50,161,-38,'#536866',2);line(140,-51,151,-51,'#536866',2);
+  ctx.restore();
+ }
+ function draw(ms){if(!canvas.isConnected)return;if(ms-lastTick<62){rpgFrameHandle=requestAnimationFrame(draw);return}lastTick=ms;frame++;
+   drawSky();tree(34,54,.75);tree(445,75,.84);tree(458,245,.92);
+   station();shop();
+   // pedestrians on the plaza, partially behind platforms
+   person(215,100,'#d68162',frame%2,.72);
+   person(414,129,'#387e98',frame%2,.76);
+   if(active.recruit){person(234,153,'#3e91a0',frame%2,.83);person(256,159,'#427fa8',(frame+1)%2,.83)}
+   if(active.promotion){rect(24,129,29,17,'#f1ce6e',3);text('SALE',27,142,10,'#784c37')}
+   platform();train();
+   tree(455,222,.85);tree(14,260,1);
+   if(pendingProjects.length){ // only a plan: outline for next-year upgrade
+     ctx.save();ctx.setLineDash([5,4]);ctx.strokeStyle='#f7e6a3';ctx.lineWidth=2;ctx.strokeRect(315,211,83,22);ctx.restore();rect(329,212,59,15,'rgba(42,70,67,.87)',3);text('工事予定',334,224,10,'#fff4c6');
+   }
+   if(s.phase==='event'&&s.year===1&&s.q===4){for(let i=0;i<12;i++){const x=(i*45+frame*3)%W,y=(i*37+frame*4)%H;line(x,y,x-11,y+16,'#9cd3e7',2)}}
+   if(s.phase==='event'&&s.year===3&&s.q===3){rect(5,197,99,16,'#704d49',4);text('減便・利用減少',9,209,10,'#fff')}
+   if(s.phase==='result'&&s.last?.kind==='quarter'){rect(195,225,274,19,'#244d42',5);let name=s.last.chosen?.label||'経営判断';text(`✓ ${name.slice(0,19)}`,205,239,11,'#f8f6dc')}
+   rpgFrameHandle=requestAnimationFrame(draw);
+ }
+ canvas.addEventListener('pointerdown',ev=>{}); // The scene is visual; no extra tapping is required.
+ if(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches){draw(100);if(rpgFrameHandle!==null)cancelAnimationFrame(rpgFrameHandle);return}
+ rpgFrameHandle=requestAnimationFrame(draw);
+}
+
+function kpis(){
+ return `<section class="money-strip" aria-label="財務状況"><div class="money-item"><small>💰 現金</small><strong>${s.cash}<em>億円</em></strong></div><div class="money-item"><small>📈 今年の営業利益</small><strong>${operatingProfit()}<em>億円</em></strong></div><div class="money-item"><small>🏦 短期借入</small><strong>${s.shortDebt}<em>億円</em></strong></div></section>`;
+}
+function evalStrip(){return `<section class="eval-strip" aria-label="経営評価"><span>🛡安全 <b>${s.safety}</b></span><span>😊満足 <b>${s.satisfaction}</b></span><span>👥社員 <b>${s.morale}</b></span><span>🌱将来 <b>${growthPoints()}</b></span></section>`}
+function track(){return `<div class="track" aria-label="12四半期の進行状況">${Array.from({length:12},(_,i)=>{const current=(s.year-1)*4+s.q-1;return `<div class="block ${s.phase==='final'||i<current?'done':i===current?'now':''}"></div>`}).join('')}</div>`}
+function intro(){return `<div class="eyebrow">経営ゲーム｜3年間・12四半期</div><h1 class="h1">あなたが鉄道会社の社長！</h1><p class="lead">未来町の駅と街を育てよう。年初に投資を計画し、四半期ごとに経営判断。<b>黒字でも現金がないと、来年は投資できません。</b></p><div class="intro-badges"><span>📅 年初投資3回</span><span>⚡ 判断11回</span><span>📊 決算3回</span></div><div class="actions"><button class="btn" data-action="start">▶ 経営をはじめる</button></div>`}
+function investCard(cat){
+ const selected=s.planned[cat.key],rem=capacity()-totalPlanned();
+ const hint={equipment:'翌年から売上＋',recruit:'翌年から社員＋10人／1億',training:'情報漏えいの損失を軽減',promotion:'翌年から売上＋',repair:'翌年から安全＋2／1億'}[cat.key];
+ return `<div class="invest-row"><div class="invest-text"><div class="invest-label">${cat.icon} ${cat.label}</div><div class="invest-hint">${hint}</div></div><div class="stepper"><button aria-label="${cat.label}を1億円減らす" data-action="invest" data-cat="${cat.key}" data-delta="-1" ${selected<=0?'disabled':''}>−</button><b>${selected}</b><button aria-label="${cat.label}を1億円増やす" data-action="invest" data-cat="${cat.key}" data-delta="1" ${selected>=4||rem<1?'disabled':''}>＋</button></div></div>`;
+}
+
+function plannedImpact(){
+ const p=s.planned;
+ const sales=Math.max(0,Math.min(2,s.active.sales+p.equipment+p.promotion)-s.active.sales);
+ const employee=10*p.recruit;
+ const safety=Math.max(0,Math.min(10,s.safety+2*p.repair)-s.safety);
+ const training=Math.max(0,Math.min(3,s.active.training+p.training)-s.active.training);
+ let parts=[];
+ if(sales)parts.push(`売上＋${sales}億円／年`);
+ if(employee)parts.push(`社員＋${employee}人・人件費＋${p.recruit}億円／年`);
+ if(safety)parts.push(`安全＋${safety}`);
+ if(training)parts.push(`事故時の損失を最大${training}億円軽減`);
+ return parts.length?parts.join(' ／ '):'まだ投資を選んでいません';
+}
+function investedEffectNow(){
+ if(s.year===1)return '1年目は年初投資の効果がまだ出ません。イベントはその場の対応で決まります。';
+ const parts=[];
+ if(s.active.sales)parts.push(`売上＋${s.active.sales}億円／年`);
+ if(s.employees>70)parts.push(`社員＋${s.employees-70}人`);
+ if(s.active.repair)parts.push(`修繕による安全対策`);
+ if(s.active.training)parts.push(`情報対策 ${s.active.training}億円分`);
+ return parts.length?`前年までの投資が現在効いています：${parts.join('・')}`:'前年までの投資はありません。今回の判断は独立して行います。';
+}
+function emergencyInvestmentLink(){
+ const key=`${s.year}-${s.q}`;
+ if(key==='1-4')return `台風被害は現在の安全${s.safety}/10で判定。年初の修繕投資は来年度からなので、今回は間に合いません。`;
+ if(key==='2-1')return `前年の採用投資 → 現在${s.employees}人。80人以上なら応援費1億円を回避できます。`;
+ if(key==='3-1')return `過去の教育投資 ${s.active.training}億円 → 情報漏えいの損失を${Math.min(3,s.active.training)}億円軽減します。`;
+ if(key==='3-3')return `感染症の減収は必ず起きます。前年までの投資で増えた売上や社員も、この影響を受けます。`;
+ return investedEffectNow();
+}
+let budgetStep=0, budgetCatIdx=0;
+const BUDGET_HELP={
+ equipment:{detail:'駅・設備を整える投資',unit:'来年から年間売上＋1億円（販促と合計で＋2億円まで）',timing:'来年度から売上増加。設備は固定資産になります。'},
+ recruit:{detail:'仲間を増やして社員の負担を軽くする',unit:'来年から社員＋10人、年間人件費＋1億円',timing:'翌年度から人数と人件費が両方増えます。'},
+ training:{detail:'情報セキュリティ事故への事前対策',unit:'将来の事故損失を1億円軽減（最大3億円）',timing:'3年目の情報漏えいイベントに備えます。'},
+ promotion:{detail:'駅や沿線の利用を増やす',unit:'来年から年間売上＋1億円（設備と合計で＋2億円まで）',timing:'翌年度から売上増加。効果は設備と共通の上限です。'},
+ repair:{detail:'駅・線路の安全を守る',unit:'来年から安全＋2（最大10）',timing:'翌年度初めに安全指標へ反映します。'}
+};
+function wizardTop(){
+ return `<div class="wz-head"><div class="wz-headtitle">📅 ${s.year}年目の投資計画</div><span class="wz-headcount">${budgetStep+1} / 3</span></div>
+ <div class="wz-progress" aria-label="投資計画の進行状況">${['資金を確認','投資を選ぶ','最終確認'].map((label,i)=>`<span class="${budgetStep===i?'current':budgetStep>i?'done':''}">${i+1} ${label}</span>`).join('')}</div>`;
+}
+function wizardBottom(){
+ const t=totalPlanned(),after=s.cash+s.borrowChoice-t;
+ return `<div class="wz-sticky-summary"><span>投資予定 <b>${t}億円</b></span><span>使える残り <b>${capacity()-t}億円</b></span><span>投資分支払後 <b>${after}億円</b></span></div>`;
+}
+function wizardStep1(){
+ const t=totalPlanned(),limit=capacity();
+ const income=s.last?.kind==='settle'?(s.last.income||0):0,expense=s.last?.kind==='settle'?(s.last.expense||0):0,repayment=s.last?.kind==='settle'?(s.last.repayment||0):0;
+ return `<div class="wz-content wz-money">
+  <div class="wz-page-title">💰 今年のお金を確認</div>
+  <div class="wz-money-hero"><div><small>今の現金</small><strong>${s.cash}<em>億円</em></strong></div><span>→</span><div><small>投資に使える上限</small><strong>${limit}<em>億円</em></strong></div></div>
+  <div class="wz-formula"><div><span>今ある現金</span><b>${s.cash}億円</b></div><div><span>− 最低限残すお金</span><b>−2億円</b></div><div><span>＋ 今回借りるお金</span><b>＋${s.borrowChoice}億円</b></div><div class="total"><span>＝ 投資に使える上限</span><b>${limit}億円</b></div></div>
+  <div class="wz-borrow"><div><b>🏦 銀行から借りる</b><small>上限${s.borrowCap}億円・翌年度初めに返済</small></div><div class="wz-steps"><button data-action="borrow" aria-label="借入を1億円減らす" data-value="${s.borrowChoice-1}" ${s.borrowChoice===0||t>Math.max(0,s.cash-2)+s.borrowChoice-1?'disabled':''}>−</button><strong>${s.borrowChoice}<small>億</small></strong><button data-action="borrow" aria-label="借入を1億円増やす" data-value="${s.borrowChoice+1}" ${s.borrowChoice>=s.borrowCap?'disabled':''}>＋</button></div></div>
+  <div class="wz-hint"><b>💡 現金は使い切らなくてOK</b><div>最低2億円は確保。急な支払いに備えるなら、<b>6億円程度</b>を残すのも一つの目安です。</div></div>
+  <details class="wz-opening"><summary>今年の現金が${s.cash}億円になった理由を見る</summary><div>前年度末 ${s.openingCash}億 ＋ 売掛回収 ${income}億 − 買掛支払 ${expense}億 − 前年借入返済 ${repayment}億 ＝ <b>${s.cash}億円</b></div></details>
+ </div><div class="wz-actions"><button class="wz-primary" data-action="budgetNext">投資を選ぶ <span>▶</span></button></div>`;
+}
+function wizardStep2(){
+ const t=totalPlanned(),remaining=capacity()-t,cat=CATS[budgetCatIdx],help=BUDGET_HELP[cat.key],chosen=s.planned[cat.key];
+ const salesRise=Math.max(0,Math.min(2,s.active.sales+s.planned.equipment+s.planned.promotion)-s.active.sales);
+ const effect=cat.key==='equipment'||cat.key==='promotion'?`現在の計画：来年の年間売上＋${salesRise}億円（設備・販促の合計）`:cat.key==='recruit'?`現在の計画：来年の社員＋${chosen*10}人、年間人件費＋${chosen}億円`:cat.key==='training'?`現在の計画：事故損失を最大${Math.max(0,Math.min(3,s.active.training+chosen)-s.active.training)}億円軽減`: `現在の計画：来年の安全＋${Math.max(0,Math.min(10,s.safety+chosen*2)-s.safety)}`;
+ return `<div class="wz-content wz-invest">
+ <div class="wz-page-title">🎯 投資先を決めよう</div>
+ <div class="wz-mini-progress"><span>投資 ${budgetCatIdx+1} / 5</span><span>投資予定 <b>${t}億</b>・残り <b>${remaining}億</b></span></div>
+ <div class="wz-dots" aria-label="投資項目を選ぶ">${CATS.map((c,i)=>`<button aria-label="${c.label}を開く" class="${i===budgetCatIdx?'on':''} ${s.planned[c.key]?'has':''}" data-action="budgetCat" data-idx="${i}">${i+1}</button>`).join('')}</div>
+ <div class="wz-invest-card"><div class="wz-invest-icon" aria-hidden="true">${cat.icon}</div><h2>${cat.label}</h2><p class="wz-invest-detail">${help.detail}</p><div class="wz-invest-unit"><span>1億円投資すると</span><strong>${help.unit}</strong></div>
+ <div class="wz-steps-big"><button data-action="invest" data-cat="${cat.key}" data-delta="-1" aria-label="${cat.label}を1億円減らす" ${chosen<=0?'disabled':''}>−</button><div><b>${chosen}</b><small>億円</small></div><button data-action="invest" data-cat="${cat.key}" data-delta="1" aria-label="${cat.label}を1億円増やす" ${chosen>=4||remaining<1?'disabled':''}>＋</button></div></div>
+ <div class="wz-effect"><b>📈 来年の効果</b><p>${effect}</p></div>
+ <div class="wz-disclaimer">今年は分割して支払い、効果は<strong>来年度から</strong>。今年の緊急イベントへの追加費用は別です。</div>
+ </div>${wizardBottom()}<div class="wz-actions duo"><button class="wz-secondary" data-action="budgetBack">◀ 戻る</button><button class="wz-primary" data-action="budgetNext">${budgetCatIdx===4?'計画を確認':'次の投資'} ▶</button></div>`;
+}
+function wizardStep3(){
+ const total=totalPlanned(), limit=capacity(),after=s.cash+s.borrowChoice-total,impact=plannedImpact();
+ return `<div class="wz-content wz-review"><div class="wz-page-title">✅ 投資計画を確認しよう</div>
+ <div class="wz-review-hero"><div><small>今年支払う投資予算</small><strong>${total}<em>億円</em></strong></div><div><small>投資分支払後の現金</small><strong class="${after<6?'caution':''}">${after}<em>億円</em></strong></div></div>
+ <div class="wz-review-list">${CATS.map(c=>`<div><span>${c.icon} ${c.label}</span><strong>${s.planned[c.key]}億円</strong></div>`).join('')}</div>
+ <div class="wz-impact"><b>🌱 来年度からの効果</b><p>${impact==='まだ投資を選んでいません'?'今回は投資なし。来年度からの投資効果はありません。':impact}</p></div>
+ <div class="wz-consequence ${after<6?'warn':''}">${after<2?'⚠ 最低限の運転資金が不足しています。':after<6?'⚠ 現金は6億円の安心目安を下回ります。予期せぬ出費に注意。':'✓ 現金は6億円の安心目安を確保しています。'}<br><small>※他の入出金を除いた投資支払後の参考額。実際の現金は四半期ごとに変動します。</small></div>
+ <div class="wz-disclaimer">①年初投資は<strong>今年支払い、来年から効果</strong>。②経営イベントの支出は別に発生します。</div></div>
+ <div class="wz-actions duo"><button class="wz-secondary" data-action="budgetBack">◀ 修正する</button><button class="wz-primary" data-action="commit">この計画で開始 ▶</button></div>`;
+}
+function budget(){return `<div class="mobile-budget-wizard">${wizardTop()}${budgetStep===0?wizardStep1():budgetStep===1?wizardStep2():wizardStep3()}</div>`;}
+
+function eventScreen(){
+ if(s.year===3&&s.q===1)return `<div class="event-shell-v12"><div class="eyebrow">🚨 3年目・第1四半期｜緊急イベント</div><h1 class="h1">情報セキュリティ事故が発生！</h1><p class="lead">1・2年目の教育投資が損失を軽減します。今期は3択なしで結果を確認します。</p><div class="result-summary"><span>事故による損失</span><strong>${5-Math.min(3,s.active.training)}億円</strong></div><div class="result-explain">教育投資による軽減：${Math.min(3,s.active.training)}億円。<br>今年の年初投資は来年から効きます。</div><div class="actions"><button class="btn" data-action="incident">事故の結果を見る ▶</button></div></div>`;
+ const key=`${s.year}-${s.q}`,e=EVENTS[key],meta=EVENT_META[key]||['経営判断','駅長'];
+ const selected=selectedChoice>=0?chosenPreview(e,selectedChoice):null;
+ const nowDue=planQuarterCost(s.q).length,link=emergencyInvestmentLink();
+ const crisis=e.major?(e.kind==='typhoon'?`安全${s.safety}/10。8以上なら台風損失が小さくなります。`:e.kind==='staff'?`社員${s.employees}人。80人以上なら追加の応援費を防げます。`:'感染症で売上が3億円減る見込みです。'):null;
+ return `<div class="event-shell-v12"><div class="event-headline"><span class="eyebrow">${s.year}年目・第${s.q}四半期</span><span class="label ${e.major?'major':''}">${e.major?'🚨 緊急イベント':'🎲 経営イベント'}</span></div>
+ <h1 class="h1">${esc(e.title)}</h1><p class="event-context">${esc(e.description)}</p>
+ <div class="event-link"><strong>① 年初投資：</strong>今期 ${nowDue}億支払・効果は来年　<strong>② 今回：</strong>臨時費用は別 ／ ${esc(link).slice(0,43)}${link.length>43?'…':''}</div>
+ ${crisis?`<div class="crisis-banner">⚠ ${esc(crisis)}</div>`:''}
+ <div class="choice-list">${e.options.map((o,i)=>`<button class="choice ${selectedChoice===i?'choice-selected':''}" data-action="pick" data-idx="${i}" aria-pressed="${selectedChoice===i}" ${o.borrowExtra&&s.borrowed+o.borrowExtra>s.borrowCap?'disabled':''}><span class="choice-key">${'ABC'[i]}</span><span class="choice-copy"><strong>${esc(o.label)}</strong><small>追加 ${o.cost}億円 ${o.borrowExtra?`・借入＋${o.borrowExtra}億`:''} ｜ ${esc(o.main)}</small></span><span class="arr">${selectedChoice===i?'✓':'›'}</span></button>`).join('')}</div>
+ <div class="event-forecast" aria-live="polite">${selected?`<b>${esc(selected.o.label)}を選択中</b><p>追加費用 ${selected.o.cost}億円 ／ ${esc(selected.seen)}</p><div class="blurb">${esc(selected.note)}</div>`:'<b>👆 どの方針で進める？</b><p>3案を比較してから、実行してください。</p>'}</div>
+ <div class="actions"><button class="btn" data-action="confirmChoice" ${selectedChoice<0?'disabled':''}>${selectedChoice<0?'方針を選んでください':'この方針で実行する ▶'}</button></div></div>`;
+}
+
+function resultScreen(){
+ const d=s.last,delta=d.afterCash-d.preCash,net=d.afterProfit-d.preProfit;
+ const key=`${d.year}-${d.quarter}`,idx=EVENTS[key]?.options.findIndex(o=>o.label===d.chosen?.label)??-1;
+ const story=d.accident?'教育投資が事故損失を減らしました':EVENT_VISUALS[key]?.[idx]||d.chosen?.label||'街が変わりました';
+ return `<div class="result-shell-v12"><div class="eyebrow">🎉 ${d.year}年目・第${d.quarter}四半期｜経営の結果</div><h1 class="h1">${esc(story)}</h1>
+ <div class="result-summary"><span>💰 現金の変化</span><strong>${d.preCash}億 → <span id="cashAnimated" data-from="${d.preCash}" data-to="${d.afterCash}">${d.afterCash}億円</span></strong></div>
+ <div class="result-profit">📈 今期の純利益の増減 <b>${signed(net)}</b> ／ 現金増減 <b>${signed(delta)}</b></div>
+ <div class="money-lines-v12"><div class="money-row important"><span>現金の増減内訳</span><strong>${signed(delta)}</strong></div>${d.movements.filter(m=>m.value!==0||m.label==='年初に決めた投資の支払').map(m=>`<div class="money-row"><span>${esc(m.label)}</span><strong class="${m.value<0?'negative':'positive'}">${signed(m.value)}</strong></div>`).join('')}</div>
+ <div class="result-explain">① 年初投資 ${d.yearBudget}億のうち支払済 ${d.paidSoFar}億（効果は来年）。② 今回の臨時費用 ${d.choicePaid}億は別支出。${d.shock?`⚠ ${esc(d.shock.title)}の影響あり。`:''}<br>利益と現金が違うのは、売上は今期計上・入金は翌期だからです。</div>
+ <div class="actions"><button class="btn" data-action="nextQuarter">${d.quarter===4?'年度末の決算を見る':'次の四半期へ'} ▶</button></div></div>`;
+}
+
+function row(name,val,emph=false){return `<tr class="${emph?'emph':''}"><td>${esc(name)}</td><td>${val}</td></tr>`}
+let financeTab='pl', selectedChoice=-1; // A tentative choice never changes the accounts
+function annualScreen(){const d=s.snapshot,p=d.pl,cf=d.cf;const assets=bs().assets,liab=bs().liab;
+ const plrows=[row('売上',fmt(p.revenue)),row('人件費',fmt(-p.personnel)),row('営業費用・追加費',fmt(-p.operations-p.discretionary-p.incident)),row('諸税・減価償却',fmt(-p.levies-p.depreciation)),row('営業利益',fmt(d.operatingProfit),true),row('利息・法人税',fmt(-p.interest-p.tax)),row('当期純利益',fmt(d.profit),true)];
+ const bsrows=[row('現金',fmt(s.cash)),row('売掛金・その他資産',fmt(s.ar+s.otherAssets)),row('固定資産',fmt(s.fixed)),row('資産合計',fmt(assets),true),row('負債',fmt(s.longDebt+s.shortDebt+s.otherLiab+s.ap)),row('純資産',fmt(s.equity)),row('負債＋純資産',fmt(liab),true)];
+ const cfrows=[row('営業CF',fmt(cf.operating)),row('投資CF',fmt(cf.investing)),row('財務CF',fmt(cf.financing)),row('現金の増減',fmt(cf.operating+cf.investing+cf.financing),true),row('期首現金',fmt(d.openingCash)),row('期末現金',fmt(s.cash),true)];
+ const datas={pl:{title:'P/L：今年はいくら儲かった？',rows:plrows},bs:{title:'B/S：現金・資産・負債は？',rows:bsrows},cf:{title:'C/F：現金はどう動いた？',rows:cfrows}};
+ const active=datas[financeTab]||datas.pl;
+ return `<div class="eyebrow">${s.year}年目｜年度末決算</div><div class="finance-top"><h1 class="h1">3つの財務諸表</h1><span>利益 ${signed(d.profit)} ／ 現金 ${fmt(s.cash)}</span></div><div class="finance-tabs" role="group" aria-label="見る財務諸表">${[['pl','P/L'],['bs','B/S'],['cf','C/F']].map(([v,label])=>`<button data-action="tab" data-tab="${v}" class="${financeTab===v?'selected':''}" aria-pressed="${financeTab===v}">${label}</button>`).join('')}</div><div class="sheet finance-one"><h3>${active.title}</h3><table>${active.rows.join('')}</table></div><div class="finance-sentence">${financeTab==='pl'?'利益は現金と同じではありません。':financeTab==='bs'?'設備投資は現金を減らし、固定資産を増やします。':'営業・投資・財務の現金の流れを確認しましょう。'} ${assets===liab?'':'※貸借不一致（要検証）'}</div><div class="actions"><button class="btn" data-action="nextYear">${s.year===3?'最終結果へ':'翌年度の投資へ'} ▶</button></div>`
+}
+function finalScreen(){const score=futureScore(),total=s.history.reduce((a,h)=>a+h.profit,0),review=total>4&&score.score>=6?'財務と将来への投資を両立できました。':total<0?'利益を生む仕組みの見直しが必要です。':score.cash<score.need?'経営を続けましたが、現金と返済に注意が必要です。':'利益・現金・安全の関係を振り返りましょう。';return `<div class="eyebrow">経営シミュレーション完了</div><h1 class="h1">3年間の経営結果</h1><div class="final-grid"><div class="box"><div class="desc">累計純利益</div><strong>${fmt(total)}</strong></div><div class="box"><div class="desc">翌年期首の現金</div><strong>${fmt(score.cash)}</strong></div><div class="box"><div class="desc">短期借入残高</div><strong>${fmt(s.shortDebt)}</strong></div><div class="box"><div class="desc">将来性</div><strong>${score.score} / 10点</strong></div></div><p class="finance-sentence">${review} 現金を確保するのは、次の投資を選べるようにするためです。</p><div class="actions"><button class="btn" data-action="restart">もう一度経営する ▶</button></div>`}
+function bankruptScreen(){return `<div class="eyebrow">経営シミュレーション終了</div><h1 class="h1 negative">現金不足で経営終了</h1><p class="lead">${esc(s.reason)}</p><div class="delta"><div class="box"><div class="boxtitle">現金</div><div class="big negative">${fmt(s.cash)}</div></div><div class="box"><div class="boxtitle">純利益</div><div class="big">${fmt(netProfit())}</div></div></div><p class="finance-sentence">利益が黒字でも、支払いに使える現金がなければ投資や事業継続はできません。</p><div class="actions"><button class="btn" data-action="restart">再挑戦する ▶</button></div>`}
+function render(){let content='';try{invariants();}catch(e){console.error(e);content=`<p>会計データの整合性エラーです。試作版のデータを初期化してください。</p><button class="btn" data-action="restart">やり直す</button>`}
+ if(!content)content=({intro,budget,event:eventScreen,result:resultScreen,annual:annualScreen,final:finalScreen,bankrupt:bankruptScreen})[s.phase]?.()||intro();
+ root.innerHTML=`<header class="header"><div class="brand"><div class="brand-logo">🚆</div><div><strong>未来つくり鉄道</strong></div></div><div class="time-tag">${s.phase==='intro'?'START':`${s.year}年目・Q${s.q}`}</div><div class="header-right"><button class="ghost" data-action="help">遊び方</button><button class="ghost" data-action="restart">最初から</button></div></header>${kpis()}${trainScene()}${evalStrip()}${track()}<section id="gameContent" class="mainpanel vis-transition" tabindex="-1">${content}</section><div class="footer">未来つくり鉄道 v1.3｜ゲーム内金額は整数億円｜オリジナルの経営ボードゲームUI</div>`;
+ root.className='phase-'+s.phase;bind();startRpgWorld();if(s.phase==='result')animateCash()}
+function animateCash(){const el=document.getElementById('cashAnimated');if(!el||window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)return;const from=Number(el.dataset.from),to=Number(el.dataset.to);const start=performance.now();const duration=500;function frame(t){if(!el.isConnected)return;const d=Math.min(1,(t-start)/duration);el.textContent=fmt(Math.round(from+(to-from)*(1-Math.pow(1-d,3))));if(d<1)requestAnimationFrame(frame)}requestAnimationFrame(frame)}
+function help(){alert('【未来つくり鉄道】\n・3年間（12四半期）を経営します。\n・各年初に5項目へ1億円ずつ投資配分します。\n・運転資金2億円を残し、現金と借入の範囲で投資を計画します。支払いは四半期ごと、効果は翌年からです。\n・銀行借入を選べますが、翌年度初めに元本を全額返済します。\n・四半期イベントの3択で経営を判断します。\n・3年目Q1は情報漏えい事故の自動結果確認です。\n・各年度末にP/L・B/S・C/Fの3表を見ます。\n・金額はすべて整数の億円、結果は自動保存されます。')}
+function bind(){root.querySelectorAll('[data-action]').forEach(el=>{el.addEventListener('click',()=>{const action=el.dataset.action;try{if(action==='start'){beginYear();focusTop();return}if(action==='restart'){resetGame();return}if(action==='help'){help();return}if(action==='budgetNext'){if(s.phase==='budget'){if(budgetStep===0)budgetStep=1;else if(budgetStep===1){if(budgetCatIdx<4)budgetCatIdx++;else budgetStep=2;}render();}return}if(action==='budgetBack'){if(s.phase==='budget'){if(budgetStep===2){budgetStep=1;budgetCatIdx=4;}else if(budgetStep===1){if(budgetCatIdx>0)budgetCatIdx--;else budgetStep=0;}render();}return}if(action==='budgetCat'){if(s.phase==='budget'){budgetStep=1;budgetCatIdx=Math.max(0,Math.min(4,Number(el.dataset.idx)));render();}return}if(action==='tab'){financeTab=el.dataset.tab;render();return}if(action==='borrow'){setBorrow(Number(el.dataset.value));return}if(action==='invest'){budgetChange(el.dataset.cat,Number(el.dataset.delta));return}if(action==='commit'){commitBudget();focusTop();return}if(action==='pick'){selectedChoice=Number(el.dataset.idx);render();return}if(action==='confirmChoice'){if(selectedChoice<0)return;const index=selectedChoice;selectedChoice=-1;runQuarter(index);focusTop();return}if(action==='choice'){runQuarter(Number(el.dataset.idx));focusTop();return}if(action==='incident'){runQuarter(-1);focusTop();return}if(action==='nextQuarter'){nextFromResult();focusTop();return}if(action==='nextYear'){nextFromAnnual();focusTop();return}}catch(e){console.error(e);alert('計算エラーが発生しました。コンソールとゲームの状態を確認してください。')}})})}
+// Public test-only hooks: invoked by developer tools without affecting the participant UI.
+window.__MIRAI_TEST__={getState:()=>clone(s),reset:()=>{s=initial();store();render()},start:()=>beginYear(),borrow:setBorrow,allocate:budgetChange,commit:commitBudget,turn:runQuarter,next:nextFromResult,advance:nextFromAnnual,assert:invariants,allEvents:EVENTS};
+render();
+})();
+</script>
+</body></html>
