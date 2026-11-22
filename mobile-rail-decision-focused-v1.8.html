@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1c6395"><title>未来つくり鉄道｜経営判断特化版 v1.8</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;color:#203c51;--blue:#256c9f;--navy:#144c79;--sky:#e9f5fc;--orange:#f7a933;--line:#c5dce9;--cream:#fff9ec;--green:#177f5f}*{box-sizing:border-box}html{background:#cdeaf9}body{margin:0;min-height:100dvh;background:linear-gradient(#d9f2ff,#e5f5ef);-webkit-tap-highlight-color:transparent}button{font:inherit;touch-action:manipulation;cursor:pointer}button:disabled{cursor:not-allowed;opacity:.48}button:focus-visible{outline:3px solid #ffb438;outline-offset:3px}#app{width:min(100%,540px);margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;padding:env(safe-area-inset-top) 11px calc(18px + env(safe-area-inset-bottom));gap:10px}.top{display:flex;align-items:center;gap:8px;padding:9px 1px 0}.logo{display:grid;place-items:center;border-radius:11px;background:#216b9c;color:white;width:39px;height:39px;font-size:23px;flex-shrink:0;box-shadow:0 4px 0 #144b70}.brand{font-weight:950;font-size:19px;letter-spacing:-.045em;white-space:nowrap}.year{margin-left:auto;background:#fff2c5;border:2px solid #e6a642;color:#855414;white-space:nowrap;padding:6px 9px;border-radius:12px;font-size:12px;font-weight:900}.iconbtn{padding:7px;background:#fff;border:2px solid #bad4e5;border-radius:10px;color:#235a7f;font-weight:800;white-space:nowrap;font-size:12px}.scorebar{display:grid;grid-template-columns:repeat(3,1fr);border-radius:15px;background:linear-gradient(135deg,#1c6296,#163e72);color:white;padding:8px 6px;box-shadow:0 5px 0 #94bfd7}.score{text-align:center;border-right:1px solid #7cacc9}.score:last-child{border:0}.score small{display:block;font-size:11px;color:#d5ecfd}.score b{display:block;font-size:23px;line-height:1.2;color:#fff}.score.cash b{color:#ffdf6d}.score em{font-style:normal;font-size:12px}.scene{position:relative;min-height:180px;height:clamp(172px,27dvh,260px);border:4px solid #8cb6ca;border-radius:20px;overflow:hidden;background:#91cee6;box-shadow:0 4px 0 #abc9cd;flex-shrink:0}.scene svg{width:100%;height:100%;display:block}.scene .scene-tag{position:absolute;top:9px;left:10px;border-radius:100px;background:#fff9e7e8;border:1px solid #daab58;padding:4px 9px;font-size:11px;font-weight:900}.scene .scene-note{position:absolute;bottom:8px;left:9px;background:#f3fff2ee;color:#17543d;border:1px solid #8bbc9d;border-radius:7px;padding:4px 9px;font-size:11px;font-weight:800;max-width:95%;pointer-events:none}.train-move{animation:railmove 6s ease-in-out infinite alternate}@keyframes railmove{from{transform:translateX(-12px)}to{transform:translateX(16px)}}.littlebob{animation:bob 2s ease-in-out infinite alternate}@keyframes bob{to{transform:translateY(-2px)}}@media(prefers-reduced-motion:reduce){.train-move,.littlebob{animation:none!important}}.content{background:#fffdf7;border:3px solid #94bfd8;border-radius:20px;box-shadow:0 5px 0 #9bbfd0;padding:15px;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:11px}.eyebrow{font-size:12px;font-weight:900;color:#367aa6;letter-spacing:.02em}.title{font-size:20px;font-weight:950;line-height:1.3;margin:0}.lead{font-size:13px;line-height:1.5;color:#4b6574;margin:0}.message{padding:10px 12px;background:#f0f7fc;border-left:5px solid #40a2cc;border-radius:9px;font-size:13px;line-height:1.5}.choice-list{display:grid;gap:8px}.choice{width:100%;text-align:left;background:#fff;border:2px solid #bed9e9;border-bottom:4px solid #8db6ce;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:9px;min-height:66px;color:#263f53}.choice.active{background:#fff1c7;border-color:#e19d36;border-bottom-color:#c47e13}.letter{background:#1c659b;color:#fff;border-radius:10px;display:grid;place-items:center;font-size:18px;font-weight:950;width:39px;height:39px;flex:0 0 39px}.choice.active .letter{background:#d48021}.choice-t{min-width:0;display:flex;flex-direction:column;gap:3px}.choice-t strong{font-size:15px;line-height:1.26}.choice-t small{font-size:11px;color:#586d7f;line-height:1.35}.choice .lock{font-size:12px;margin-left:auto;color:#a94839}.hint{font-size:12px;line-height:1.48;color:#4c6a79}.impact{background:#edf8f2;border:1px solid #b9d8c7;border-radius:11px;padding:10px 12px;display:grid;gap:5px;font-size:12px}.impact strong{font-size:13px;color:#286c53}.impact .forecast{display:grid;grid-template-columns:1fr 1fr;gap:7px}.mini{background:#fff;border:1px solid #d3e6dc;border-radius:8px;padding:8px}.mini small{display:block;color:#5a7777;font-size:11px}.mini b{font-size:17px}.actions{display:grid;gap:7px;margin-top:auto}.btn{display:block;width:100%;min-height:48px;background:linear-gradient(#ffbf56,#f69a26);color:#663b12;font-size:16px;font-weight:950;border-radius:13px;border:2px solid #cd8132;border-bottom:5px solid #a85a20;box-shadow:0 2px 0 #e5d2ab}.btn.alt{background:#edf6fd;color:#225d85;border-color:#a9c9dc;border-bottom-color:#719bb1;box-shadow:none}.btn.small{min-height:39px;font-size:13px}.step-chip{background:#ecf6fb;border-radius:8px;padding:7px;font-size:11px;font-weight:850;color:#497896}.line{display:flex;justify-content:space-between;gap:8px;align-items:baseline;font-size:13px}.line strong{white-space:nowrap}.lines{display:grid;gap:6px}.cashbook{background:#f4f9ff;border-radius:12px;border:1px solid #c6dce9;padding:11px;display:grid;gap:6px}.cashbook .line{font-size:12px}.cashbook .line.total{border-top:2px solid #c2d7e6;padding-top:7px;font-size:15px;font-weight:950}.plus{color:#0e8d69}.minus{color:#bd503b}.banner{background:#fff0d5;border:1px solid #e5bc74;padding:9px;border-radius:9px;font-size:12px;color:#83501b;line-height:1.4}.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.tabs button{border:2px solid #b5d3e5;background:#ecf7fd;border-radius:9px;padding:9px 0;font-size:13px;font-weight:950;color:#36739a}.tabs button.active{background:#fabb53;border-color:#d9902d;color:#673e1c}.fin-table{width:100%;border-collapse:collapse;font-size:13px}.fin-table td{border-bottom:1px solid #dce8e8;padding:8px 5px}.fin-table td:last-child{text-align:right;font-weight:850;white-space:nowrap}.fin-table tr.emph{background:#fff0c9;font-weight:950}.review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.review-grid>div{border:1px solid #c6dbeb;border-radius:10px;background:#f4faff;padding:10px}.review-grid small{display:block;color:#56788b}.review-grid b{display:block;font-size:20px}.footer{font-size:10px;text-align:center;color:#658698;margin-bottom:5px}.short{font-size:11px;color:#56788b;line-height:1.5}.status-row{display:flex;flex-wrap:wrap;gap:5px}.status-row span{background:#eff6fb;border:1px solid #ccdfec;border-radius:8px;font-size:11px;padding:5px 7px}.scene-fallback{background:#b8e2ef;height:100%}@media(max-width:380px){#app{padding-left:8px;padding-right:8px;gap:7px}.brand{font-size:16px}.year{padding:5px 7px;font-size:11px}.iconbtn{font-size:11px;padding:6px}.scene{height:clamp(152px,24dvh,188px);min-height:150px}.content{padding:11px;gap:8px}.title{font-size:18px}.lead{font-size:12px}.choice{min-height:59px;padding:7px 9px}.choice-t strong{font-size:13px}.choice-t small{font-size:10px}.message{font-size:12px;padding:8px}.impact{padding:8px}.score b{font-size:21px}}@media(max-height:750px){.scene{height:clamp(130px,22dvh,180px)}.top{padding-top:3px}.content{gap:7px}.choice{min-height:56px;padding:7px 9px}.choice-list{gap:6px}.title{font-size:18px}.lead{font-size:12px}.btn{min-height:43px}.impact{padding:8px}}@media(max-height:650px){.scene{height:125px;min-height:125px}.content{padding:9px;gap:6px}.message{padding:6px;font-size:11px}.choice{min-height:49px}.score b{font-size:19px}}.hidden{display:none}
+
+@media(max-width:600px){
+ .scene{height:143px;min-height:143px;flex-shrink:0}
+ .content{padding:10px;gap:6px;border-width:2px}
+ .title{font-size:18px;line-height:1.2}
+ .lead{font-size:12px;line-height:1.3}
+ .choice-list{gap:5px}
+ .choice{min-height:54px;padding:6px 8px;border-bottom-width:3px}
+ .letter{width:34px;height:34px;flex-basis:34px;font-size:16px}
+ .choice-t strong{font-size:13px}
+ .choice-t small{font-size:10px}
+ .step-chip{padding:5px;font-size:10px}
+ .hint{font-size:10px;line-height:1.3}
+ .btn{min-height:42px;font-size:14px}
+ .scorebar{padding:5px}
+ .score b{font-size:20px}
+ .status-row{gap:3px;justify-content:space-between}
+ .status-row span{padding:3px 4px;font-size:10px}
+ .scene .scene-tag{font-size:10px;padding:2px 6px;top:5px;left:5px}
+ .scene .scene-note{font-size:10px;padding:3px 6px;bottom:4px}
+}
+@media(max-width:380px){.scene{height:125px;min-height:125px}.top{padding-top:0}.choice{min-height:50px}.content{gap:5px}.score b{font-size:18px}}
+
+/* v1.8: Phase2 (original) retro menu + decision-game skin. Simulation engine unchanged. */
+:root{--retro-sky:#68b9ee;--retro-screen:#07111e;--retro-border:#05090f;--retro-panel:#10253a;--retro-white:#f8fbff;--retro-blue:#2f9df4;--retro-green:#38ce7a;--retro-gold:#ffd45a;--retro-muted:#abc0d1;--retro-red:#ff5b57;--retro-focus:#fff27a}
+html{background:#68b9ee}
+body{color:#f8fbff;background:radial-gradient(ellipse 80px 28px at 12% 10%, #ffffffc0 0 58%, transparent 60%),radial-gradient(ellipse 105px 34px at 76% 15%, #ffffffbd 0 58%, transparent 60%),linear-gradient(166deg, transparent 0 72%, #4e94a3 72.2% 78%, transparent 78.2%),linear-gradient(194deg, transparent 0 74%, #357984 74.2% 82%, transparent 82.2%),linear-gradient(180deg,#72c8f7 0,#68b9ee 62%,#b8e2f3 100%)}
+#app{width:min(100%,640px);height:100dvh;min-height:0;max-height:100dvh;margin:auto;padding:8px 9px calc(8px + env(safe-area-inset-bottom));gap:0;overflow:hidden;display:block}
+.retro-cabinet{height:100%;min-height:0;display:flex;flex-direction:column;position:relative;background:var(--retro-border);border:5px solid var(--retro-border);border-radius:7px;box-shadow:0 10px 0 #0b22313b;overflow:hidden}
+.retro-screen{min-height:0;flex:1 1 auto;background:var(--retro-screen);border:5px solid var(--retro-white);display:flex;flex-direction:column;color:var(--retro-white)}
+.retro-floor{height:64px;min-height:38px;flex:0 0 64px;background:repeating-linear-gradient(90deg,#8b5d3b 0 18px,#537a52 18px 44px,#8b5d3b 44px 54px,#547953 54px 80px),linear-gradient(180deg,#dcaa71,#a17147);border:5px solid var(--retro-white);border-top:0;box-shadow:inset 0 0 0 1px #24371d}
+.retro-title{align-items:center;justify-content:space-between;padding:clamp(16px,3.5dvh,36px) 25px 20px;text-align:center;gap:0}
+.front-loco{flex:0 0 auto;margin:auto auto 4px;transform:scale(.9);filter:drop-shadow(4px 6px 0 #000)}
+.intro-kicker{font-size:clamp(13px,2.4vw,17px);font-weight:900;color:#b9cddd;line-height:1.5;white-space:nowrap}
+.big-title{margin:15px 0 0;color:var(--retro-white);font-weight:1000;font-size:clamp(28px,8vw,51px);letter-spacing:-.04em;line-height:1.15;white-space:nowrap;text-shadow:4px 5px #000}
+.intro-sub{font-size:clamp(18px,5.5vw,27px);color:var(--retro-gold);font-weight:950;letter-spacing:.12em;margin:8px 0 12px}
+.turn-label{font-size:clamp(16px,4.5vw,22px);font-weight:900;border:3px solid #53708a;padding:8px 18px;background:#10253a;display:inline-block;color:#fff}
+.start-actions{width:100%;display:grid;gap:11px;max-width:500px;margin:clamp(16px,5dvh,38px) auto 10px}
+.start-btn{min-height:69px;border-radius:2px!important;border:4px solid #fff!important;box-shadow:5px 6px 0 #000!important;font-size:clamp(18px,4.5vw,23px)!important;font-weight:950;color:var(--retro-white);background:var(--retro-blue);width:100%;line-height:1.15}
+.start-btn:disabled{opacity:.56;cursor:not-allowed}
+.start-btn.new{min-height:88px;border-color:var(--retro-gold)!important;background:var(--retro-green);color:var(--retro-screen);animation:menu-glow 2.8s ease-in-out infinite}
+.start-btn.new small{display:block;font-size:13px;letter-spacing:.22em;margin-bottom:7px}
+.start-btn.new strong{display:block;font-size:21px}
+.start-btn.restart{background:#dbeaf1;color:#07111e}
+.title-help{font-size:11px;line-height:1.4;color:#a9beca;margin-top:9px}
+@keyframes menu-glow{50%{filter:brightness(1.12)}}
+.game-mode .retro-screen{padding:6px 8px 4px;gap:6px;overflow:hidden}
+.game-mode .retro-floor{height:30px;flex-basis:30px}
+.game-mode .top{padding:0;min-height:34px;gap:5px}
+.game-mode .brand{color:#fff;font-size:clamp(15px,4vw,20px);text-shadow:2px 2px #000;letter-spacing:-.04em}
+.game-mode .logo{width:27px;height:27px;background:#254d72;border:1px solid #628eab;border-radius:2px;font-size:16px;box-shadow:none}
+.game-mode .year{border:2px solid #516d8b;background:#163652;color:#ffde6f;font-size:10px;border-radius:2px;padding:4px 5px}
+.game-mode .iconbtn{min-height:28px;padding:3px 6px;background:#153a5b;border:2px solid #7297b7;border-radius:2px;color:#fff;font-size:11px}
+.game-mode .scorebar{border:2px solid #426687;box-shadow:none;border-radius:2px;padding:4px;background:#10253a;grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
+.game-mode .score{border-right:1px solid #45627c;min-width:0}.game-mode .score small{font-size:10px;color:#abc0d1}.game-mode .score b{font-size:19px;color:#fff}.game-mode .score.cash b{color:#ffd45a}.game-mode .score em{font-size:10px}
+.game-mode .scene{height:clamp(105px,19dvh,167px)!important;min-height:105px!important;border-radius:2px;border:3px solid #f8fbff;box-shadow:0 0 0 2px #07111e;margin:0;flex:0 0 auto}
+.game-mode .scene .scene-tag{font-size:9px;top:4px;left:4px;background:#0b3b64ee;color:#fff;border-color:#d3e9f8;border-radius:2px}
+.game-mode .scene .scene-note{font-size:9px;bottom:4px;left:4px;color:#082737;border-color:#fff;border-radius:2px;background:#e8f8f5e9}
+.game-mode .content{background:#10253a;border:2px solid #53708a;box-shadow:3px 3px 0 #05090f;border-radius:2px;padding:9px 10px;gap:6px;flex:1 1 0;min-height:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#53708a transparent}
+.game-mode .eyebrow{color:#ffd45a;font-size:11px}
+.game-mode .title{color:#f8fbff;font-size:clamp(16px,4.1vw,21px);text-shadow:2px 2px #000}
+.game-mode .lead{color:#d8e9f5;font-size:12px;line-height:1.4}
+.game-mode .choice-list{gap:6px}
+.game-mode .choice{background:#163d60;color:#fff;border:2px solid #638eae;border-bottom:4px solid #07111e;border-radius:2px;min-height:53px;box-shadow:2px 2px #05090f}
+.game-mode .choice.active{background:#513d17;border-color:#ffd45a}
+.game-mode .letter{border-radius:2px;background:#2f9df4;color:#07111e;font-weight:1000;width:32px;height:32px;flex-basis:32px}
+.game-mode .choice.active .letter{background:#ffd45a}
+.game-mode .choice-t strong{color:#fff;font-size:13px}
+.game-mode .choice-t small{font-size:10px;color:#c9ddef}
+.game-mode .hint{font-size:11px;color:#c4d4e3}
+.game-mode .impact{background:#0d3245;border:2px solid #579475;color:#fff;border-radius:2px;padding:7px;gap:4px}
+.game-mode .impact strong{color:#7bf2b1;font-size:12px}
+.game-mode .mini{background:#0a2134;border:1px solid #4c6e83;border-radius:2px;padding:5px 7px}
+.game-mode .mini small{font-size:10px;color:#c1d8e8}
+.game-mode .mini b{font-size:16px;color:#ffd45a}
+.game-mode .actions{margin-top:auto;gap:5px}
+.game-mode .btn{background:#38ce7a;color:#07111e;border:3px solid #ffd45a;border-bottom:5px solid #05090f;border-radius:2px;box-shadow:3px 3px 0 #05090f;font-weight:950;min-height:44px;font-size:14px}
+.game-mode .btn:disabled{background:#516a6b;color:#bbced4;border-color:#668184;opacity:.67}
+.game-mode .message,.game-mode .step-chip{color:#e2f0f8;background:#142f45;border:2px solid #436b87;border-radius:2px;font-size:12px;padding:8px}
+.game-mode .cashbook,.game-mode .review-grid>div{background:#0b2337;border:2px solid #58738c;color:#fff;border-radius:2px}
+.game-mode .cashbook .line.total{border-color:#ffd45a}
+.game-mode .line{color:#eef6fd}
+.game-mode .line .plus{color:#7bf2b1}.game-mode .line .minus{color:#ff8987}
+.game-mode .review-grid b{color:#ffd45a}.game-mode .review-grid small{color:#bfd5e4}
+.game-mode .tabs button{color:#fff;background:#193c5e;border:2px solid #7497b2;border-radius:2px}
+.game-mode .tabs button.active{background:#ffd45a;color:#07111e;border-color:#ffd45a}
+.game-mode .fin-table td{border-color:#334c60;color:#fff}.game-mode .fin-table tr.emph{background:#1c4764}
+.game-mode .banner{background:#513229;border:2px solid #e1a155;color:#fff;border-radius:2px}
+.game-mode .footer{color:#abc0d1;font-size:9px;text-align:center;flex:0 0 auto;margin:0}
+.game-mode .status-row{gap:4px;justify-content:center;flex:0 0 auto}
+.game-mode .status-row span{background:#112c44;border:1px solid #436987;color:#e7f5fa;border-radius:2px;font-size:9px;padding:3px 5px}
+@media(max-width:420px){
+ #app{padding:5px 5px calc(5px + env(safe-area-inset-bottom))}
+ .retro-cabinet{border-width:4px}
+ .retro-screen{border-width:4px}
+ .retro-floor{height:42px;flex-basis:42px;border-width:4px}
+ .retro-title{padding:20px 14px 12px}
+ .front-loco{transform:scale(.8);margin-bottom:0}
+ .big-title{font-size:clamp(28px,8vw,37px)}
+ .turn-label{padding:7px 10px}
+ .start-actions{gap:10px;margin:15px auto 8px}
+ .start-btn{min-height:61px}
+ .start-btn.new{min-height:79px}
+ .game-mode .retro-screen{gap:5px;padding:5px}
+ .game-mode .score small{font-size:9px}
+ .game-mode .score b{font-size:17px}
+ .game-mode .content{padding:8px;gap:5px}
+ .game-mode .choice{padding:6px 7px;min-height:48px}
+ .game-mode .choice-t strong{font-size:12px}
+ .game-mode .choice-t small{font-size:9.5px}
+ .game-mode .scene{height:clamp(96px,17dvh,140px)!important;min-height:96px!important}
+ .game-mode .retro-floor{height:18px;flex-basis:18px}
+}
+@media(max-height:690px){.retro-title{padding-top:10px}.front-loco{transform:scale(.65)}.start-btn{min-height:50px}.start-btn.new{min-height:68px}.start-actions{margin:9px auto}.game-mode .scene{height:100px!important;min-height:100px!important}.game-mode .retro-floor{height:13px;flex-basis:13px}}
+@media(prefers-reduced-motion:reduce){.start-btn.new{animation:none}}
+
+/* Keep confirmation visible as soon as an option is chosen */
+.game-mode .content .actions{position:sticky;bottom:0;z-index:3;background:#10253a;padding-top:4px;margin-top:auto}
+.game-mode .content .actions .btn{min-height:41px}
+
+/* v1.8 retro dark screens */
+.game-mode .content{background:linear-gradient(180deg,#06152a,#0b2340 58%,#0c2542);border:4px solid #7da9cb;box-shadow:inset 0 0 0 2px #1a365b,0 5px 0 #08111d;color:#f6fbff;border-radius:4px;padding:18px 16px;gap:14px}
+.game-mode .content.phase-decision,.game-mode .content.phase-result,.game-mode .content.phase-annual,.game-mode .content.phase-final,.game-mode .content.phase-bankrupt,.game-mode .content.phase-intro{background:linear-gradient(180deg,#06152a,#0c2340)}
+.game-mode .eyebrow{color:#ffd55a;font-weight:950;letter-spacing:.05em;text-transform:uppercase}
+.game-mode .title{color:#fff;font-size:clamp(1.7rem,5.4vw,2.6rem);line-height:1.18;text-shadow:4px 4px 0 #000;margin:0 0 6px}
+.game-mode .lead{color:#e5eef8;font-size:14px;line-height:1.65}
+.game-mode .message,.game-mode .banner,.game-mode .hint,.game-mode .cashbook,.game-mode .impact,.game-mode .review-grid>div,.game-mode .fin-panel,.game-mode .summary-card,.game-mode .rank-card,.game-mode .state-card,.game-mode .delta-card,.game-mode .forecast-panel{background:#102a49;border:2px solid #5e83a9;box-shadow:inset 0 0 0 1px #1e4167,4px 4px 0 #03070e;color:#fff;border-radius:3px}
+.game-mode .message{padding:13px 14px;border-color:#4d89c0;background:#123055}
+.game-mode .hint{padding:11px 13px;color:#dbe9f8;border-color:#406790;background:#0e223c}
+.game-mode .banner{padding:11px 13px;color:#fff1be;border-color:#e0bb51;background:#483116}
+.game-mode .choice-list{display:grid;gap:12px}
+.game-mode .choice{background:#102a49;border:3px solid #6f96bb;border-bottom-width:5px;box-shadow:4px 4px 0 #03070e;color:#fff;border-radius:3px;padding:14px 14px;min-height:94px;align-items:flex-start}
+.game-mode .choice:hover{transform:translateY(-1px)}
+.game-mode .choice.active{background:#1a3655;border-color:#ffd55a;border-bottom-color:#c89a1b}
+.game-mode .choice[disabled]{opacity:.55;filter:saturate(.75)}
+.game-mode .letter{background:#2f9df4;border:2px solid #cbe6ff;color:#fff;width:46px;height:46px;flex-basis:46px;border-radius:3px;font-size:22px;box-shadow:3px 3px 0 #00152d}
+.game-mode .choice.active .letter{background:#ffcf48;color:#162033;border-color:#fff2a5}
+.game-mode .choice-t strong{font-size:17px;line-height:1.28;color:#fff}
+.game-mode .choice-t small{font-size:12px;color:#d8e6f2;line-height:1.5}
+.game-mode .choice .lock{color:#ff8f8f;font-weight:900}
+.game-mode .actions{gap:10px}
+.game-mode .btn{min-height:54px;font-size:17px;border-radius:4px;border:3px solid #c87d2b;border-bottom-width:6px;background:linear-gradient(#ffbe54,#eb9227);color:#572f09;box-shadow:0 0 0 2px #f6d184 inset,4px 4px 0 #06090e}
+.game-mode .btn:disabled{opacity:.45}
+.game-mode .btn.alt{background:linear-gradient(#4ab2ff,#2381d4);border-color:#3e95d7;color:#fff;box-shadow:0 0 0 2px #d2eeff inset,4px 4px 0 #06090e}
+.game-mode .review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.game-mode .review-grid>div{padding:12px 13px}
+.game-mode .review-grid small,.game-mode .state-card small,.game-mode .delta-card small,.game-mode .mini-note{display:block;color:#bdd3ea;font-size:12px;line-height:1.45}
+.game-mode .review-grid b,.game-mode .state-card b,.game-mode .delta-card b{display:block;color:#fff;font-size:30px;line-height:1.1;margin-top:6px}
+.game-mode .cashbook{padding:12px 14px;display:grid;gap:7px}
+.game-mode .cashbook .line{display:flex;justify-content:space-between;gap:10px;font-size:13px;line-height:1.45;color:#dceaf7}
+.game-mode .cashbook .line strong{white-space:nowrap;color:#fff;font-size:15px}
+.game-mode .cashbook .line.total{border-top:2px solid #6787a7;padding-top:9px;margin-top:3px}
+.game-mode .plus{color:#59df8d}.game-mode .minus{color:#ff8a8a}
+.game-mode .impact{padding:12px 14px;display:grid;gap:8px}.game-mode .impact strong{font-size:15px;color:#ffd55a}.game-mode .impact .forecast{grid-template-columns:repeat(2,minmax(0,1fr))}
+.game-mode .impact .mini{background:#0c1f38;border:2px solid #4b6f92;color:#fff;border-radius:3px;padding:9px 10px}
+.game-mode .impact .mini small{color:#bed3ea}.game-mode .impact .mini b{font-size:26px;color:#fff}
+.game-mode .tabs{gap:8px}.game-mode .tabs button{background:#103055;border:2px solid #5386b8;color:#dfeefe;border-radius:3px;padding:10px 0;font-size:14px;font-weight:900;box-shadow:3px 3px 0 #040810}.game-mode .tabs button.active{background:#ffd55a;color:#1d2330;border-color:#f8efaa}
+.game-mode .fin-table{width:100%;border-collapse:collapse}.game-mode .fin-table td{padding:10px 8px;border-bottom:1px solid #375374;color:#eff7ff;font-size:14px}.game-mode .fin-table tr.emph td{background:#173656;color:#ffd55a;font-weight:900}.game-mode .fin-table td:last-child{text-align:right;font-weight:900}
+.game-mode .summary-card{padding:16px 14px;display:grid;gap:14px}
+.game-mode .summary-top{display:grid;gap:14px;grid-template-columns:1.15fr .85fr}
+.game-mode .score-box b{font-size:72px;color:#ffd85d;line-height:1;text-shadow:5px 5px 0 #000;display:block}
+.game-mode .score-bar{height:20px;background:#d7d7da;border-radius:999px;overflow:hidden;box-shadow:inset 0 2px 5px rgba(0,0,0,.35)}
+.game-mode .score-bar span{display:block;height:100%;border-radius:999px;background:#40ce5f}
+.game-mode .rank-card{display:grid;place-items:center;gap:10px;padding:16px 10px}
+.game-mode .rank-badge{width:128px;height:128px;border:6px solid #ffd55a;color:#ffd55a;display:grid;place-items:center;font-size:72px;font-weight:950;box-shadow:6px 6px 0 #000}
+.game-mode .state-stack,.game-mode .delta-grid{display:grid;gap:12px}
+.game-mode .state-card,.game-mode .delta-card,.game-mode .forecast-panel{padding:14px 14px}
+.game-mode .state-card h3,.game-mode .delta-card h3,.game-mode .forecast-panel h3{margin:0 0 4px;font-size:15px;color:#fff}
+.game-mode .state-card b{font-size:28px}.game-mode .forecast-panel .review-grid b{font-size:24px}
+.game-mode .delta-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.game-mode .delta-card{border-color:#ff7a7a}.game-mode .delta-card.keep{border-color:#45a9ff}.game-mode .delta-card.good{border-color:#69d68a}
+.game-mode .delta-card .tag{display:inline-block;padding:6px 10px;border:2px solid currentColor;font-size:12px;font-weight:950;margin-bottom:12px}
+.game-mode .annual-subtitle{display:grid;gap:8px}.game-mode .annual-subtitle .year-tag{display:inline-block;padding:10px 20px;border:3px solid #ffd55a;color:#ffd55a;font-weight:950;justify-self:center;background:#08182c}
+@media(max-width:380px){.game-mode .content{padding:14px 12px;gap:11px}.game-mode .title{font-size:1.45rem}.game-mode .choice{padding:11px 11px;min-height:86px}.game-mode .choice-t strong{font-size:15px}.game-mode .review-grid,.game-mode .summary-top,.game-mode .delta-grid,.game-mode .impact .forecast{grid-template-columns:1fr}.game-mode .score-box b{font-size:58px}.game-mode .rank-badge{width:104px;height:104px;font-size:58px}}
+
+/* v1.8: judgement-focused mobile retro UI. Preserve old Phase2 cabinet. */
+.game-mode .retro-screen{gap:5px;padding:5px 6px 4px}
+.game-mode .top{min-height:30px}
+.game-mode .brand{font-size:clamp(14px,4.2vw,19px)}
+.game-mode .core-status{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+.game-mode .core-status>div{background:#0f3152;border:2px solid #4277a3;min-width:0;text-align:center;padding:4px 1px 5px;box-shadow:2px 2px 0 #020810}
+.game-mode .core-status small{display:block;color:#bdd9eb;font-size:clamp(10px,2.8vw,12px);white-space:nowrap}
+.game-mode .core-status strong{display:block;color:#fff;font-size:clamp(15px,4.7vw,21px);line-height:1.16;margin-top:2px}
+.game-mode .core-status>div:first-child strong{color:#ffdc6e}
+.game-mode .scene{height:clamp(86px,14dvh,125px)!important;min-height:86px!important}
+.game-mode .scene-note{display:none!important}
+.game-mode .content{gap:8px;padding:10px 11px;overflow:auto;overscroll-behavior:contain}
+.game-mode .title{font-size:clamp(20px,5.5vw,28px);line-height:1.2}
+.game-mode .lead{font-size:13px;line-height:1.5;color:#e1ecf6}
+.game-mode .eyebrow{font-size:12px;color:#ffd55a}
+.game-mode .question{font-size:14px;font-weight:900;color:#ffd761;padding:0 0 3px}
+.game-mode .choice-list{gap:8px}
+.game-mode .choice{min-height:64px;padding:10px 9px;gap:8px;border-radius:3px}
+.game-mode .choice-t strong{font-size:14px;line-height:1.3}
+.game-mode .choice-t small{font-size:11px;line-height:1.42;overflow-wrap:anywhere}
+.game-mode .choice.active{background:#233e2e;border-color:#ffd45a}
+.game-mode .letter{width:34px;height:34px;flex-basis:34px;font-size:18px}
+.game-mode .actions{position:sticky;bottom:-10px;margin-top:auto;z-index:5;background:#0c2340;padding:6px 0 1px;box-shadow:0 -9px 15px #0c2340}
+.game-mode .btn{min-height:48px;font-size:16px}
+.game-mode .hint{padding:7px;color:#c6d9e9;font-size:11px;line-height:1.45}
+.game-mode .choice-preview,.game-mode .single-fact{border:2px solid #b7a45f;background:#3b331f;padding:8px 10px;font-size:12px;line-height:1.5;color:#fff8df}
+.game-mode .choice-preview b{color:#ffd45a}
+.game-mode .choice-preview p{margin:3px 0}
+.game-mode .result-focus,.game-mode .reflection,.game-mode .money-explain,.game-mode .one-cash-line,.game-mode .nextyear,.game-mode .year-comment,.game-mode .reflect-summary{border:2px solid #537b9b;background:#112d4a;padding:9px 10px;color:#f1f9ff;font-size:12px;line-height:1.52}
+.game-mode .result-focus>b,.game-mode .reflection>b{font-size:14px;color:#ffd55a}
+.game-mode .change-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:8px}
+.game-mode .change{background:#0a1d32;border:2px solid #3f6488;padding:8px 5px;min-width:0}
+.game-mode .change.positive{border-color:#45bd75}.game-mode .change.negative{border-color:#f27476}
+.game-mode .change span{display:block;color:#afcde1;font-size:11px}
+.game-mode .change b{display:block;color:#fff;font-size:clamp(11px,3vw,14px);overflow-wrap:anywhere}
+.game-mode .change small{color:#c0d7e8}.game-mode .change.positive small{color:#71ec9d}.game-mode .change.negative small{color:#ff9d9d}
+.game-mode .one-cash-line b{color:#ffda67}.game-mode .one-cash-line small{display:block;color:#bdd4e4}
+.game-mode .reflection{border-color:#d5b35e}.game-mode .reflection p{margin:4px 0 0;font-size:12px}
+.game-mode .nextyear{border-color:#52b38a;color:#aef5c5}
+.game-mode .year-rank{display:flex;gap:13px;align-items:center;justify-content:space-between;border:3px solid #b8993b;padding:10px 13px;background:#10243d}
+.game-mode .year-rank span{font-weight:900;font-size:14px}
+.game-mode .year-rank b{font-size:56px;line-height:1;color:#ffd55a;text-shadow:3px 3px #000}
+.game-mode .year-rank small{font-size:11px;line-height:1.3;color:#d8eafa}
+.game-mode .year-goals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.game-mode .goal{background:#122f4c;border:2px solid #6985a3;padding:9px;min-width:0}
+.game-mode .goal.pass{border-color:#4db877}.game-mode .goal.miss{border-color:#cd9858}
+.game-mode .goal span{display:block;color:#c9dced;font-size:11px}
+.game-mode .goal b{font-size:21px;color:#fff;white-space:nowrap}
+.game-mode .year-comment{font-size:13px;color:#fff}
+.game-mode .advanced{margin-top:5px;border:2px solid #385c7d;background:#0a1b30;padding:9px;color:#bdd2e4}
+.game-mode .advanced summary{font-size:12px;font-weight:850;cursor:pointer;min-height:32px}
+.game-mode .advanced p{font-size:11px;line-height:1.5}
+.game-mode .statement{padding:7px;margin-top:8px;border:1px solid #58728a}
+.game-mode .statement summary{font-size:12px;font-weight:850}
+.game-mode .fin-table{font-size:12px;color:#fff}
+.game-mode .fin-table td{padding:6px;border-bottom:1px solid #37536a}
+.game-mode .fin-table td:last-child{text-align:right;font-weight:900;white-space:nowrap}
+.game-mode .footer{font-size:9px;color:#abc0d1}
+@media(max-height:780px){.game-mode .scene{height:90px!important;min-height:90px!important}.game-mode .choice{min-height:58px;padding:8px}.game-mode .content{gap:6px;padding:8px}.game-mode .lead{font-size:12px;line-height:1.35}}
+@media(max-width:350px){.game-mode .brand{font-size:13px}.game-mode .year{font-size:9px}.game-mode .content{padding:8px}.game-mode .choice-t strong{font-size:13px}.game-mode .choice-t small{font-size:10px}.game-mode .change b{font-size:11px}}
+
+.game-mode .short-note{font-size:10px;line-height:1.3;color:#b6cfe1}
+.game-mode .year-comment small{display:block;margin-top:4px;color:#ffdc80;font-size:11px}
+.game-mode .cash-note{font-size:10px;line-height:1.35;color:#b9d1e4}
+.game-mode .year-rank{padding:8px 11px}.game-mode .year-rank b{font-size:49px}
+.game-mode .goal{padding:7px}.game-mode .goal b{font-size:19px}
+.game-mode .advanced{margin-top:2px;padding:7px}
+.game-mode .reflection{padding:8px 10px}
+</style>
+</head><body><div id="app"></div>
+<script>
+(()=>{'use strict';
+const VERSION='v1.8',KEY='mirai-rail-one-decision-v18';
+const E={
+ '1-1':{title:'会社の未来、何から始める？',who:'経営企画室',story:'駅の設備を直すか、社員を増やすか。現金を残すことも経営判断です。',opts:[
+ {label:'設備を更新する',cost:2,capital:2,delay:{sales:2,growth:2},scene:'station',desc:'来年から年間売上＋2億円',kind:'投資'},
+ {label:'採用を強化する',cost:1,delay:{staff:10,payroll:1,growth:1},scene:'staff',desc:'来年から社員＋10人・人件費＋1億円',kind:'投資'},
+ {label:'今年は現金を温存する',cost:0,scene:'hold',desc:'追加支出なし。来年度の成長効果なし',kind:'維持'}]},
+ '1-2':{title:'駅前のにぎわいを取り戻せ！',who:'営業担当',story:'駅前のお店の利用が減っています。新しい利用者をどう呼び込みますか？',opts:[
+ {label:'沿線キャンペーンを実施',cost:1,revenue:2,metrics:{customer:1},scene:'poster',desc:'今期売上＋2億円・入金は来期',kind:'施策'},
+ {label:'駅前施設を整備する',cost:2,capital:2,delay:{sales:1,growth:1},scene:'shop',desc:'来年から売上＋1億円／年',kind:'投資'},
+ {label:'地域との対話を優先する',cost:0,metrics:{customer:1,morale:-1},scene:'town',desc:'顧客＋1・社員−1／現金を守る',kind:'維持'}]},
+ '1-3':{title:'ホーム設備の劣化が発覚',who:'保線担当',story:'設備が傷んでいます。年末には大きな台風が来るとの予報もあります。',opts:[
+ {label:'予防修繕を実施する',cost:2,metrics:{safety:2},scene:'fence',desc:'安全＋2／台風被害を減らせる',kind:'安全'},
+ {label:'情報セキュリティ教育をする',cost:1,delay:{training:1},metrics:{safety:1},scene:'training',desc:'安全＋1／3年目の事故損失−1億円',kind:'投資'},
+ {label:'重要箇所だけを点検する',cost:0,metrics:{safety:-1},scene:'warning',desc:'現金温存／安全−1',kind:'維持'}]},
+ '1-4':{title:'緊急！大型台風が発生',who:'運行指令',story:'台風で設備が損傷しました。これまでの安全対策で被害額が変わります。',shock:'typhoon',opts:[
+ {label:'自己資金で早期復旧',cost:2,metrics:{safety:2,customer:1},scene:'repair',desc:'現金−2億円／安全＋2・顧客＋1',kind:'緊急'},
+ {label:'借入して計画的に復旧',cost:1,loan:2,metrics:{safety:1},scene:'repair',desc:'借入＋2億円／復旧費−1億円',kind:'緊急'},
+ {label:'重要区間のみ復旧',cost:0,metrics:{customer:-2,safety:-1},scene:'damage',desc:'支出なし／安全−1・顧客−2',kind:'緊急'}]},
+ '2-1':{title:'緊急！人手不足と採用難',who:'人事担当',story:'現場に人手不足が発生。昨年採用していれば影響を軽減できます。',shock:'staff',opts:[
+ {label:'採用と処遇を強化',cost:1,metrics:{morale:1},delay:{staff:10,payroll:1},scene:'staff',desc:'来年から社員＋10人／今年の社員＋1',kind:'投資'},
+ {label:'省力化設備を導入',cost:2,capital:2,delay:{save:1,growth:2},scene:'auto',desc:'来年から運営費−1億円／年',kind:'投資'},
+ {label:'地域の協力会社と連携',cost:1,metrics:{customer:1,morale:1},scene:'staff',desc:'顧客＋1・社員＋1（今期から）',kind:'施策'}]},
+ '2-2':{title:'技能継承が間に合わない',who:'現場社員',story:'熟練社員の技術を次世代に残したい。でも教育にも時間とお金が必要です。',opts:[
+ {label:'教育時間とリスク対策を確保',cost:1,delay:{training:1},metrics:{morale:1},scene:'training',desc:'社員＋1／3年目の事故損失−1億円',kind:'投資'},
+ {label:'技能を動画・データ化する',cost:2,capital:2,delay:{growth:2},scene:'auto',desc:'来年から街の発展度＋2',kind:'投資'},
+ {label:'経験者を重要業務へ集中',cost:0,metrics:{safety:1,morale:-1},scene:'warning',desc:'安全＋1・社員−1／費用なし',kind:'維持'}]},
+ '2-3':{title:'安全データをどう活用する？',who:'企画担当',story:'保守情報が部署ごとに分かれています。データ活用には投資も必要です。',opts:[
+ {label:'全社データ基盤をつくる',cost:2,capital:2,delay:{sales:1,growth:2},scene:'auto',desc:'来年から売上＋1億円／年',kind:'投資'},
+ {label:'保守業務だけで試す',cost:1,metrics:{safety:1},delay:{growth:1},scene:'signal',desc:'安全＋1／来年の発展度＋1',kind:'投資'},
+ {label:'既存データのまま運営',cost:0,metrics:{safety:-1},scene:'hold',desc:'追加支出なし／安全−1',kind:'維持'}]},
+ '2-4':{title:'AI・DX活用を進める？',who:'経営企画室',story:'自動化に向けた投資を今行うか。将来の効率化と社員の負担を考えます。',opts:[
+ {label:'大規模な自動化投資',cost:3,capital:3,delay:{save:1,growth:3},metrics:{morale:-1},scene:'auto',desc:'来年から運営費−1億円／年・社員−1',kind:'投資'},
+ {label:'重要業務から段階導入',cost:1,capital:1,delay:{growth:2},metrics:{morale:1},scene:'auto',desc:'社員＋1／来年の発展度＋2',kind:'投資'},
+ {label:'現場の運用を維持',cost:0,metrics:{morale:1},scene:'hold',desc:'社員＋1／発展への新規投資なし',kind:'維持'}]},
+ '3-2':{title:'地方路線の公共性と採算',who:'自治体担当',story:'利用が少ない路線をどう守るか。地域の要望と経営資源の両立が課題です。',opts:[
+ {label:'公共交通として運行を維持',cost:2,metrics:{customer:2},scene:'service',desc:'顧客＋2／現金−2億円',kind:'施策'},
+ {label:'利用に合わせて減便する',cost:0,metrics:{customer:-2,morale:1},scene:'hold',desc:'顧客−2・社員＋1／現金を守る',kind:'維持'},
+ {label:'自治体と共同運営する',cost:1,metrics:{customer:1},growth:1,scene:'town',desc:'顧客＋1・発展度＋1',kind:'施策'}]},
+ '3-3':{title:'緊急！感染症で利用客が激減',who:'運行指令',story:'感染症の流行で今期の売上が3億円減少。生活交通をどう守りますか？',shock:'pandemic',opts:[
+ {label:'必要な運行を最大限維持',cost:2,metrics:{customer:2,morale:-1},scene:'service',desc:'顧客＋2・社員−1／費用−2億円',kind:'緊急'},
+ {label:'一部減便して資金を守る',cost:0,savingNow:1,metrics:{customer:-2,morale:1},scene:'notice',desc:'運営費を1億円節約／顧客−2',kind:'緊急'},
+ {label:'デジタル・生活支援を開始',cost:1,revenue:1,metrics:{customer:1},growth:2,scene:'shop',desc:'今期売上＋1億円・顧客＋1',kind:'緊急'}]},
+ '3-4':{title:'自動運転・無人化への決断',who:'社長室',story:'人手不足が続く未来。どこまで自動化し、何を守りますか？',opts:[
+ {label:'全社へ一気に自動化',cost:3,capital:3,metrics:{morale:-2,safety:-1},growth:3,scene:'auto',desc:'現金−3億円／未来への投資・社員−2',kind:'投資'},
+ {label:'一部路線から段階導入',cost:1,capital:1,metrics:{safety:1},growth:2,scene:'auto',desc:'現金−1億円／安全＋1・未来＋2',kind:'投資'},
+ {label:'人による運営を重視',cost:0,metrics:{morale:1},scene:'staff',desc:'現金温存／社員＋1',kind:'維持'}]}
+};
+const clone=x=>JSON.parse(JSON.stringify(x));const fmt=n=>`${n<0?'−':''}${Math.abs(n)}億円`;const sign=n=>n>0?`＋${n}億円`:n<0?`−${-n}億円`:'0億円';const clamp=x=>Math.max(0,Math.min(10,x));const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function fresh(){return {version:14,phase:'intro',year:1,q:1,cash:5,ar:9,ap:4,fixed:140,otherAssets:4,longDebt:85,shortDebt:0,otherLiab:31,equity:38,safety:6,customer:6,morale:6,growth:0,choices:[],delays:[],employees:70,yearReady:1,pl:emptyPL(),cf:emptyCF(),yearOpenCash:5,history:[],last:null,selected:null,tab:'pl',reason:''}}
+function emptyPL(){return {revenue:0,payroll:0,operations:0,levies:0,depreciation:0,event:0,interest:0,tax:0}}
+function emptyCF(){return {operating:0,investing:0,financing:0}}
+let s;try{s=JSON.parse(localStorage.getItem(KEY));if(!s||s.version!==14)s=fresh()}catch(e){s=fresh()}
+const root=document.querySelector('#app');function save(){try{localStorage.setItem(KEY,JSON.stringify(s))}catch(e){}}
+function totals(a){const assets=a.cash+a.ar+a.otherAssets+a.fixed;const liability=a.longDebt+a.shortDebt+a.otherLiab+a.ap+a.equity;return {assets,liability}}
+function yearProfit(a){const p=a.pl;return p.revenue-p.payroll-p.operations-p.levies-p.depreciation-p.event-p.interest-p.tax}
+function operatingProfit(a){const p=a.pl;return p.revenue-p.payroll-p.operations-p.levies-p.depreciation-p.event}
+function active(a){const eff={sales:0,payroll:0,save:0,staff:0,training:0,growth:0};for(const d of a.delays){if(d.year<a.year)for(const k in d){if(k!=='year'&&k in eff)eff[k]+=(d[k]||0)}}return eff}
+function leadYear(a){if(a.yearReady===a.year)return;const last=a.year;const gained=a.delays.filter(x=>x.year===a.year-1);for(const d of gained){a.employees+=(d.staff||0);a.growth+=d.growth||0;}a.yearReady=a.year}
+function revenue(a,n,flows){a.ar+=n;a.pl.revenue+=n;a.equity+=n;if(flows&&n!==9)flows.push({label:`今期売上 ${sign(n)}（入金は次の四半期）`,n:0,accounting:true})}
+function expense(a,n,key,flows,label){if(!n)return;a.cash-=n;a.equity-=n;a.pl[key]+=n;a.cf.operating-=n;if(flows)flows.push({label:label||key,n:-n})}
+function invest(a,n,flows){if(!n)return;a.cash-=n;a.fixed+=n;a.cf.investing-=n;if(flows)flows.push({label:'設備・システムへの投資',n:-n})}
+function loan(a,n,flows){if(!n)return;a.cash+=n;a.shortDebt+=n;a.cf.financing+=n;if(flows)flows.push({label:'銀行からの借入',n:n})}
+function collect(a,flows){if(a.ar){const n=a.ar;a.cash+=n;a.cf.operating+=n;a.ar=0;if(flows)flows.push({label:'前期売上の入金',n})}if(a.ap){const n=a.ap;a.cash-=n;a.cf.operating-=n;a.ap=0;if(flows)flows.push({label:'買掛金の支払い',n:-n})}if(a.q===1&&a.shortDebt){const n=a.shortDebt;a.cash-=n;a.shortDebt=0;a.cf.financing-=n;if(flows)flows.push({label:'前年借入の元本返済',n:-n})}}
+function quarter(a,idx,preview=false){const before=a.cash,startingProfit=yearProfit(a),startingOperating=operatingProfit(a),beforeIndicators={cash:a.cash,safety:a.safety,customer:a.customer,morale:a.morale,growth:a.growth,profit:yearProfit(a)},flows=[],effects=active(a),key=`${a.year}-${a.q}`;const auto=a.year===3&&a.q===1;const ev=E[key];const op=auto?null:ev.opts[idx];collect(a,flows);if(a.cash<0){return {cash:a.cash,failed:'期首の回収・支払い・借入返済後に現金がマイナスになりました',flows,before}}
+ const quarterlyPayroll=[2,2,2,1][a.q-1]+(a.q===4?effects.payroll:0);const baseOps=4-(a.q===4?Math.min(2,effects.save):0);expense(a,quarterlyPayroll,'payroll',flows,'社員の人件費');expense(a,baseOps,'operations',flows,'通常運行・維持費');if(a.q===2||a.q===4)expense(a,1,'levies',flows,'諸税');if(a.q===4){expense(a,1,'interest',flows,'既存借入の利息（簡易）');expense(a,1,'tax',flows,'法人税（簡易）')}
+ let shockLabel='',shockCost=0;
+ if(ev?.shock==='typhoon'){shockCost=a.safety>=8?1:2;expense(a,shockCost,'event',flows,'台風による損害');shockLabel=`台風の被害 ${shockCost}億円（安全${a.safety}/10）`}
+ if(ev?.shock==='staff'){shockCost=a.employees>=80?0:1;if(shockCost)expense(a,1,'event',flows,'人手不足の臨時応援費');shockLabel=shockCost?'社員不足で臨時応援費1億円':'前年の採用で臨時応援費を回避';if(shockCost)a.morale=clamp(a.morale-1)}
+ if(ev?.shock==='pandemic'){shockLabel='感染症により今期売上が3億円減少';a.customer=clamp(a.customer-1)}
+ const standard=9+(a.q===4?effects.sales:0)-(ev?.shock==='pandemic'?3:0);revenue(a,standard);a.pl.depreciation+=[1,2,1,2][a.q-1];a.fixed-=[1,2,1,2][a.q-1];a.equity-=[1,2,1,2][a.q-1];
+ if(auto){const dmg=5-Math.min(3,effects.training);expense(a,dmg,'event',flows,'情報セキュリティ事故の損失');shockLabel=`教育投資により事故損失を${5-dmg}億円軽減（実損失${dmg}億円）`;a.customer=clamp(a.customer-1)}else{
+  if(!op)return {failed:'選択肢がありません',cash:a.cash,flows,before};
+  if(op.loan)loan(a,op.loan,flows);
+  if(op.savingNow)expense(a,-op.savingNow,'operations',flows,'減便による運行費の節約');
+  if(op.cost){if(op.capital)invest(a,op.cost,flows);else expense(a,op.cost,'event',flows,`${op.kind}の追加費用`)}
+  if(op.revenue)revenue(a,op.revenue,flows);
+  for(const [k,v] of Object.entries(op.metrics||{}))a[k]=clamp(a[k]+v);
+  if(op.growth)a.growth+=op.growth;
+  if(op.delay)a.delays.push({year:a.year,...op.delay});
+ }
+ const cost=op?.cost||0;
+ const loanOver=(op?.loan||0)+((a.choices||[]).filter(c=>c.year===a.year).reduce((v,c)=>v+(c.loan||0),0))>creditCap(a);
+ const reserveNeeded=op?.kind==='投資'&&a.cash<2;
+ const failed=a.cash<0?'現金残高がマイナスになりました':loanOver?'借入上限を超えています':reserveNeeded?'投資後に必要な運転資金2億円を確保できません':null;
+ if(!preview&&!failed){a.last={year:a.year,q:a.q,before,after:a.cash,profitDelta:yearProfit(a)-startingProfit,flows,option:op?.label||'情報セキュリティ事故',shockLabel,kind:op?.kind||'自動イベント',cashDelta:a.cash-before,investment:op?.capital||0,beforeIndicators,afterIndicators:{cash:a.cash,safety:a.safety,customer:a.customer,morale:a.morale,growth:a.growth,profit:yearProfit(a)},nextYearImpact:op?.delay||null,choiceCost:op?.cost||0};if(op)a.choices.push({year:a.year,q:a.q,option:op.label,scene:op.scene,cost,loan:op.loan||0});a.phase='result';}
+ return {before,cash:a.cash,flows,failed,shockLabel,profitDelta:yearProfit(a)-startingProfit,loan:op?.loan||0,op};
+}
+function creditCap(a){if(a.year===1)return 2;const prev=a.history[a.history.length-1];if(!prev)return 2;return prev.profit>=3&&prev.opCF>=5&&prev.cash>=3&&prev.debt<=2?3:prev.cash<2||prev.profit<0?1:2}
+function preview(idx){const a=clone(s);return quarter(a,idx,true)}
+function commit(idx){const res=quarter(s,idx,false);if(res.failed){s.reason=res.failed;s.phase='bankrupt';s.last=res;save();draw();return}if(totals(s).assets!==totals(s).liability)throw Error('B/Sの整合が崩れました');save();draw()}
+function endQuarter(){if(s.q===4){s.phase='annual';const p=yearProfit(s);s.history.push({year:s.year,profit:p,operating:operatingProfit(s),cash:s.cash,debt:s.shortDebt,opCF:s.cf.operating,cf:clone(s.cf),pl:clone(s.pl),bs:totals(s),opening:s.yearOpenCash});}else{s.q++;s.phase='decision';}s.selected=null;save();draw()}
+function nextYear(){if(s.year===3){s.phase='final'}else{s.year++;s.q=1;s.pl=emptyPL();s.cf=emptyCF();s.yearOpenCash=s.cash;s.phase='decision';leadYear(s)}s.selected=null;save();draw()}
+function limits(){const eff=active(s);return {cash:s.cash,prev:s.history[s.history.length-1],staff:s.employees,eff}}
+function sky(){
+  const tags=new Set(s.choices.map(x=>x.scene));
+  const eff=active(s);
+  const upgraded=eff.sales>0||eff.growth>0||tags.has('town')||tags.has('shop')||tags.has('service');
+  const staffed=s.employees>=80||eff.staff>0||tags.has('staff');
+  const safer=eff.save>0||tags.has('fence')||tags.has('signal')||tags.has('repair');
+  const trained=eff.training>0||tags.has('training');
+  const warning=tags.has('warning')||tags.has('damage');
+  const posters=tags.has('poster')||tags.has('notice');
+  const auto=tags.has('auto');
+  const crisis=s.phase==='decision'&&(s.year===1&&s.q===4||s.year===3&&s.q===3);
+  const busy=s.customer>=7||upgraded;
+  const people=(x,y,c)=>`<g class="littlebob"><circle cx="${x}" cy="${y-11}" r="4" fill="#ffd8b6"/><rect x="${x-4}" y="${y-7}" width="8" height="11" rx="3" fill="${c}"/><path d="M${x-2} ${y+4}l-3 8M${x+2} ${y+4}l3 8M${x-5} ${y-2}l-5 4M${x+5} ${y-2}l5 4" stroke="${c}" stroke-width="2.5" stroke-linecap="round" fill="none"/></g>`;
+  return `<section class="scene" aria-label="横から見た未来町駅と列車"><svg viewBox="0 0 600 255" role="img" aria-label="2Dの駅ホームと横向きの列車" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky2d" x2="0" y2="1"><stop offset="0" stop-color="#8fd8ff"/><stop offset="1" stop-color="#e7f8ff"/></linearGradient>
+    <linearGradient id="glass2d" x2="0" y2="1"><stop offset="0" stop-color="#eafcff"/><stop offset="1" stop-color="#8ac5e0"/></linearGradient>
+    <linearGradient id="trainBody2d" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfe7ea"/></linearGradient>
+  </defs>
+  <rect width="600" height="255" fill="url(#sky2d)"/>
+  <circle cx="548" cy="38" r="22" fill="#fff7be" opacity=".85"/>
+  <g fill="#fff" opacity=".92"><ellipse cx="78" cy="40" rx="28" ry="12"/><ellipse cx="101" cy="42" rx="19" ry="9"/><ellipse cx="452" cy="50" rx="25" ry="10"/><ellipse cx="472" cy="52" rx="17" ry="8"/></g>
+  <rect y="118" width="600" height="54" fill="#8fd08e"/>
+  <rect y="171" width="600" height="34" fill="#d9d3c7"/>
+  <rect y="205" width="600" height="50" fill="#686f77"/>
+  <rect y="196" width="600" height="6" fill="#ffe07a"/>
+  <rect y="224" width="600" height="6" fill="#ffe07a"/>
+  <g stroke="#363c42" stroke-width="4"><line x1="0" y1="214" x2="600" y2="214"/><line x1="0" y1="236" x2="600" y2="236"/></g>
+  <g stroke="#8e785e" stroke-width="3">${Array.from({length:21},(_,i)=>`<line x1="${i*30+8}" y1="208" x2="${i*30+22}" y2="242"/>`).join('')}</g>
+  <g>
+    <rect x="32" y="96" width="126" height="65" rx="5" fill="#efbf86" stroke="#c88755" stroke-width="3"/>
+    <rect x="45" y="108" width="56" height="28" rx="3" fill="#d96a60"/>
+    <rect x="59" y="118" width="15" height="18" fill="#89c4d7"/>
+    <rect x="111" y="114" width="30" height="47" fill="#7fb39a"/>
+    <rect x="148" y="84" width="22" height="77" fill="#c7d7da"/>
+    <rect x="170" y="84" width="8" height="77" fill="#8aa0a9"/>
+    <rect x="28" y="90" width="148" height="10" fill="#c95e55"/>
+    <rect x="38" y="82" width="72" height="12" rx="4" fill="#fff4bd" stroke="#cfb25b"/>
+    <text x="48" y="92" font-size="15" font-weight="900" fill="#2b6b88">未来町駅</text>
+  </g>
+  <g>
+    ${upgraded?`<rect x="445" y="82" width="48" height="79" rx="4" fill="#8cb6cc"/><rect x="500" y="65" width="42" height="96" rx="4" fill="#9fc4d8"/><g fill="#e8f8ff">${Array.from({length:4},(_,r)=>Array.from({length:2},(_,c)=>`<rect x="${455+c*16}" y="${93+r*15}" width="8" height="9" rx="1"/>`).join('')).join('')}${Array.from({length:5},(_,r)=>Array.from({length:2},(_,c)=>`<rect x="${509+c*14}" y="${75+r*16}" width="8" height="9" rx="1"/>`).join('')).join('')}</g>`:`<rect x="470" y="110" width="52" height="40" rx="4" fill="#96ca8f"/><polygon points="463,111 497,88 530,111" fill="#db7263"/><rect x="487" y="125" width="12" height="25" fill="#80594e"/>`}
+    ${posters?`<rect x="392" y="128" width="22" height="28" rx="3" fill="#fff2cc" stroke="#c88f40"/><rect x="395" y="131" width="16" height="7" fill="#f27a7a"/><rect x="395" y="141" width="16" height="4" fill="#72b4e5"/><rect x="395" y="148" width="16" height="4" fill="#81ca90"/>`:''}
+    ${tags.has('shop')||upgraded?`<rect x="350" y="120" width="36" height="34" rx="4" fill="#ffd48c" stroke="#c57e2f"/><rect x="352" y="114" width="32" height="8" fill="#ef6f62"/><text x="357" y="120" font-size="8" fill="#fff" font-weight="900">SHOP</text>`:''}
+  </g>
+  <g>
+    ${safer?`<rect x="230" y="154" width="185" height="8" rx="3" fill="#8eb6c7"/>${Array.from({length:10},(_,i)=>`<rect x="${238+i*18}" y="144" width="4" height="18" rx="2" fill="#7da0af"/>`).join('')}`:''}
+    ${warning?`<rect x="244" y="132" width="38" height="18" rx="4" fill="#ffd26c" stroke="#c79230"/><text x="253" y="145" font-size="10" font-weight="900" fill="#8a3f1b">注意</text>`:''}
+    <rect x="205" y="152" width="265" height="9" fill="#ede7d8"/>
+  </g>
+  <g class="train-move">
+    <g transform="translate(125,0)">
+      <rect x="18" y="116" width="250" height="70" rx="16" fill="url(#trainBody2d)" stroke="#8798a3" stroke-width="3"/>
+      <rect x="18" y="158" width="250" height="12" fill="#26a082"/>
+      <rect x="30" y="127" width="36" height="22" rx="5" fill="url(#glass2d)" stroke="#78a7bb"/>
+      ${Array.from({length:7},(_,i)=>`<rect x="${75+i*25}" y="125" width="17" height="26" rx="3" fill="url(#glass2d)" stroke="#78a7bb"/>`).join('')}
+      <rect x="255" y="128" width="10" height="48" rx="4" fill="#cfd7da"/>
+      <circle cx="56" cy="188" r="9" fill="#3e4950"/><circle cx="141" cy="188" r="9" fill="#3e4950"/><circle cx="228" cy="188" r="9" fill="#3e4950"/>
+      <path d="M12 171h262" stroke="#677882" stroke-width="4"/>
+      ${auto?`<rect x="180" y="108" width="46" height="12" rx="6" fill="#2766a4"/><text x="189" y="117" font-size="8" fill="#fff" font-weight="900">AUTO</text>`:''}
+    </g>
+  </g>
+  <g>
+    ${people(215,151,'#5088d4')}
+    ${people(302,151,'#df866b')}
+    ${busy?people(332,151,'#5ca96b'):''}
+    ${staffed?people(168,151,'#2e6c90'):''}
+    ${staffed?people(196,151,'#2e6c90'):''}
+    ${trained?`<rect x="92" y="160" width="44" height="14" rx="4" fill="#e6fff2" stroke="#73b18d"/><text x="100" y="170" font-size="9" fill="#1f7a53" font-weight="900">研修中</text>`:''}
+  </g>
+  ${crisis?`<g opacity=".82">${Array.from({length:20},(_,i)=>`<line x1="${18+i*28}" y1="${70+(i%3)*4}" x2="${10+i*28}" y2="${112+(i%3)*4}" stroke="#8bc4da" stroke-width="3" stroke-linecap="round"/>`).join('')}<rect x="435" y="12" width="128" height="24" rx="12" fill="#b94942"/><text x="452" y="29" font-size="13" fill="#fff" font-weight="900">緊急対応中</text></g>`:''}
+  ${s.phase==='decision'&&s.year===3&&s.q===1?`<g><rect x="422" y="14" width="146" height="24" rx="12" fill="#805fd1"/><text x="436" y="30" font-size="12" fill="#fff" font-weight="900">情報セキュリティ警戒</text></g>`:''}
+  </svg><div class="scene-tag">🚉 未来町駅・2Dビュー</div><div class="scene-note">投資や経営判断で、駅・人・街の様子が変わります。</div></section>`
+}
+function sceneMessage(){const last=s.choices[s.choices.length-1];if(s.phase==='result'&&last?.year===s.year&&last?.q===s.q)return `🏙 ${last.option}：街にも記録されます`;if(s.phase==='annual')return '📊 利益と現金は同じではありません';if(s.phase==='final')return '🏁 3年間の経営を振り返ろう';return s.year===1?'🌱 判断によって、この街は成長します':`🌱 過去の投資が街の姿を変えます`}
+function header(){return `<div class="top"><span class="logo">🚆</span><span class="brand">未来つくり鉄道</span><span class="year">${s.year}年目・Q${s.q}</span><button class="iconbtn" data-act="goTitle">メニュー</button></div><div class="core-status"><div><small>💰 現金</small><strong>${s.cash}億</strong></div><div><small>🛡 安全</small><strong>${s.safety}/10</strong></div><div><small>😊 満足</small><strong>${s.customer}/10</strong></div><div><small>🌱 将来</small><strong>${s.growth}/10</strong></div></div>`}
+function kpis(){return `<div class="status-row"><span>🛡 安全 ${s.safety}/10</span><span>😊 顧客 ${s.customer}/10</span><span>👥 社員 ${s.morale}/10</span><span>🚆 社員数 ${s.employees}人</span></div>`}
+let showTitle=true;
+function startTitle(){const hasProgress=s.phase!=='intro';return `<div class="retro-cabinet title-mode"><div class="retro-screen retro-title"><div class="front-loco" aria-hidden="true"><svg viewBox="0 0 106 95" width="110" height="100"><rect x="13" y="7" width="80" height="68" rx="17" fill="#e9fbfe" stroke="#fff" stroke-width="5"/><rect x="19" y="12" width="68" height="55" rx="11" fill="#2b95f4"/><rect x="25" y="13" width="55" height="44" rx="5" fill="#a4e5ff"/><path d="M26 15h6v46h-6zm35 0h8v46h-8z" fill="#3b9ef1"/><rect x="19" y="54" width="68" height="14" fill="#eaf8ff"/><rect x="20" y="65" width="66" height="11" fill="#38ce7a"/><rect x="4" y="75" width="98" height="21" fill="#05090f"/><rect x="10" y="78" width="85" height="13" fill="#ffd45a"/></svg></div>
+ <div class="intro-kicker">架空企業を題材にした研修用ゲーム</div><h1 class="big-title">未来つくり鉄道</h1><div class="intro-sub">経営シミュレーション</div><div class="turn-label">3年間・全12ターン</div><div class="start-actions"><button class="start-btn new" data-act="new"><small>GAME START</small><strong>新しく始める</strong></button><button class="start-btn resume" data-act="resume" ${hasProgress?'':'disabled'}>続きから再開</button><button class="start-btn restart" data-act="restart">最初からやり直す</button></div>
+ <div class="title-help">正解は一つではない。3年間、あなたの判断で鉄道の未来をつくろう。</div></div><div class="retro-floor" aria-hidden="true"></div></div>`}
+
+function approximateRunwayMonths(cash){return Math.max(0,Math.floor(Math.max(0,cash)/2));}
+function gradeInfo(score){return score>=85?["A","とても安定した経営"]:score>=70?["B","安定した経営"]:score>=55?["C","改善が必要"]:["D","要改善"];}
+function currentScore(){
+  const months=approximateRunwayMonths(s.cash);const runway=months>=6?10:months>=3?6:2;
+  const profit=yearProfit(s)>=5?10:yearProfit(s)>=0?7:yearProfit(s)>=-5?4:1;
+  const score=Math.max(0,Math.min(100,Math.round((s.safety*2.2+s.customer*1.5+s.morale*1.3+s.growth*1.3+runway*1.9+profit*1.8)*1.2)));
+  return score;
+}
+function deltaCards(d){
+ const items=[["安全",d.beforeState.safety,d.afterState.safety],["資金の残り期間",d.beforeState.cashRunway,d.afterState.cashRunway],["今年度の営業利益",d.beforeState.profit,d.afterState.profit]];
+ return `<div class="delta-grid">${items.map(([name,b,a])=>{const diff=a-b;const klass=diff>0?"good":diff<0?"":"keep";const tag=diff>0?"UP・改善":diff<0?"DAMAGE・低下":"KEEP・維持";return `<div class="delta-card ${klass}"><span class="tag">${tag}</span><h3>${name}</h3><b>${name==="資金の残り期間"?`${b}か月 → ${a}か月`:`${b}${name==="今年度の営業利益"?"億円":"/10"} → ${a}${name==="今年度の営業利益"?"億円":"/10"}`}</b></div>`}).join("")}</div>`;
+}
+function yearStateCards(){
+ const cards=[["安全","目標：8/10以上","設備は経年劣化します。","🛡",`${s.safety}/10`],["資金の残り期間",`状態：${approximateRunwayMonths(s.cash)>=6?"標準":approximateRunwayMonths(s.cash)>=3?"注意":"危険"}／推奨：6か月以上`,"","🪙",`${approximateRunwayMonths(s.cash)}か月（概算）`],["今年度の営業利益","今年度目標：5億円","","📈",`${operatingProfit(s)}億円`],["お客さま満足","","","😊",`${s.customer}/10`],["社員の状態","","","👥",`${s.morale}/10`],["将来性","","","🌱",`${s.growth}/10`]];
+ return `<div class="state-stack">${cards.map(([t,note,sub,ico,val])=>`<div class="state-card"><h3>${ico} ${t}</h3><b>${val}</b>${note?`<small>${note}</small>`:""}${sub?`<small>${sub}</small>`:""}</div>`).join("")}</div>`;
+}
+function forecastPanel(p,popt){
+ const afterCash=p.cash, afterProfit=yearProfit(s)+(p.profitDelta||0), beforeProfit=yearProfit(s), afterRunway=approximateRunwayMonths(afterCash), beforeRunway=approximateRunwayMonths(s.cash);
+ return `<div class="forecast-panel"><h3>選択後の見込み</h3><div class="review-grid"><div><small>今期後の現金</small><b>${afterCash}億円</b></div><div><small>今期後の利益</small><b>${afterProfit}億円</b></div></div><div class="delta-grid"><div class="delta-card ${afterCash>s.cash?"good":afterCash<s.cash?"":"keep"}"><span class="tag">${afterCash>s.cash?"UP・改善":afterCash<s.cash?"DAMAGE・低下":"KEEP・維持"}</span><h3>現金</h3><b>${s.cash}億円 → ${afterCash}億円</b></div><div class="delta-card ${afterProfit>beforeProfit?"good":afterProfit<beforeProfit?"":"keep"}"><span class="tag">${afterProfit>beforeProfit?"UP・改善":afterProfit<beforeProfit?"DAMAGE・低下":"KEEP・維持"}</span><h3>今年度の営業利益</h3><b>${beforeProfit}億円 → ${afterProfit}億円</b></div><div class="delta-card ${afterRunway>beforeRunway?"good":afterRunway<beforeRunway?"":"keep"}"><span class="tag">${afterRunway>beforeRunway?"UP・改善":afterRunway<beforeRunway?"DAMAGE・低下":"KEEP・維持"}</span><h3>資金の残り期間</h3><b>${beforeRunway}か月 → ${afterRunway}か月</b></div></div><div class="hint">${esc(popt.label)}を選ぶと、費用 ${popt.cost||0}億円${popt.loan?`・借入 ${popt.loan}億円`:""}が今期に反映されます。売上の入金は原則として翌四半期です。</div></div>`;
+}
+function nextOpeningCash(){return s.cash+s.ar-s.ap-s.shortDebt;}
+function managementGrade(){
+ const projected=nextOpeningCash();
+ const goals=[{name:'安全',okay:s.safety>=8,value:`${s.safety}/10`,goal:'8以上'},{name:'お客さま満足',okay:s.customer>=7,value:`${s.customer}/10`,goal:'7以上'},{name:'将来性',okay:s.growth>=2,value:`${s.growth}/10`,goal:'2以上'},{name:'次年度の現金',okay:projected>=2,value:`${projected}億円`,goal:'期首精算後2億円以上'}];
+ const met=goals.filter(x=>x.okay).length;
+ return {rank:met===4?'A':met===3?'B':met===2?'C':'D',met,goals};
+}
+function cashLesson(){const c=nextOpeningCash();if(c<2)return '翌年度の期首精算後に十分な現金が残らず、投資の選択肢が減りそうです。';if(c<6)return '翌年度の投資余力はありますが、運行費や緊急支出に注意が必要です。';return '翌年度へ備えられています。現金を貯めるだけでなく、必要な投資も考えましょう。'}
+function yearLesson(){const g=managementGrade();if(s.safety<8)return '安全に課題があります。先送りによるコストと、早めの対策を比べてみましょう。';if(nextOpeningCash()<2)return '翌年度の投資余力が小さくなりそうです。利益と現金の違いがポイントです。';if(s.customer<7)return '現金や安全だけでなく、利用者への価値も見直す必要があります。';if(s.growth<2)return '短期の問題には対応できました。次は将来の成長にも目を向けましょう。';return '複数の目標を両立できています。どの判断が効いたかを振り返りましょう。';}
+function metricChanges(d){const b=d.beforeIndicators||{},a=d.afterIndicators||{};const vals=[['💰 現金',b.cash,a.cash,'億円'],['🛡 安全',b.safety,a.safety,'/10'],['😊 満足',b.customer,a.customer,'/10'],['🌱 将来',b.growth,a.growth,'/10']];return `<div class="change-grid">${vals.map(([n,x,y,u])=>{const diff=y-x;return `<div class="change ${diff>0?'positive':diff<0?'negative':'neutral'}"><span>${n}</span><b>${x}${u} → ${y}${u}</b><small>${diff>0?'改善':diff<0?'低下':'維持'}${diff?` (${diff>0?'+':''}${diff})`:''}</small></div>`}).join('')}</div>`;}
+const REFLECTIONS={
+'1-1':'初年度に現金を使う価値と、翌年の選択肢を残す価値。どちらを重視しましたか？',
+'1-2':'今すぐ利用者を増やす策と、将来の基盤づくりをどう比べましたか？',
+'1-3':'台風を前に、予防への投資と現金の確保をどう考えましたか？',
+'1-4':'台風の復旧速度、安全、返済負担。どの優先順位で決めましたか？',
+'2-1':'採用・省力化・外部連携のうち、持続可能なのはどの方法だと考えますか？',
+'2-2':'技能継承で、目先の仕事を止める負担と将来の備えをどう比べましたか？',
+'2-3':'データへの投資と、今ある情報で動く速さをどう両立しましたか？',
+'2-4':'AI導入の速さと、社員への影響をどう天秤にかけましたか？',
+'3-1':'過去の情報セキュリティ教育への投資が、事故の被害をどう変えましたか？',
+'3-2':'地域の利便性と採算性の両立に、ほかの選択肢はありそうですか？',
+'3-3':'緊急時にサービスを守るため、どこまで現金を使えるでしょうか？',
+'3-4':'3年で結果が出ない投資を、経営者はどう判断すべきでしょうか？'
+};
+function tradeoffText(o){
+ const now=o.cost?`現金を${o.cost}億円使います。`:'今回の追加費用は0億円です。';
+ const loan=o.loan?`借入${o.loan}億円は翌年度に返済する必要があります。`:'';
+ const effect=o.delay?'将来への効果は来年度以降です。':'主な効果は今回からです。';
+ return `${now}${loan}${effect}`;
+}
+function advancedStatements(){const p=s.pl,cf=s.cf,bs=totals(s);const parts=[['P/L（損益計算書）',[['売上',p.revenue],['人件費',-p.payroll],['運営費',-p.operations],['その他費用',-p.event-p.levies],['減価償却費',-p.depreciation],['営業利益',operatingProfit(s)],['利息・法人税',-p.interest-p.tax],['当期利益',yearProfit(s)]]],['B/S（貸借対照表）',[['現金',s.cash],['売掛金',s.ar],['その他資産',s.otherAssets],['固定資産',s.fixed],['資産合計',bs.assets],['長期・短期借入等',s.longDebt+s.shortDebt+s.otherLiab+s.ap],['純資産',s.equity],['負債・純資産合計',bs.liability]]],['C/F（キャッシュフロー）',[['営業活動',cf.operating],['投資活動',cf.investing],['財務活動',cf.financing],['現金増減',cf.operating+cf.investing+cf.financing],['期首現金',s.yearOpenCash],['期末現金',s.cash]]]];
+ return `<details class="advanced"><summary>講師・発展学習：財務三表を見る（任意）</summary><p>初回プレイでは飛ばして構いません。財務三表は内部で自動計算しています。</p>${parts.map(([title,rows])=>`<details class="statement"><summary>${title}</summary><table class="fin-table">${rows.map(([name,value])=>`<tr><td>${name}</td><td>${value}億円</td></tr>`).join('')}</table></details>`).join('')}</details>`;
+}
+function introduction(){return `<div class="eyebrow">START｜経営者に就任！</div><h1 class="title">3年間、この鉄道会社の未来をつくろう</h1><div class="message">🔹 毎四半期、経営判断は<strong>1回・3択</strong>だけ。<br>🔹 投資すると現金が減り、効果は来年から出ることも。<br>🔹 黒字でも現金がなければ、次の投資は選べません。</div><div class="review-grid"><div><small>事業収入の目安</small><b>年36億円</b></div><div><small>資金の最低確保額</small><b>2億円</b></div></div><div class="short">金額はすべて億円の整数。JR東日本の損益・資産構造を参考にした学習用モデルです。</div><div class="actions"><button class="btn" data-act="start">▶ 経営を始める</button></div>`}
+function decision(){
+ const auto=s.year===3&&s.q===1,e=E[`${s.year}-${s.q}`],picked=s.selected,eff=active(s);
+ if(auto){return `<div class="eyebrow">🚨 3年目 Q1・緊急イベント</div><h1 class="title">情報セキュリティ事故</h1><p class="lead">情報が流出しました。過去の教育投資によって、今回の被害額が変わります。</p><div class="single-fact">対策なし：5億円の損失 ／ 教育効果：−${Math.min(3,eff.training)}億円<br><strong>今回の損失：${5-Math.min(3,eff.training)}億円</strong></div><div class="actions"><button class="btn" data-act="auto">事故の影響を確認 ▶</button></div>`;}
+ const high=e.shock?'🚨 緊急イベント':'📣 経営判断';
+ return `<div class="eyebrow">${high}｜${esc(e.who)}</div><h1 class="title">${esc(e.title)}</h1><p class="lead">${esc(e.story)}</p><div class="question">あなたなら、何を優先しますか？</div><div class="choice-list">${e.opts.map((o,i)=>{const p=preview(i),locked=!!p.failed;return `<button class="choice ${picked===i?'active':''}" data-act="select" data-n="${i}" ${locked?'disabled':''}><span class="letter">${'ABC'[i]}</span><span class="choice-t"><strong>${esc(o.label)}</strong><small>${o.cost?`今期の支出 ${o.cost}億円`:'追加支出なし'}${o.loan?`・借入＋${o.loan}億円`:''}｜${esc(o.desc)}</small></span>${locked?'<span class="lock">資金不足</span>':''}</button>`}).join('')}</div>${picked==null?`<div class="hint">同じ問題でも、守るものと失うものが異なります。3案を比べて選びましょう。</div>`:`<div class="choice-preview"><b>選んだ案：${esc(e.opts[picked].label)}</b><p>${tradeoffText(e.opts[picked])}</p><p>実行後の現金見込み：<strong>${preview(picked).cash}億円</strong>（通常運行の入出金も含む）</p></div>`}<div class="actions"><button class="btn" data-act="execute" ${picked==null||preview(picked).failed?'disabled':''}>${picked==null?'方針を選んでください':'この方針で決定する ▶'}</button></div>`;
+}
+function result(){
+ const d=s.last;if(!d?.flows)return `<p>結果がまだありません。</p>`;
+ const thought=REFLECTIONS[`${d.year}-${d.q}`]||'今回の選択で、何を守り、何を諦めましたか？';
+ return `<div class="eyebrow">📣 ${d.year}年目 Q${d.q}・判断の結果</div><h1 class="title">${esc(d.option)}</h1>${d.shockLabel?`<div class="banner">⚠️ ${esc(d.shockLabel)}</div>`:''}<div class="result-focus"><b>この判断で何が変わった？</b>${metricChanges(d)}</div><div class="short-note">※現金の増減には、今回の判断以外の通常運行費や売上入金も含みます。</div>${d.nextYearImpact?`<div class="nextyear">🌱 今回の投資効果は、原則として<strong>来年度から</strong>発生します。</div>`:''}<div class="reflection"><b>💭 振り返りの問い</b><p>${thought}</p></div><div class="actions"><button class="btn" data-act="advance">${s.q===4?'年度の振り返りへ ▶':'次の経営判断へ ▶'}</button></div>`;
+}
+function financial(){
+ const g=managementGrade();
+ return `<div class="eyebrow">🏁 ${s.year}年目・年末の振り返り</div><h1 class="title">今年の経営はどうだった？</h1><div class="year-rank"><span>経営評価</span><b>${g.rank}</b><small>目安を達成：${g.met}/4項目</small></div><div class="cash-note">※次年度の現金は、売上入金・支払い・返済を精算した見込み額</div><div class="year-goals">${g.goals.map(x=>`<div class="goal ${x.okay?'pass':'miss'}"><span>${x.okay?'✓':'!'} ${x.name}</span><b>${x.value}</b></div>`).join('')}</div><div class="year-comment">${yearLesson()}<small>💭 どの判断が、今年の結果につながったでしょうか？</small></div>${advancedStatements()}<div class="actions"><button class="btn" data-act="nextYear">${s.year===3?'3年間の最終結果へ ▶':'翌年度へ進む ▶'}</button></div>`;
+}
+function finale(){
+ const g=managementGrade(),projected=s.cash+s.ar-s.ap-s.shortDebt;
+ return `<div class="eyebrow">🏆 3年間の経営を完了</div><h1 class="title">未来町の3年間</h1><div class="year-rank"><span>最終経営評価</span><b>${g.rank}</b><small>目安を達成：${g.met}/4項目</small></div><div class="year-goals">${g.goals.map(x=>`<div class="goal ${x.okay?'pass':'miss'}"><span>${x.okay?'✓':'!'} ${x.name}</span><b>${x.value}</b></div>`).join('')}</div><p class="year-comment">${yearLesson()}</p><div class="money-explain">💰 4年目の期首精算後の予想現金：<strong>${projected}億円</strong><br>利益があっても、現金が足りなければ次の投資はできません。</div><div class="reflection"><b>💭 最後に考えてみよう</b><p>あなたの判断では、何を守れたでしょうか。何を諦めたでしょうか。ほかのチームと比べてみましょう。</p></div>${advancedStatements()}<div class="actions"><button class="btn" data-act="restart">もう一度経営する ↻</button></div>`;
+}
+function failure(){return `<div class="eyebrow">⚠️ 経営終了</div><h1 class="title">現金が足りなくなりました</h1><div class="banner">${esc(s.reason||'支払い・返済に必要な現金が不足しました。')}</div><p class="lead">利益が出ていても、現金がなければ事業を続けたり、次の投資を選んだりできません。</p><div class="actions"><button class="btn" data-act="restart">最初からやり直す ↻</button></div>`}
+function draw(){
+ let html='';
+ if(showTitle){root.innerHTML=startTitle();}
+ else{
+ try{if(totals(s).assets!==totals(s).liability)throw Error('貸借不一致');html={intro:introduction,decision,result,annual:financial,final:finale,bankrupt:failure}[s.phase]()}catch(e){html=`<div class="banner">動作エラー：${esc(e.message)}</div><button class="btn" data-act="restart">初期化する</button>`;console.error(e)}
+ root.innerHTML=`<div class="retro-cabinet game-mode"><div class="retro-screen">${header()}${sky()}<main class="content phase-${s.phase}">${html}</main><div class="footer">経営判断に集中しよう｜財務三表は任意表示｜v1.8</div></div><div class="retro-floor" aria-hidden="true"></div></div>`;
+ }
+ root.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('click',()=>{
+ const v=b.dataset.act;
+ try{
+  if(v==='new'){
+    if(s.phase!=='intro'&&!confirm('保存中の経営データを破棄して新しく始めますか？'))return;
+    s=fresh();s.phase='decision';showTitle=false;
+  }else if(v==='resume'){
+    if(s.phase==='intro')return;
+    showTitle=false;
+  }else if(v==='goTitle'){
+    showTitle=true;
+  }else if(v==='help'){
+    alert('【未来つくり鉄道】\n経営判断に集中する初心者向け版です。\n毎四半期、3案のうち1案を選びます。\n・現金・安全・満足・将来性に注目\n・年1回、予期しない危機が発生\n・利益があっても現金が不足すると投資できません\n・年度末は4指標で振り返り\n・財務三表は任意の発展学習メニューにあります。');
+    return;
+  }else if(v==='start'){s.phase='decision'}
+  else if(v==='select'){s.selected=Number(b.dataset.n)}
+  else if(v==='execute'){if(s.selected!=null&&!preview(s.selected).failed)commit(s.selected)}
+  else if(v==='auto'){commit(-1)}
+  else if(v==='advance'){endQuarter()}
+  else if(v==='nextYear'){nextYear()}
+  else if(v==='tab'){s.tab=b.dataset.tab}
+  else if(v==='restart'){
+     if(s.phase!=='intro'&&!confirm('経営データを消去して最初からやり直しますか？'))return;
+     s=fresh();showTitle=true;
+  }
+  save();draw();
+ }catch(e){console.error(e);alert('処理を完了できませんでした: '+e.message);}
+ }));
+}
+window.__MIRAI_TEST__={getState:()=>clone(s),getEvents:()=>clone(E),choose:(i)=>{s.selected=i;return preview(i)},commit:(i)=>commit(i),advance:()=>{endQuarter();return s.phase},nextYear:()=>{nextYear();return s.phase},reset:()=>{s=fresh();save();draw();},check:()=>totals(s),preview:(i)=>preview(i)};draw();
+})();
+</script></body></html>
